@@ -18,7 +18,8 @@
   if request.page_type == 'index'
     assign seo_title = 'ZadaVibe Dubai™ | Premium Men’s Ribbed Knits & Vintage Henleys UAE'
   elsif request.page_type == 'product'
-    assign prod_price_formatted = product.price | money_without_currency | strip
+    assign cur_seo_variant = product.selected_or_first_available_variant | default: product.variants.first
+    assign prod_price_formatted = cur_seo_variant.price | money_without_currency | strip
     assign seo_title = product.title | append: ' | ZadaVibe UAE (AED ' | append: prod_price_formatted | append: ')'
   elsif request.page_type == 'collection'
     assign seo_title = collection.title | append: ' | Luxury Menswear Collection Dubai - ZadaVibe UAE'
@@ -73,7 +74,7 @@
 <meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
 
 {%- if request.page_type == 'product' -%}
-  <meta property="product:price:amount" content="{{ product.price | money_without_currency | strip }}">
+  <meta property="product:price:amount" content="{{ cur_seo_variant.price | money_without_currency | strip }}">
   <meta property="product:price:currency" content="AED">
   <meta property="product:condition" content="new">
   <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
@@ -249,7 +250,7 @@
     "@type": "Offer",
     "url": "{{ canonical_url }}",
     "priceCurrency": "AED",
-    "price": "{{ product.price | divided_by: 100.0 }}",
+    "price": "{{ cur_seo_variant.price | divided_by: 100.0 }}",
     "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' }}",
     "itemCondition": "https://schema.org/NewCondition",
     "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",

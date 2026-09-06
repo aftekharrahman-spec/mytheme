@@ -25,15 +25,16 @@
         {%- if collection.products.size > 0 -%}
           {%- for product in collection.products -%}
             {%- liquid
+              assign cur_variant = product.selected_or_first_available_variant | default: product.variants.first
               assign is_sold_out = false
-              if product.available == false
+              if cur_variant.available == false
                 assign is_sold_out = true
               endif
 
               assign on_sale = false
-              if product.compare_at_price > product.price
+              if cur_variant.compare_at_price > cur_variant.price
                 assign on_sale = true
-                assign savings_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+                assign savings_pct = cur_variant.compare_at_price | minus: cur_variant.price | times: 100.0 | divided_by: cur_variant.compare_at_price | round
               endif
             -%}
             <div class="zv-card">
@@ -48,7 +49,7 @@
                   <span class="zv-card-badge">HOT DROP</span>
                 {%- endif -%}
 
-                <a href="{{ product.url }}" class="zv-card-img-link">
+                <a href="{{ cur_variant.url | default: product.url }}" class="zv-card-img-link">
                   {%- if product.featured_image -%}
                     <img
                       src="{{ product.featured_image | image_url: width: 600 }}"
@@ -81,7 +82,7 @@
                 </a>
 
                 <div class="zv-quick-add-overlay">
-                  <a href="{{ product.url }}" class="zv-quick-btn">
+                  <a href="{{ cur_variant.url | default: product.url }}" class="zv-quick-btn">
                     <span>SELECT SIZE & BUY</span>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </a>
@@ -90,7 +91,7 @@
 
               <div class="zv-card-body">
                 <div class="zv-card-stars">★★★★★ <span style="font-size: 0.78rem; color: #888;">(4.9)</span></div>
-                <h3 class="zv-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+                <h3 class="zv-card-title"><a href="{{ cur_variant.url | default: product.url }}">{{ product.title }}</a></h3>
 
                 {%- for option in product.options_with_values -%}
                   {%- assign opt_name = option.name | downcase -%}
@@ -104,9 +105,9 @@
                 {%- endfor -%}
 
                 <div class="zv-card-prices">
-                  <span class="zv-price-now">AED {{ product.price | money_without_currency }}</span>
+                  <span class="zv-price-now">AED {{ cur_variant.price | money_without_currency }}</span>
                   {%- if on_sale -%}
-                    <span class="zv-price-was">AED {{ product.compare_at_price | money_without_currency }}</span>
+                    <span class="zv-price-was">AED {{ cur_variant.compare_at_price | money_without_currency }}</span>
                   {%- endif -%}
                 </div>
               </div>

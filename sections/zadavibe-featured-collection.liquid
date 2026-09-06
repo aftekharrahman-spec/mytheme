@@ -65,13 +65,14 @@
                 <span class="zv-fp-stars">★★★★★</span>
                 <span class="zv-fp-review-cnt">(4.9)</span>
               </div>
+              {%- assign prod_variant = prod.selected_or_first_available_variant | default: prod.variants.first -%}
               <h3 class="zv-fp-prod-title">
-                <a href="{{ prod.url }}">{{ prod.title }}</a>
+                <a href="{{ prod_variant.url | default: prod.url }}">{{ prod.title }}</a>
               </h3>
               <div class="zv-fp-price-row">
-                <span class="zv-fp-price-curr">AED {{ prod.price | money_without_currency }}</span>
-                {%- if prod.compare_at_price > prod.price -%}
-                  <span class="zv-fp-price-was">AED {{ prod.compare_at_price | money_without_currency }}</span>
+                <span class="zv-fp-price-curr">AED {{ prod_variant.price | money_without_currency }}</span>
+                {%- if prod_variant.compare_at_price > prod_variant.price -%}
+                  <span class="zv-fp-price-was">AED {{ prod_variant.compare_at_price | money_without_currency }}</span>
                 {%- endif -%}
               </div>
 

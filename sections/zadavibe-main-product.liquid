@@ -113,27 +113,26 @@
           </div>
         </div>
 
+        {%- assign cur_variant = product.selected_or_first_available_variant | default: product.variants.first -%}
         <!-- Clean Pricing Row -->
         <div class="zv-pricing-row">
           <span class="zv-price-current" id="zv-display-price">
-            {%- if product.selected_or_first_available_variant.price -%}
-              AED {{ product.selected_or_first_available_variant.price | money_without_currency }}
-            {%- elsif product.price -%}
-              AED {{ product.price | money_without_currency }}
+            {%- if cur_variant.price -%}
+              AED {{ cur_variant.price | money_without_currency }}
             {%- else -%}
               AED 149.00
             {%- endif -%}
           </span>
-          <span class="zv-price-compare" id="zv-display-compare">
-            {%- if product.selected_or_first_available_variant.compare_at_price -%}
-              AED {{ product.selected_or_first_available_variant.compare_at_price | money_without_currency }}
-            {%- elsif product.compare_at_price -%}
-              AED {{ product.compare_at_price | money_without_currency }}
-            {%- else -%}
-              AED 249.00
-            {%- endif -%}
-          </span>
-          <span class="zv-discount-badge">SAVE 40%</span>
+          {%- if cur_variant.compare_at_price > cur_variant.price -%}
+            {%- assign pct_off = cur_variant.compare_at_price | minus: cur_variant.price | times: 100.0 | divided_by: cur_variant.compare_at_price | round -%}
+            <span class="zv-price-compare" id="zv-display-compare">
+              AED {{ cur_variant.compare_at_price | money_without_currency }}
+            </span>
+            <span class="zv-discount-badge" id="zv-display-discount">SAVE {{ pct_off }}%</span>
+          {%- else -%}
+            <span class="zv-price-compare" id="zv-display-compare" style="display: none;"></span>
+            <span class="zv-discount-badge" id="zv-display-discount" style="display: none;"></span>
+          {%- endif -%}
         </div>
 
         <!-- Single-Line UAE Delivery Badge -->
@@ -1412,13 +1411,22 @@
         const stickyPrice = document.getElementById('zv-sticky-price-text');
         if (stickyPrice) stickyPrice.textContent = formattedPrice;
 
+        const displayComp = document.getElementById('zv-display-compare');
+        const displayDisc = document.getElementById('zv-display-discount');
         if (matchedVariant.compare_at_price && matchedVariant.compare_at_price > matchedVariant.price) {
           const compFormatted = currencySymbol + (matchedVariant.compare_at_price / 100.0).toFixed(2);
-          const displayComp = document.getElementById('zv-display-compare');
+          const pct = Math.round(((matchedVariant.compare_at_price - matchedVariant.price) / matchedVariant.compare_at_price) * 100);
           if (displayComp) {
             displayComp.textContent = compFormatted;
             displayComp.style.display = 'inline';
           }
+          if (displayDisc) {
+            displayDisc.textContent = 'SAVE ' + pct + '%';
+            displayDisc.style.display = 'inline-block';
+          }
+        } else {
+          if (displayComp) displayComp.style.display = 'none';
+          if (displayDisc) displayDisc.style.display = 'none';
         }
 
         const qtyInput = document.getElementById('zv-cart-quantity');
