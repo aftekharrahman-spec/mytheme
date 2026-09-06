@@ -1,4 +1,4 @@
-<section class="zv-press-marquee-section" style="--zv-press-bg: {{ section.settings.bg_color | default: '#f8f6f2' }}; --zv-press-text: {{ section.settings.text_color | default: '#1a1d1b' }};">
+<section class="zv-press-marquee-section" style="--zv-press-bg: {{ section.settings.bg_color | default: '#f8f6f2' }}; --zv-press-text: {{ section.settings.text_color | default: '#1a1d1b' }}; --zv-press-speed: {{ section.settings.speed | default: 25 }}s;">
   {%- if section.settings.heading != blank -%}
     <div class="zv-press-header">
       <span class="zv-press-tag">{{ section.settings.heading }}</span>
@@ -153,7 +153,7 @@
   .zv-press-marquee-track {
     display: flex;
     white-space: nowrap;
-    animation: zvPressFlow 25s linear infinite;
+    animation: zvPressFlow var(--zv-press-speed, 25s) linear infinite;
     will-change: transform;
     align-items: center;
   }
@@ -366,6 +366,16 @@
       "id": "text_color",
       "label": "Text Color",
       "default": "#1a1d1b"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll Speed",
+      "min": 15,
+      "max": 50,
+      "step": 5,
+      "default": 25,
+      "unit": "s"
     }
   ],
   "presets": [
