@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -373,10 +382,22 @@
     "feed": {
       "type": "zadavibe-feed",
       "blocks": {
-        "feed_1": { "type": "feed_item" },
-        "feed_2": { "type": "feed_item" },
-        "feed_3": { "type": "feed_item" },
-        "feed_4": { "type": "feed_item" }
+        "feed_1": {
+          "type": "feed_item",
+          "settings": {}
+        },
+        "feed_2": {
+          "type": "feed_item",
+          "settings": {}
+        },
+        "feed_3": {
+          "type": "feed_item",
+          "settings": {}
+        },
+        "feed_4": {
+          "type": "feed_item",
+          "settings": {}
+        }
       },
       "block_order": [
         "feed_1",

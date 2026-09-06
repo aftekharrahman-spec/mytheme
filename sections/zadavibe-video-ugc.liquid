@@ -11,12 +11,7 @@
           {%- elsif block.settings.image != blank -%}
             {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.name }}
           {%- else -%}
-            {%- cycle 'hero_model', 'product_shirt', 'hero_model', 'product_shirt' as ugc_fallback_img -%}
-            {%- if ugc_fallback_img == 'hero_model' -%}
-              <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="{{ block.settings.name | default: 'ZadaVibe Style' }}" loading="lazy" width="500" height="600">
-            {%- else -%}
-              <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="{{ block.settings.name | default: 'ZadaVibe Style' }}" loading="lazy" width="500" height="600">
-            {%- endif -%}
+            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="{{ block.settings.name }}" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
           {%- endif -%}
 
           <div class="zv-ugc-overlay">
