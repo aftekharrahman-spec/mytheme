@@ -6,8 +6,8 @@
       "type": "zadavibe-announcement-bar",
       "settings": {
         "show_announcement": true,
-        "icon": "✈️",
-        "text": "FREE EXPRESS UAE DELIVERY ON ORDERS OVER AED 150 • 100% SECURE ONLINE CHECKOUT",
+        "icon": "🇦🇪",
+        "text": "Free UAE Delivery Over AED 150 • Code: VIBE10",
         "bg_color": "#2d3b31",
         "text_color": "#ffffff"
       }
