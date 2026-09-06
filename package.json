@@ -1,0 +1,14 @@
+{
+  "name": "premium-shopify-theme",
+  "version": "1.0.0",
+  "description": "Premium Custom Shopify Theme built on OS 2.0",
+  "scripts": {
+    "dev": "shopify theme dev",
+    "pull": "shopify theme pull",
+    "push": "shopify theme push",
+    "check": "shopify theme check"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^4.7.1"
+  }
+}
