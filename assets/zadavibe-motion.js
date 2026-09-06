@@ -134,11 +134,11 @@
     requestAnimationFrame(update);
   }
 
-  /* 4. Interactive 3D Card Tilt for Desktop */
+  /* 4. Interactive 3D Card Tilt for Desktop Only */
   function initCardTilt() {
-    if (window.innerWidth < 1024) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.innerWidth < 1024) return;
 
-    const cards = document.querySelectorAll('.zv-callout-card, .zv-bundle-card, .zv-card');
+    const cards = document.querySelectorAll('.zv-callout-card');
 
     cards.forEach((card) => {
       card.addEventListener('mousemove', (e) => {
@@ -149,10 +149,10 @@
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const rotateX = ((y - centerY) / centerY) * -4;
-        const rotateY = ((x - centerX) / centerX) * 4;
+        const rotateX = ((y - centerY) / centerY) * -3;
+        const rotateY = ((x - centerX) / centerX) * 3;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
       });
 
       card.addEventListener('mouseleave', () => {

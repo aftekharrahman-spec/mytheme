@@ -1227,8 +1227,38 @@
   .zv-benefits-grid,
   .zv-stats-grid,
   .zv-product-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    grid-template-columns: 1fr !important;
+    gap: 36px;
+  }
+
+  /* CRITICAL: Disable sticky gallery on mobile/tablet to prevent buy-box overlap */
+  .zv-gallery-sticky {
+    position: static !important;
+    top: auto !important;
+  }
+
+  .zv-gallery-main img {
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    max-height: 440px;
+  }
+
+  .zv-hero-image-card img {
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    max-height: 400px;
+  }
+
+  .zv-hero-float-badge {
+    position: static !important;
+    margin: 16px auto 0 !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .zv-callout-image img {
+    min-height: unset !important;
+    height: 300px !important;
   }
 
   .zv-ugc-grid,
@@ -1237,23 +1267,49 @@
   }
 
   .zv-footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 36px;
   }
 
   .zv-callout-info {
-    padding: 36px 24px;
+    padding: 36px 20px;
   }
 }
 
 @media (max-width: 600px) {
-  .zv-ugc-grid,
-  .zv-feed-grid {
-    grid-template-columns: 1fr;
+  .zv-hero-section {
+    padding: 36px 0 50px;
+  }
+
+  .zv-hero-title {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
+  .zv-product-title {
+    font-size: clamp(1.6rem, 5.5vw, 2.1rem);
+  }
+
+  .zv-gallery-main img {
+    max-height: 340px;
+  }
+
+  .zv-hero-image-card img {
+    max-height: 320px;
+  }
+
+  .zv-thumb {
+    width: 64px;
+    height: 64px;
   }
 
   .zv-hero-pills-list {
-    margin: 18px 0 24px;
+    margin: 16px 0 24px;
+    gap: 8px;
+  }
+
+  .zv-hero-pill {
+    padding: 6px 14px;
+    font-size: 0.82rem;
   }
 
   .zv-trust-badges {
@@ -1263,7 +1319,7 @@
 
   /* Mobile Horizontal Scroll-Snap for UGC and Review Strips */
   .zv-dark-cards-scroll {
-    grid-template-columns: repeat(6, 260px);
+    grid-template-columns: repeat(6, 250px);
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     padding: 0 16px 16px;
@@ -1282,8 +1338,17 @@
   }
 
   .zv-ugc-card {
-    min-width: 260px;
+    min-width: 250px;
     scroll-snap-align: center;
+  }
+
+  .zv-feed-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .zv-feed-item {
+    height: 180px;
   }
 
   .zv-sticky-atc {
