@@ -27,6 +27,14 @@
           ★★★★★ <span style="color: #6b726c; font-size: 0.88rem; font-weight: 600; margin-left: 6px;">4.9 / 5.0 (1,280+ REVIEWS)</span>
         </div>
 
+        <!-- Live Viewers Real-Time Badge -->
+        <div class="zv-live-viewers-badge">
+          <span class="zv-live-pulse-dot"></span>
+          <span class="zv-live-viewers-text">
+            <strong id="zv-live-viewers-count">34</strong> people are viewing this right now
+          </span>
+        </div>
+
         <h1 class="zv-product-title">
           {{ product.title | default: "Zadavibe Signature Vintage Lace-Up Ribbed Henley" }}
         </h1>
@@ -60,65 +68,23 @@
           </div>
         </div>
 
-        <!-- DTC Quantity Breaks / Bundle Box -->
-        <div class="zv-variant-label" style="margin-top: 10px;">CHOOSE QUANTITY & SPECIAL DISCOUNT:</div>
-        <div class="zv-bundles-container">
-          <!-- Tier 1 -->
-          <div class="zv-bundle-card" onclick="selectBundle(1, 39.99, 65.00, this)">
-            <div class="zv-bundle-left">
-              <div class="zv-bundle-radio"></div>
-              <div>
-                <div class="zv-bundle-title">Buy 1 (Standard)</div>
-                <div class="zv-bundle-subtitle">1x Signature Henley</div>
-              </div>
-            </div>
-            <div class="zv-bundle-price">
-              <div class="zv-bundle-price-main">$39.99</div>
-              <div class="zv-bundle-price-compare">$65.00</div>
-            </div>
-          </div>
-
-          <!-- Tier 2 (Most Popular) -->
-          <div class="zv-bundle-card active" onclick="selectBundle(2, 67.98, 130.00, this)">
-            <div class="zv-bundle-tag">MOST POPULAR • SAVE 15%</div>
-            <div class="zv-bundle-left">
-              <div class="zv-bundle-radio"></div>
-              <div>
-                <div class="zv-bundle-title">Buy 2 (Save 15%)</div>
-                <div class="zv-bundle-subtitle">2x Signature Henleys ($33.99 each)</div>
-              </div>
-            </div>
-            <div class="zv-bundle-price">
-              <div class="zv-bundle-price-main">$67.98</div>
-              <div class="zv-bundle-price-compare">$130.00</div>
-            </div>
-          </div>
-
-          <!-- Tier 3 (Best Value) -->
-          <div class="zv-bundle-card" onclick="selectBundle(3, 95.97, 195.00, this)">
-            <div class="zv-bundle-tag" style="background: var(--zv-accent);">BEST VALUE • SAVE 20%</div>
-            <div class="zv-bundle-left">
-              <div class="zv-bundle-radio"></div>
-              <div>
-                <div class="zv-bundle-title">Buy 3 (Save 20%)</div>
-                <div class="zv-bundle-subtitle">3x Signature Henleys ($31.99 each)</div>
-              </div>
-            </div>
-            <div class="zv-bundle-price">
-              <div class="zv-bundle-price-main">$95.97</div>
-              <div class="zv-bundle-price-compare">$195.00</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Actions -->
+        <!-- Actions Form -->
         <form method="post" action="/cart/add" id="zv-add-form">
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id | default: 1 }}">
-          <input type="hidden" name="quantity" id="zv-cart-quantity" value="2">
+
+          <!-- Modern Quantity Stepper -->
+          <div class="zv-quantity-group">
+            <label class="zv-variant-label" for="zv-cart-quantity">QUANTITY:</label>
+            <div class="zv-qty-stepper">
+              <button type="button" class="zv-qty-btn" onclick="updateQuantity(-1)" aria-label="Decrease quantity">−</button>
+              <input type="number" name="quantity" id="zv-cart-quantity" value="1" min="1" max="10" readonly>
+              <button type="button" class="zv-qty-btn" onclick="updateQuantity(1)" aria-label="Increase quantity">+</button>
+            </div>
+          </div>
           
           <div class="zv-buy-actions">
             <button type="submit" class="zv-btn-primary zv-btn-atc">
-              <span>ADD TO CART</span> • <span id="zv-btn-price">$67.98</span>
+              <span>ADD TO CART</span> • <span id="zv-btn-price">{%- if product.price -%}{{ product.price | money }}{%- else -%}$39.99{%- endif -%}</span>
             </button>
             <button type="button" class="zv-btn-buynow" onclick="window.location.href='/checkout'">
               BUY IT NOW (EXPRESS CHECKOUT)
@@ -154,7 +120,7 @@
     </div>
     <div>
       <div class="zv-sticky-title">Zadavibe Signature Henley</div>
-      <div class="zv-sticky-price" id="zv-sticky-price-text">$67.98</div>
+      <div class="zv-sticky-price" id="zv-sticky-price-text">{%- if product.price -%}{{ product.price | money }}{%- else -%}$39.99{%- endif -%}</div>
     </div>
   </div>
   <div>
@@ -165,6 +131,8 @@
 </div>
 
 <script>
+  const basePrice = {%- if product.price -%}{{ product.price | divided_by: 100.0 }}{%- else -%}39.99{%- endif -%};
+
   function switchMainImage(src, el) {
     const mainImg = document.getElementById('zv-main-img');
     if (mainImg) mainImg.src = src;
@@ -178,16 +146,39 @@
     if (el) el.classList.add('active');
   }
 
-  function selectBundle(qty, price, compare, el) {
-    document.getElementById('zv-cart-quantity').value = qty;
-    document.getElementById('zv-display-price').textContent = '$' + price.toFixed(2);
-    document.getElementById('zv-display-compare').textContent = '$' + compare.toFixed(2);
-    document.getElementById('zv-btn-price').textContent = '$' + price.toFixed(2);
-    document.getElementById('zv-sticky-price-text').textContent = '$' + price.toFixed(2);
+  function updateQuantity(change) {
+    const input = document.getElementById('zv-cart-quantity');
+    if (!input) return;
+    let qty = parseInt(input.value) || 1;
+    qty = Math.max(1, Math.min(10, qty + change));
+    input.value = qty;
 
-    document.querySelectorAll('.zv-bundle-card').forEach(c => c.classList.remove('active'));
-    if (el) el.classList.add('active');
+    const totalPrice = (qty * basePrice).toFixed(2);
+    const btnPrice = document.getElementById('zv-btn-price');
+    const stickyPrice = document.getElementById('zv-sticky-price-text');
+    if (btnPrice) btnPrice.textContent = '$' + totalPrice;
+    if (stickyPrice) stickyPrice.textContent = '$' + totalPrice;
   }
+
+  // Dynamic Real-Time Live Viewers Fluctuation
+  function initLiveViewers() {
+    const counter = document.getElementById('zv-live-viewers-count');
+    if (!counter) return;
+
+    let current = Math.floor(Math.random() * 14) + 26; // 26 to 40
+    counter.textContent = current;
+
+    setInterval(() => {
+      const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
+      current = Math.max(22, Math.min(48, current + change));
+      counter.textContent = current;
+    }, 4000);
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    initLiveViewers();
+  });
 
   // Sticky Bar Scroll Listener
   window.addEventListener('scroll', function() {

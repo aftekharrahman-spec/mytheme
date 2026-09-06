@@ -1040,104 +1040,111 @@ html, body {
   color: #ffffff;
 }
 
-/* Bundle / Quantity Breaks Box (Key DTC Feature) */
-.zv-bundles-container {
-  margin: 24px 0 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.zv-bundle-card {
-  position: relative;
-  border: 2px solid var(--zv-border);
-  border-radius: var(--zv-radius-md);
-  padding: 16px 20px;
-  display: flex;
+/* Live Viewers Real-Time Social Proof Badge */
+.zv-live-viewers-badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  background: #ffffff;
-  transition: all 0.2s ease;
+  gap: 8px;
+  background: #f0f7f2;
+  border: 1px solid #d3e7d8;
+  padding: 6px 14px;
+  border-radius: var(--zv-radius-pill);
+  font-size: 0.84rem;
+  color: #1e4620;
+  font-weight: 600;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  width: fit-content;
+  box-shadow: var(--zv-shadow-sm);
 }
 
-.zv-bundle-card:hover {
-  border-color: #99a89d;
-}
-
-.zv-bundle-card.active {
-  border-color: var(--zv-primary);
-  background: #f7faf8;
-  box-shadow: 0 0 0 1px var(--zv-primary);
-}
-
-.zv-bundle-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.zv-bundle-radio {
-  width: 20px;
-  height: 20px;
+.zv-live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #16a34a;
   border-radius: 50%;
-  border: 2px solid var(--zv-border);
+  position: relative;
+  display: inline-block;
+}
+
+.zv-live-pulse-dot::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.4);
+  animation: zvLivePulse 1.8s ease-out infinite;
+}
+
+@keyframes zvLivePulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Modern Quantity Stepper */
+.zv-quantity-group {
+  margin-bottom: 22px;
+}
+
+.zv-qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--zv-border);
+  border-radius: var(--zv-radius-pill);
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: var(--zv-shadow-sm);
+  width: fit-content;
+}
+
+.zv-qty-btn {
+  background: none;
+  border: none;
+  width: 44px;
+  height: 44px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--zv-text);
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+  user-select: none;
 }
 
-.zv-bundle-card.active .zv-bundle-radio {
-  border-color: var(--zv-primary);
-}
-
-.zv-bundle-card.active .zv-bundle-radio::after {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--zv-primary);
-}
-
-.zv-bundle-title {
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--zv-text);
-}
-
-.zv-bundle-subtitle {
-  font-size: 0.85rem;
-  color: var(--zv-text-muted);
-}
-
-.zv-bundle-tag {
-  position: absolute;
-  top: -10px;
-  right: 20px;
-  background: var(--zv-primary);
-  color: #ffffff;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  padding: 3px 10px;
-  border-radius: var(--zv-radius-pill);
-  text-transform: uppercase;
-}
-
-.zv-bundle-price {
-  text-align: right;
-}
-
-.zv-bundle-price-main {
-  font-weight: 800;
-  font-size: 1.15rem;
+.zv-qty-btn:hover {
+  background: var(--zv-bg-soft);
   color: var(--zv-primary);
 }
 
-.zv-bundle-price-compare {
-  font-size: 0.85rem;
-  text-decoration: line-through;
-  color: #9ca3af;
+.zv-qty-stepper input {
+  width: 48px;
+  height: 44px;
+  border: none;
+  text-align: center;
+  font-family: var(--zv-font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--zv-text);
+  outline: none;
+  background: transparent;
+  -moz-appearance: textfield;
+}
+
+.zv-qty-stepper input::-webkit-outer-spin-button,
+.zv-qty-stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Buy Buttons */
@@ -1509,47 +1516,25 @@ html, body {
     text-align: center;
   }
 
-  .zv-bundles-container {
-    margin: 16px 0 20px;
-    gap: 10px;
-  }
-
-  .zv-bundle-card {
-    padding: 12px 14px !important;
-    border-radius: var(--zv-radius-md) !important;
-  }
-
-  .zv-bundle-left {
-    gap: 10px;
-  }
-
-  .zv-bundle-radio {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-  }
-
-  .zv-bundle-title {
-    font-size: 0.9rem !important;
-  }
-
-  .zv-bundle-subtitle {
-    font-size: 0.76rem !important;
-  }
-
-  .zv-bundle-tag {
-    top: -9px !important;
-    right: 12px !important;
-    font-size: 0.62rem !important;
-    padding: 2px 7px !important;
-  }
-
-  .zv-bundle-price-main {
-    font-size: 1rem !important;
-  }
-
-  .zv-bundle-price-compare {
+  .zv-live-viewers-badge {
     font-size: 0.78rem !important;
+    padding: 5px 12px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .zv-quantity-group {
+    margin-bottom: 16px !important;
+  }
+
+  .zv-qty-btn {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .zv-qty-stepper input {
+    width: 44px !important;
+    height: 40px !important;
+    font-size: 0.98rem !important;
   }
 
   .zv-buy-actions {
