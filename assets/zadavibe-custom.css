@@ -1260,4 +1260,138 @@
     grid-template-columns: 1fr;
     gap: 16px;
   }
+
+  /* Mobile Horizontal Scroll-Snap for UGC and Review Strips */
+  .zv-dark-cards-scroll {
+    grid-template-columns: repeat(6, 260px);
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 16px 16px;
+  }
+
+  .zv-dark-card {
+    scroll-snap-align: center;
+  }
+
+  .zv-ugc-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 12px;
+  }
+
+  .zv-ugc-card {
+    min-width: 260px;
+    scroll-snap-align: center;
+  }
+
+  .zv-sticky-atc {
+    padding-bottom: max(14px, env(safe-area-inset-bottom));
+  }
 }
+
+/* ==========================================================================
+   Senior Engineer Motion & Parallax Enhancements
+   ========================================================================== */
+
+/* 1. Scroll-Triggered Reveal */
+.zv-reveal-init {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.zv-revealed {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* 2. Floating Badge Animation */
+.zv-hero-float-badge {
+  animation: zvFloat 4s ease-in-out infinite;
+}
+
+@keyframes zvFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 3. Button Shimmer Glow Effect */
+.zv-btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.zv-btn-primary::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  transition: none;
+}
+
+.zv-btn-primary:hover::after {
+  animation: zvShimmer 1.2s ease-in-out;
+}
+
+@keyframes zvShimmer {
+  0% {
+    left: -60%;
+  }
+  100% {
+    left: 140%;
+  }
+}
+
+/* 4. Active Quantity Break Pulse */
+.zv-bundle-card.active {
+  animation: zvCardPulse 0.35s ease-out;
+}
+
+@keyframes zvCardPulse {
+  0% {
+    transform: scale(0.98);
+  }
+  50% {
+    transform: scale(1.015);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 5. Fluid Accordion Max-Height Transition */
+.zv-faq-item details .zv-faq-answer {
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+  overflow: hidden;
+}
+
+/* 6. Smooth Image Zoom on Hover */
+.zv-hero-image-card img,
+.zv-callout-image img,
+.zv-benefits-photo img,
+.zv-stats-photo img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* 7. Pause Marquee on Hover */
+.zv-ticker-wrapper:hover .zv-ticker-track {
+  animation-play-state: paused;
+}
+
