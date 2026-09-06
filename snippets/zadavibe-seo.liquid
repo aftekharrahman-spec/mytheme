@@ -16,29 +16,30 @@
 
   # Dynamic High-Converting SEO Title
   if request.page_type == 'index'
-    assign seo_title = 'ZadaVibe Dubai™ | Premium Men’s Ribbed Knits & Vintage Henleys UAE'
+    assign seo_title = 'ZadaVibe Dubai™ | Premium Men’s Fashion & Luxury Menswear UAE'
   elsif request.page_type == 'product'
     assign cur_seo_variant = product.selected_or_first_available_variant | default: product.variants.first
     assign prod_price_formatted = cur_seo_variant.price | money_without_currency | strip
     assign seo_title = product.title | append: ' | ZadaVibe UAE (AED ' | append: prod_price_formatted | append: ')'
   elsif request.page_type == 'collection'
-    assign seo_title = collection.title | append: ' | Luxury Menswear Collection Dubai - ZadaVibe UAE'
+    assign seo_title = collection.title | append: ' | Luxury Men’s Fashion Dubai - ZadaVibe UAE'
   elsif request.page_type == 'cart'
     assign seo_title = 'Your Shopping Bag | ZadaVibe Dubai (Free UAE Delivery Over AED 150)'
   else
-    assign seo_title = page_title | append: ' &ndash; ZadaVibe UAE'
+    assign seo_title = page_title | append: ' – ZadaVibe UAE'
   endif
 
-  # Dynamic High-CTR Meta Description for UAE
-  if page_description != blank and page_description != shop.description
-    assign seo_description = page_description | escape
-  elsif request.page_type == 'index'
-    assign seo_description = 'Shop ZadaVibe luxury menswear in UAE. Handcrafted vintage lace-up ribbed henleys and breathable knitwear. Fast express delivery to Dubai, Abu Dhabi, & all Emirates. Free shipping over AED 150.'
-  elsif request.page_type == 'product'
-    assign clean_product_desc = product.description | strip_html | truncate: 140
-    assign seo_description = 'Buy ' | append: product.title | append: ' in UAE. 100% organic ribbed cotton, tailored athletic fit. Express shipping to Dubai & Abu Dhabi. ' | append: clean_product_desc
+  # Dynamic High-CTR Meta Description for UAE (High Commercial Intent)
+  if request.page_type == 'product'
+    assign cur_seo_variant = product.selected_or_first_available_variant | default: product.variants.first
+    assign prod_price_formatted = cur_seo_variant.price | money_without_currency | strip
+    assign seo_description = 'Shop ' | append: product.title | append: ' online in UAE at AED ' | append: prod_price_formatted | append: '. Premium quality menswear, modern athletic fit & breathable fabric. Free Express Delivery across Dubai, Abu Dhabi & UAE over AED 150. 100% Secure Checkout at ZadaVibe.'
   elsif request.page_type == 'collection'
-    assign seo_description = 'Explore ' | append: collection.title | append: ' at ZadaVibe UAE. Luxury ribbed henleys, lightweight knitwear, and modern tunics with fast doorstep delivery across the Emirates.'
+    assign seo_description = 'Explore ' | append: collection.title | append: ' at ZadaVibe UAE. Discover luxury men’s clothing, relaxed tailored fits & breathable premium fabrics. Fast express delivery across Dubai, Abu Dhabi & all Emirates over AED 150.'
+  elsif request.page_type == 'index'
+    assign seo_description = 'Shop ZadaVibe luxury menswear in Dubai & UAE. Handcrafted ribbed knits, vintage lace-up henleys, and modern streetwear. Fast express delivery across Dubai, Abu Dhabi & all Emirates. Free shipping over AED 150.'
+  elsif page_description != blank and page_description != shop.description
+    assign seo_description = page_description | escape
   else
     assign seo_description = 'ZadaVibe UAE — High-performance luxury menswear. Breathable organic knits, lace-up collars, and modern tailored silhouettes. Fast delivery across Dubai and UAE.'
   endif
@@ -48,7 +49,14 @@
 <title>{{ seo_title }}</title>
 <link rel="canonical" href="{{ current_url }}">
 <meta name="description" content="{{ seo_description | escape }}">
+<meta name="keywords" content="menswear dubai, luxury clothing men uae, henley shirts dubai, mens fashion abu dhabi, ribbed knit shirts uae, vintage polo men dubai, buy men clothes online uae, mens casual tops dubai, express clothing delivery uae, zadavibe dubai">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+<!-- DNS Prefetch & Resource Hints for Google Core Web Vitals -->
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.shopify.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://oss-cf.cjdropshipping.com">
 
 <!-- Regional Geo-Targeting for Google UAE (Dubai / Abu Dhabi) -->
 <meta name="geo.region" content="AE-DU">
@@ -226,8 +234,41 @@
 }
 </script>
 
+{%- if request.page_type == 'collection' and collection.products.size > 0 -%}
+<!-- 4. Collection ItemList Schema (Google Search Product Carousel) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": {{ collection.title | json }},
+  "url": "{{ canonical_url }}",
+  "numberOfItems": {{ collection.products.size }},
+  "itemListElement": [
+    {%- for prod in collection.products limit: 16 -%}
+      {%- assign p_variant = prod.selected_or_first_available_variant | default: prod.variants.first -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "name": {{ prod.title | json }},
+        "url": "{{ shop.url }}{{ prod.url }}",
+        {%- if prod.featured_image -%}
+        "image": "https:{{ prod.featured_image | image_url: width: 800 }}",
+        {%- endif -%}
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "AED",
+          "price": "{{ p_variant.price | divided_by: 100.0 }}",
+          "availability": "https://schema.org/{% if prod.available %}InStock{% else %}OutOfStock{% endif %}"
+        }
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
 {%- if request.page_type == 'product' -%}
-<!-- 4. Product & Merchant Offer Schema (Google Rich Snippets & Shopping Tab) -->
+<!-- 5. Product & Merchant Offer Schema (Google Rich Snippets & Shopping Tab) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
