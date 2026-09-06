@@ -218,9 +218,9 @@
             </button>
           </div>
 
-          <!-- Express Cash On Delivery Button -->
-          <button type="button" class="zv-btn-cod" onclick="expressCheckout()">
-            ⚡ ORDER WITH CASH ON DELIVERY (COD)
+          <!-- Buy Now Instant Checkout Button -->
+          <button type="button" class="zv-btn-buynow" id="zv-buynow-button" onclick="buyNow()"{% unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>
+            BUY IT NOW
           </button>
         </form>
 
@@ -826,20 +826,27 @@
     opacity: 0.6;
   }
 
-  .zv-btn-cod {
+  .zv-btn-buynow {
     width: 100%;
-    height: 38px;
-    background: #f8faf9;
-    color: #2d3b31;
-    border: 1.5px solid #2d3b31;
+    height: 42px;
+    background: #141a15;
+    color: #ffffff;
+    border: none;
     border-radius: 6px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 800;
     cursor: pointer;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   }
-  .zv-btn-cod:hover {
-    background: #2d3b31;
-    color: #ffffff;
+  .zv-btn-buynow:hover {
+    background: #000000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
   }
 
   /* Trust Grid (Compact 2x2 Inline) */
@@ -1306,6 +1313,7 @@
         if (btnPrice) btnPrice.textContent = currencySymbol + (qty * basePrice).toFixed(2);
 
         const atcBtn = document.getElementById('zv-atc-button');
+        const buyNowBtn = document.getElementById('zv-buynow-button');
         if (atcBtn) {
           const atcLabel = atcBtn.querySelector('.zv-atc-label');
           if (!matchedVariant.available) {
@@ -1313,11 +1321,21 @@
             if (atcLabel) atcLabel.textContent = 'SOLD OUT';
             atcBtn.style.opacity = '0.6';
             atcBtn.style.cursor = 'not-allowed';
+            if (buyNowBtn) {
+              buyNowBtn.disabled = true;
+              buyNowBtn.style.opacity = '0.5';
+              buyNowBtn.style.cursor = 'not-allowed';
+            }
           } else {
             atcBtn.disabled = false;
             if (atcLabel) atcLabel.textContent = 'ADD TO CART';
             atcBtn.style.opacity = '1';
             atcBtn.style.cursor = 'pointer';
+            if (buyNowBtn) {
+              buyNowBtn.disabled = false;
+              buyNowBtn.style.opacity = '1';
+              buyNowBtn.style.cursor = 'pointer';
+            }
           }
         }
 
@@ -1362,12 +1380,13 @@
     if (stickyPrice) stickyPrice.textContent = formatted;
   }
 
-  function expressCheckout() {
+  function buyNow() {
     const variantId = document.getElementById('zv-variant-id-input').value;
     const qtyInput = document.getElementById('zv-cart-quantity');
     const qty = qtyInput ? qtyInput.value : 1;
     window.location.href = `/cart/${variantId}:${qty}`;
   }
+  const expressCheckout = buyNow;
 
   /* Live Viewers Fluctuation */
   function initLiveViewers() {
