@@ -173,7 +173,11 @@
     },
     "press": {
       "type": "zadavibe-press-bar",
-      "settings": {}
+      "settings": {
+        "heading": "AS FEATURED IN GLOBAL MENSWEAR MEDIA",
+        "bg_color": "#f8f6f2",
+        "text_color": "#1a1d1b"
+      }
     },
     "benefits": {
       "type": "zadavibe-benefits",
@@ -414,11 +418,11 @@
   "order": [
     "hero",
     "ticker",
+    "press",
     "featured_collection",
     "ugc",
     "video_showcase",
     "callout",
-    "press",
     "benefits",
     "stats",
     "reviews",
