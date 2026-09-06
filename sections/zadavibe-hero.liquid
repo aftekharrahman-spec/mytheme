@@ -25,15 +25,24 @@
           {%- endfor -%}
         </div>
 
-        <div>
+        <div class="zv-hero-cta-group">
           <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="zv-btn-primary">
             {{ section.settings.button_label }}
           </a>
+          <div class="zv-hero-social-proof">
+            <div class="zv-hero-stars">★★★★★</div>
+            <span class="zv-hero-proof-text">Rated <strong>4.9/5</strong> by 2,400+ Gentlemen</span>
+          </div>
         </div>
       </div>
 
       <div class="zv-hero-media-wrapper">
         <div class="zv-hero-image-card">
+          <div class="zv-hero-badge-top">
+            <span>🔥</span>
+            <span>AUTUMN DROP • LIMITED EDITION</span>
+          </div>
+
           {%- if section.settings.image != blank -%}
             {{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'eager', alt: 'Zadavibe Hero' }}
           {%- else -%}

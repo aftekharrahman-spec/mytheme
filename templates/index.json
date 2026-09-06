@@ -54,6 +54,25 @@
         "text_color": "#ffffff"
       }
     },
+    "featured_collection": {
+      "type": "zadavibe-featured-collection",
+      "settings": {
+        "eyebrow": "CURATED ESSENTIALS • AUTUMN / SPRING DROP",
+        "heading": "Trending Menswear Drops",
+        "subheading": "Engineered with breathable organic micro-ribbed knit, athletic tailoring, and vintage bohemian cords.",
+        "products_to_show": 8,
+        "all_products_url": "/collections/all",
+        "button_label": "EXPLORE ALL PRODUCTS"
+      }
+    },
+    "video_showcase": {
+      "type": "zadavibe-video-showcase",
+      "settings": {
+        "eyebrow": "CRAFTSMANSHIP IN MOTION",
+        "heading": "Engineered For The Modern Gentleman",
+        "subheading": "Watch how our signature ribbed organic knit is woven, dyed, and tailored for effortless daily confidence."
+      }
+    },
     "ugc": {
       "type": "zadavibe-video-ugc",
       "blocks": {
@@ -373,7 +392,9 @@
   "order": [
     "hero",
     "ticker",
+    "featured_collection",
     "ugc",
+    "video_showcase",
     "callout",
     "press",
     "benefits",

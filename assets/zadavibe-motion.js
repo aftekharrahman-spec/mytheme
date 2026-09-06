@@ -18,7 +18,7 @@
   /* 1. Scroll-Triggered Reveal Animations */
   function initScrollReveal() {
     const revealElements = document.querySelectorAll(
-      '.zv-ugc-card, .zv-callout-card, .zv-benefit-item, .zv-stat-card, .zv-dark-card, .zv-feed-item, .zv-step-card, .zv-comparison-wrapper, .zv-faq-item'
+      '.zv-ugc-card, .zv-callout-card, .zv-benefit-item, .zv-stat-card, .zv-dark-card, .zv-feed-item, .zv-step-card, .zv-comparison-wrapper, .zv-faq-item, .zv-fp-card, .zv-vf-card'
     );
 
     if (!revealElements.length) return;
