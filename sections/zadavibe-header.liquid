@@ -3,63 +3,113 @@
 <header class="zv-header-wrapper" id="zv-main-header">
   <div class="zv-container">
     <div class="zv-header-inner">
-      <!-- Mobile Hamburger -->
-      <div class="zv-header-mobile-toggle" onclick="toggleMobileNav()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <!-- Mobile Hamburger Toggle -->
+      <button
+        type="button"
+        class="zv-header-mobile-toggle"
+        onclick="toggleMobileNav()"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="zv-burger-line"></span>
+        <span class="zv-burger-line"></span>
+        <span class="zv-burger-line"></span>
+      </button>
 
-      <!-- Left Nav (Desktop) -->
-      <nav class="zv-header-nav">
+      <!-- Left Navigation (Desktop) -->
+      <nav class="zv-header-nav" aria-label="Main Navigation">
         <ul class="zv-nav-list">
-          {%- if section.settings.menu != blank -%}
+          {%- if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 -%}
             {%- for link in linklists[section.settings.menu].links -%}
               <li class="zv-nav-item">
-                <a href="{{ link.url }}" class="zv-nav-link {% if link.active %}active{% endif %}">
-                  {{ link.title }}
+                <a href="{{ link.url }}" class="zv-nav-link{% if link.active %} active{% endif %}">
+                  <span>{{ link.title }}</span>
+                  {%- if link.title contains 'New' or link.title contains 'Drop' or link.title contains 'Hot' -%}
+                    <span class="zv-nav-badge-hot">HOT</span>
+                  {%- endif -%}
                 </a>
               </li>
             {%- endfor -%}
           {%- else -%}
-            <li class="zv-nav-item"><a href="/collections/all" class="zv-nav-link">Shop All</a></li>
-            <li class="zv-nav-item"><a href="/collections/all" class="zv-nav-link">New Arrivals</a></li>
-            <li class="zv-nav-item"><a href="/products" class="zv-nav-link">Signature Henley</a></li>
-            <li class="zv-nav-item"><a href="/pages/contact" class="zv-nav-link">Our Story</a></li>
+            <li class="zv-nav-item">
+              <a href="/collections/all" class="zv-nav-link active"><span>Shop All</span></a>
+            </li>
+            <li class="zv-nav-item">
+              <a href="/collections/all" class="zv-nav-link">
+                <span>New Drops</span>
+                <span class="zv-nav-badge-hot">HOT</span>
+              </a>
+            </li>
+            <li class="zv-nav-item">
+              <a href="/products" class="zv-nav-link"><span>Signature Henley</span></a>
+            </li>
+            <li class="zv-nav-item">
+              <a href="/collections/all" class="zv-nav-link"><span>Knitwear</span></a>
+            </li>
+            <li class="zv-nav-item">
+              <a href="/pages/contact" class="zv-nav-link"><span>Track Order</span></a>
+            </li>
           {%- endif -%}
         </ul>
       </nav>
 
       <!-- Center Brand Logo -->
       <div class="zv-header-logo">
-        <a href="/" class="zv-logo-link">
+        <a href="/" class="zv-logo-link" aria-label="{{ shop.name }}">
           {%- if section.settings.logo != blank -%}
-            {{ section.settings.logo | image_url: width: 220 | image_tag: alt: shop.name }}
+            {{ section.settings.logo | image_url: width: 240 | image_tag: alt: shop.name, class: 'zv-logo-img' }}
           {%- else -%}
-            <span class="zv-logo-text">ZADAVIBE</span>
-            <span class="zv-logo-sub">STUDIO</span>
+            <div class="zv-logo-wrap">
+              <span class="zv-logo-emblem">◈</span>
+              <span class="zv-logo-text">ZADAVIBE</span>
+              <span class="zv-logo-sub">DUBAI</span>
+            </div>
           {%- endif -%}
         </a>
       </div>
 
-      <!-- Right Actions (Search, Account, Cart) -->
+      <!-- Right Actions (Region, Search, Account, Cart) -->
       <div class="zv-header-actions">
-        <a href="/search" class="zv-action-icon" aria-label="Search" title="Search">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- UAE Currency & Region Pill -->
+        <div class="zv-region-pill" title="Shopping in UAE (AED)">
+          <span class="zv-flag-icon">🇦🇪</span>
+          <span class="zv-region-text">AED</span>
+        </div>
+
+        <!-- Search Trigger -->
+        <button
+          type="button"
+          class="zv-action-icon"
+          onclick="openSearchModal()"
+          aria-label="Search products"
+          title="Search"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-        </a>
+        </button>
 
-        <a href="/account" class="zv-action-icon zv-hide-mobile" aria-label="Account" title="Account">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Account (Desktop Only) -->
+        <a
+          href="/account"
+          class="zv-action-icon zv-hide-mobile"
+          aria-label="My Account"
+          title="My Account"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
         </a>
 
-        <a href="/cart" class="zv-action-icon zv-cart-trigger" aria-label="Cart" title="Cart">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Cart Trigger -->
+        <a
+          href="/cart"
+          class="zv-action-icon zv-cart-trigger"
+          aria-label="Cart"
+          title="Cart"
+        >
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -71,46 +121,149 @@
   </div>
 </header>
 
+<!-- Full-Featured Search Modal Overlay -->
+<div class="zv-search-modal" id="zv-search-modal">
+  <div class="zv-search-backdrop" onclick="closeSearchModal()"></div>
+  <div class="zv-search-box">
+    <div class="zv-search-top">
+      <div class="zv-search-form-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <form action="/search" method="get" role="search" class="zv-search-form">
+          <input
+            type="search"
+            name="q"
+            id="zv-search-input"
+            placeholder="Search mens knits, henleys, linen tunics..."
+            autocomplete="off"
+            class="zv-search-input"
+          >
+        </form>
+      </div>
+      <button type="button" class="zv-search-close-btn" onclick="closeSearchModal()" aria-label="Close search">✕</button>
+    </div>
+
+    <div class="zv-search-suggestions">
+      <span class="zv-search-sug-title">TRENDING SEARCHES:</span>
+      <div class="zv-search-chips">
+        <a href="/search?q=Henley" class="zv-search-chip">👔 Vintage Henley</a>
+        <a href="/search?q=Ribbed" class="zv-search-chip">🧶 Ribbed Knit</a>
+        <a href="/search?q=Lace-Up" class="zv-search-chip">✨ Lace-Up Collar</a>
+        <a href="/search?q=Olive" class="zv-search-chip">🌿 Olive Green</a>
+        <a href="/collections/all" class="zv-search-chip">🔥 Autumn Drop</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Mobile Navigation Drawer -->
 <div class="zv-mobile-drawer" id="zv-mobile-drawer">
   <div class="zv-drawer-backdrop" onclick="toggleMobileNav()"></div>
   <div class="zv-drawer-content">
     <div class="zv-drawer-header">
-      <span class="zv-logo-text" style="font-size: 1.4rem;">ZADAVIBE</span>
-      <button type="button" class="zv-drawer-close" onclick="toggleMobileNav()">&times;</button>
+      <div class="zv-drawer-logo">
+        <span class="zv-logo-emblem" style="font-size: 1.1rem; color: #c07a50;">◈</span>
+        <span class="zv-logo-text" style="font-size: 1.45rem;">ZADAVIBE</span>
+      </div>
+      <button type="button" class="zv-drawer-close" onclick="toggleMobileNav()" aria-label="Close menu">&times;</button>
     </div>
+
+    <!-- UAE Delivery Notice inside Drawer -->
+    <div class="zv-drawer-uae-badge">
+      <span class="zv-flag-icon">🇦🇪</span>
+      <span>Express UAE Delivery • 100% Secure Checkout</span>
+    </div>
+
     <ul class="zv-mobile-nav-list">
-      <li><a href="/collections/all">Shop All Collections</a></li>
-      <li><a href="/collections/all">New Arrivals</a></li>
-      <li><a href="/products">Signature Ribbed Henley</a></li>
-      <li><a href="/pages/contact">Track Order</a></li>
-      <li><a href="/pages/contact">Contact & FAQ</a></li>
+      <li>
+        <a href="/collections/all" class="zv-drawer-link">
+          <span class="zv-drawer-icon">👔</span>
+          <span>Shop All Collections</span>
+        </a>
+      </li>
+      <li>
+        <a href="/collections/all" class="zv-drawer-link">
+          <span class="zv-drawer-icon">🔥</span>
+          <span>New Autumn Drops</span>
+          <span class="zv-nav-badge-hot">HOT</span>
+        </a>
+      </li>
+      <li>
+        <a href="/products" class="zv-drawer-link">
+          <span class="zv-drawer-icon">👕</span>
+          <span>Signature Lace-Up Henley</span>
+        </a>
+      </li>
+      <li>
+        <a href="/collections/all" class="zv-drawer-link">
+          <span class="zv-drawer-icon">🧶</span>
+          <span>Ribbed Knits & Tunics</span>
+        </a>
+      </li>
+      <li>
+        <a href="/pages/contact" class="zv-drawer-link">
+          <span class="zv-drawer-icon">📦</span>
+          <span>Track Your Order</span>
+        </a>
+      </li>
+      <li>
+        <a href="/pages/contact" class="zv-drawer-link">
+          <span class="zv-drawer-icon">💬</span>
+          <span>Contact & WhatsApp Support</span>
+        </a>
+      </li>
     </ul>
+
     <div class="zv-drawer-footer">
-      <a href="/account" class="zv-btn-primary" style="width: 100%; padding: 12px; font-size: 0.9rem;">Sign In / Account</a>
+      <a href="/collections/all" class="zv-btn-primary zv-drawer-cta">
+        EXPLORE MENSWEAR DROP →
+      </a>
+      <div class="zv-drawer-account-link">
+        <a href="/account">Sign In / Register Account</a>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
+  /* ==========================================================================
+     Header Main Wrapper & Ultra-Modern Glassmorphism
+     ========================================================================== */
   .zv-header-wrapper {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--zv-border);
-    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(226, 221, 211, 0.6);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Scrolled State (Micro-shrink for maximum viewport breathing room) */
+  .zv-header-wrapper.zv-header-scrolled {
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 10px 30px rgba(45, 59, 49, 0.08);
+    border-bottom-color: rgba(210, 203, 190, 0.8);
+  }
+
+  .zv-header-wrapper.zv-header-scrolled .zv-header-inner {
+    height: 64px;
   }
 
   .zv-header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 74px;
+    height: 76px;
+    transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* ==========================================================================
+     Desktop Navigation Links
+     ========================================================================== */
   .zv-header-nav {
     flex: 1;
     display: flex;
@@ -122,31 +275,44 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    gap: 28px;
+    gap: 24px;
   }
 
   .zv-nav-link {
-    font-family: var(--zv-font-body);
-    font-weight: 600;
-    font-size: 0.92rem;
-    color: var(--zv-text);
+    font-family: var(--zv-font-body, 'Plus Jakarta Sans', sans-serif);
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--zv-text, #1a1e1b);
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     position: relative;
-    padding: 6px 0;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     transition: color 0.2s ease;
+  }
+
+  .zv-nav-link span {
+    position: relative;
   }
 
   .zv-nav-link::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 2px;
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--zv-primary);
-    transition: width 0.25s ease;
+    background: linear-gradient(90deg, #c07a50 0%, #2d3b31 100%);
+    border-radius: 2px;
+    transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .zv-nav-link:hover,
+  .zv-nav-link.active {
+    color: #2d3b31;
   }
 
   .zv-nav-link:hover::after,
@@ -154,106 +320,344 @@
     width: 100%;
   }
 
+  .zv-nav-badge-hot {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+    animation: zvHotPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes zvHotPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* ==========================================================================
+     Brand Logo & Monogram
+     ========================================================================== */
   .zv-header-logo {
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .zv-logo-link {
     text-decoration: none;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.2s ease;
+  }
+
+  .zv-logo-link:hover {
+    opacity: 0.9;
+  }
+
+  .zv-logo-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
+  .zv-logo-emblem {
+    font-size: 0.95rem;
+    color: var(--zv-accent, #c07a50);
+    line-height: 1;
+    margin-bottom: 2px;
+    transition: transform 0.3s ease;
+  }
+
+  .zv-logo-link:hover .zv-logo-emblem {
+    transform: rotate(45deg);
+  }
+
   .zv-logo-text {
-    font-family: var(--zv-font-heading);
+    font-family: var(--zv-font-heading, 'Outfit', sans-serif);
     font-size: 1.85rem;
     font-weight: 800;
     letter-spacing: 0.22em;
-    color: var(--zv-primary);
+    color: var(--zv-primary, #2d3b31);
     line-height: 1;
   }
 
   .zv-logo-sub {
-    font-size: 0.62rem;
+    font-size: 0.64rem;
     letter-spacing: 0.38em;
-    color: var(--zv-accent);
+    color: var(--zv-accent, #c07a50);
     font-weight: 800;
-    margin-top: 2px;
+    margin-top: 3px;
   }
 
+  .zv-logo-img {
+    height: auto;
+    max-height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* ==========================================================================
+     Header Right Actions
+     ========================================================================== */
   .zv-header-actions {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 18px;
+    gap: 12px;
+  }
+
+  /* UAE Currency Pill */
+  .zv-region-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(45, 59, 49, 0.06);
+    border: 1px solid rgba(45, 59, 49, 0.12);
+    border-radius: 999px;
+    padding: 5px 11px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--zv-primary, #2d3b31);
+    cursor: default;
+    user-select: none;
+    transition: all 0.2s ease;
+  }
+
+  .zv-region-pill:hover {
+    background: rgba(45, 59, 49, 0.1);
+  }
+
+  .zv-flag-icon {
+    font-size: 0.95rem;
+    line-height: 1;
   }
 
   .zv-action-icon {
-    color: var(--zv-text);
+    color: var(--zv-text, #1a1e1b);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     text-decoration: none;
     position: relative;
-    transition: background 0.2s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
 
   .zv-action-icon:hover {
-    background: var(--zv-bg-soft);
+    background: rgba(45, 59, 49, 0.07);
+    color: var(--zv-primary, #2d3b31);
+    transform: translateY(-1px);
   }
 
   .zv-cart-count {
     position: absolute;
-    top: 4px;
-    right: 4px;
-    background: var(--zv-primary);
+    top: 3px;
+    right: 3px;
+    background: var(--zv-accent, #c07a50);
     color: #ffffff;
-    font-size: 0.7rem;
-    font-weight: 700;
-    width: 18px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    min-width: 18px;
     height: 18px;
-    border-radius: 50%;
+    padding: 0 4px;
+    border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 6px rgba(192, 122, 80, 0.4);
+    border: 1.5px solid #ffffff;
+    animation: zvCartPulse 0.4s ease-out;
   }
 
+  @keyframes zvCartPulse {
+    0% { transform: scale(0.6); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  /* Hamburger Toggle */
   .zv-header-mobile-toggle {
     display: none;
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
-    padding: 6px;
+    background: none;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
   }
 
-  .zv-header-mobile-toggle span {
+  .zv-burger-line {
     width: 22px;
-    height: 2px;
-    background: var(--zv-text);
+    height: 2.2px;
+    background: var(--zv-text, #1a1e1b);
     border-radius: 2px;
+    transition: all 0.25s ease;
   }
 
-  /* Mobile Drawer */
+  /* ==========================================================================
+     Interactive Search Modal
+     ========================================================================== */
+  .zv-search-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 80px;
+  }
+
+  .zv-search-modal.active {
+    display: flex;
+  }
+
+  .zv-search-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 15, 12, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .zv-search-box {
+    position: relative;
+    width: 90%;
+    max-width: 640px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    z-index: 2;
+    animation: zvModalSlide 0.25s ease-out;
+  }
+
+  @keyframes zvModalSlide {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .zv-search-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid #2d3b31;
+    padding-bottom: 12px;
+  }
+
+  .zv-search-form-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    color: #64748b;
+  }
+
+  .zv-search-form {
+    flex: 1;
+  }
+
+  .zv-search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: var(--zv-font-body, 'Plus Jakarta Sans', sans-serif);
+    font-size: 1.1rem;
+    color: #1a1e1b;
+    font-weight: 600;
+    background: transparent;
+  }
+
+  .zv-search-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #64748b;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.15s ease;
+  }
+
+  .zv-search-close-btn:hover {
+    color: #000000;
+  }
+
+  .zv-search-suggestions {
+    margin-top: 18px;
+  }
+
+  .zv-search-sug-title {
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .zv-search-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .zv-search-chip {
+    background: #f4f6f4;
+    border: 1px solid #e2e8e4;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2d3b31;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .zv-search-chip:hover {
+    background: #2d3b31;
+    color: #ffffff;
+    border-color: #2d3b31;
+  }
+
+  /* ==========================================================================
+     Mobile Drawer (Off-Canvas)
+     ========================================================================== */
   .zv-mobile-drawer {
     position: fixed;
     inset: 0;
-    z-index: 2000;
-    display: none;
+    z-index: 2200;
+    visibility: hidden;
+    transition: visibility 0.3s ease;
   }
 
   .zv-mobile-drawer.open {
-    display: block;
+    visibility: visible;
   }
 
   .zv-drawer-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(10, 15, 12, 0.6);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .zv-mobile-drawer.open .zv-drawer-backdrop {
+    opacity: 1;
   }
 
   .zv-drawer-content {
@@ -262,67 +666,145 @@
     left: 0;
     bottom: 0;
     width: 320px;
-    max-width: 85%;
+    max-width: 86vw;
     background: #ffffff;
-    box-shadow: var(--zv-shadow-lg);
+    box-shadow: 10px 0 40px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 22px;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+    overflow-y: auto;
+  }
+
+  .zv-mobile-drawer.open .zv-drawer-content {
+    transform: translateX(0);
   }
 
   .zv-drawer-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--zv-border);
+    padding-bottom: 16px;
+    border-bottom: 1px solid #edf1ee;
+  }
+
+  .zv-drawer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .zv-drawer-close {
-    background: none;
+    background: #f3f4f6;
     border: none;
-    font-size: 2rem;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1.5rem;
     line-height: 1;
     cursor: pointer;
-    color: var(--zv-text);
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .zv-drawer-uae-badge {
+    margin-top: 14px;
+    padding: 8px 12px;
+    background: #f8faf9;
+    border: 1px solid #e2e8e4;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #2d3b31;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .zv-mobile-nav-list {
     list-style: none;
-    padding: 20px 0;
+    padding: 16px 0;
     margin: 0;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
-  .zv-mobile-nav-list li {
-    margin-bottom: 16px;
-  }
-
-  .zv-mobile-nav-list a {
-    font-family: var(--zv-font-heading);
-    font-size: 1.15rem;
+  .zv-drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+    border-radius: 8px;
+    font-family: var(--zv-font-heading, 'Outfit', sans-serif);
+    font-size: 1.05rem;
     font-weight: 700;
-    color: var(--zv-text);
+    color: var(--zv-text, #1a1e1b);
     text-decoration: none;
+    transition: background 0.15s ease;
   }
 
-  @media (max-width: 860px) {
-    .zv-header-wrapper {
-      position: sticky;
-      top: 0;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
+  .zv-drawer-link:hover,
+  .zv-drawer-link:active {
+    background: #f4f6f4;
+    color: var(--zv-primary, #2d3b31);
+  }
 
+  .zv-drawer-icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+  }
+
+  .zv-drawer-footer {
+    padding-top: 16px;
+    border-top: 1px solid #edf1ee;
+  }
+
+  .zv-drawer-cta {
+    width: 100%;
+    padding: 14px;
+    font-size: 0.92rem;
+    text-align: center;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .zv-drawer-account-link {
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  .zv-drawer-account-link a {
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  /* ==========================================================================
+     Mobile Responsive Tweaks (Screen <= 860px)
+     ========================================================================== */
+  @media (max-width: 860px) {
     .zv-header-inner {
       display: grid;
-      grid-template-columns: 76px 1fr 76px;
+      grid-template-columns: 48px 1fr 100px;
       align-items: center;
-      height: 62px;
+      height: 60px;
       padding: 0;
       width: 100%;
       box-sizing: border-box;
+    }
+
+    .zv-header-wrapper.zv-header-scrolled .zv-header-inner {
+      height: 54px;
     }
 
     .zv-header-nav,
@@ -334,8 +816,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       justify-self: start;
     }
 
@@ -345,13 +827,16 @@
       align-items: center;
       justify-content: center;
       justify-self: center;
-      overflow: hidden;
       width: 100%;
     }
 
+    .zv-logo-emblem {
+      font-size: 0.85rem;
+    }
+
     .zv-logo-text {
-      font-size: clamp(1.15rem, 4.6vw, 1.38rem);
-      letter-spacing: 0.14em;
+      font-size: clamp(1.2rem, 4.8vw, 1.45rem);
+      letter-spacing: 0.16em;
       white-space: nowrap;
     }
 
@@ -365,20 +850,36 @@
       align-items: center;
       justify-content: flex-end;
       justify-self: end;
-      gap: 2px;
+      gap: 4px;
+    }
+
+    .zv-region-pill {
+      display: none; /* Keep mobile header clean and uncluttered */
     }
 
     .zv-action-icon {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
     }
 
     .zv-cart-count {
-      top: 2px;
-      right: 2px;
+      top: 3px;
+      right: 3px;
       width: 17px;
       height: 17px;
-      font-size: 0.65rem;
+      font-size: 0.64rem;
+    }
+
+    .zv-search-modal {
+      padding-top: 60px;
+    }
+
+    .zv-search-box {
+      padding: 18px 16px;
+    }
+
+    .zv-search-input {
+      font-size: 1rem;
     }
   }
 </style>
@@ -388,8 +889,49 @@
     const drawer = document.getElementById('zv-mobile-drawer');
     if (drawer) {
       drawer.classList.toggle('open');
+      document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
     }
   }
+
+  function openSearchModal() {
+    const modal = document.getElementById('zv-search-modal');
+    if (modal) {
+      modal.classList.add('active');
+      const input = document.getElementById('zv-search-input');
+      if (input) setTimeout(() => input.focus(), 100);
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeSearchModal() {
+    const modal = document.getElementById('zv-search-modal');
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Keyboard navigation support
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeSearchModal();
+      const drawer = document.getElementById('zv-mobile-drawer');
+      if (drawer && drawer.classList.contains('open')) {
+        toggleMobileNav();
+      }
+    }
+  });
+
+  // Smooth Scroll-Shrink Header Elevation
+  window.addEventListener('scroll', function() {
+    const header = document.getElementById('zv-main-header');
+    if (!header) return;
+    if (window.scrollY > 25) {
+      header.classList.add('zv-header-scrolled');
+    } else {
+      header.classList.remove('zv-header-scrolled');
+    }
+  }, { passive: true });
 </script>
 
 {% schema %}
