@@ -19,7 +19,7 @@
             <span>You've unlocked <strong>FREE EXPRESS UAE DELIVERY</strong> on this order!</span>
           {%- else -%}
             <span class="zv-meter-icon">🚚</span>
-            <span>Add <strong>{{ remaining_amount | money }}</strong> more to unlock <strong>FREE EXPRESS UAE DELIVERY</strong>!</span>
+            <span>Add <strong>AED {{ remaining_amount | money_without_currency }}</strong> more to unlock <strong>FREE EXPRESS UAE DELIVERY</strong>!</span>
           {%- endif -%}
         </div>
         <div class="zv-shipping-meter-bar">
@@ -68,11 +68,11 @@
 
                       <div class="zv-cart-item-price-col">
                         <div class="zv-cart-item-total-price">
-                          {{ item.final_line_price | money }}
+                          AED {{ item.final_line_price | money_without_currency }}
                         </div>
                         {%- if item.original_line_price > item.final_line_price -%}
                           <div class="zv-cart-item-original-price">
-                            {{ item.original_line_price | money }}
+                            AED {{ item.original_line_price | money_without_currency }}
                           </div>
                         {%- endif -%}
                       </div>
@@ -124,7 +124,7 @@
             <div class="zv-summary-rows">
               <div class="zv-summary-row">
                 <span>Subtotal</span>
-                <span class="zv-summary-val">{{ cart.total_price | money }}</span>
+                <span class="zv-summary-val">AED {{ cart.total_price | money_without_currency }}</span>
               </div>
 
               <div class="zv-summary-row">
@@ -147,7 +147,7 @@
 
               <div class="zv-summary-total-row">
                 <span>Estimated Total</span>
-                <span class="zv-summary-total-price">{{ cart.total_price | money }}</span>
+                <span class="zv-summary-total-price">AED {{ cart.total_price | money_without_currency }}</span>
               </div>
             </div>
 

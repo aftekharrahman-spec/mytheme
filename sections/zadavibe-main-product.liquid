@@ -117,18 +117,18 @@
         <div class="zv-pricing-row">
           <span class="zv-price-current" id="zv-display-price">
             {%- if product.selected_or_first_available_variant.price -%}
-              {{ product.selected_or_first_available_variant.price | money }}
+              AED {{ product.selected_or_first_available_variant.price | money_without_currency }}
             {%- elsif product.price -%}
-              {{ product.price | money }}
+              AED {{ product.price | money_without_currency }}
             {%- else -%}
               AED 149.00
             {%- endif -%}
           </span>
           <span class="zv-price-compare" id="zv-display-compare">
             {%- if product.selected_or_first_available_variant.compare_at_price -%}
-              {{ product.selected_or_first_available_variant.compare_at_price | money }}
+              AED {{ product.selected_or_first_available_variant.compare_at_price | money_without_currency }}
             {%- elsif product.compare_at_price -%}
-              {{ product.compare_at_price | money }}
+              AED {{ product.compare_at_price | money_without_currency }}
             {%- else -%}
               AED 249.00
             {%- endif -%}
@@ -208,9 +208,9 @@
               <span class="zv-atc-sep">•</span>
               <span id="zv-btn-price" class="zv-atc-val">
                 {%- if product.selected_or_first_available_variant.price -%}
-                  {{ product.selected_or_first_available_variant.price | money }}
+                  AED {{ product.selected_or_first_available_variant.price | money_without_currency }}
                 {%- elsif product.price -%}
-                  {{ product.price | money }}
+                  AED {{ product.price | money_without_currency }}
                 {%- else -%}
                   AED 149.00
                 {%- endif -%}
@@ -363,9 +363,9 @@
       <div class="zv-sticky-meta">
         <span class="zv-sticky-price" id="zv-sticky-price-text">
           {%- if product.selected_or_first_available_variant.price -%}
-            {{ product.selected_or_first_available_variant.price | money }}
+            AED {{ product.selected_or_first_available_variant.price | money_without_currency }}
           {%- elsif product.price -%}
-            {{ product.price | money }}
+            AED {{ product.price | money_without_currency }}
           {%- else -%}
             AED 149.00
           {%- endif -%}

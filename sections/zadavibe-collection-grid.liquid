@@ -42,9 +42,9 @@
               <div class="zv-card-stars">★★★★★ <span style="font-size: 0.78rem; color: #888;">(4.9)</span></div>
               <h3 class="zv-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
               <div class="zv-card-prices">
-                <span class="zv-price-now">{{ product.price | money }}</span>
+                <span class="zv-price-now">AED {{ product.price | money_without_currency }}</span>
                 {%- if product.compare_at_price > product.price -%}
-                  <span class="zv-price-was">{{ product.compare_at_price | money }}</span>
+                  <span class="zv-price-was">AED {{ product.compare_at_price | money_without_currency }}</span>
                 {%- endif -%}
               </div>
             </div>
