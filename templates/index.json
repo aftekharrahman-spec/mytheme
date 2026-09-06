@@ -180,14 +180,6 @@
         "button_link": "shopify://collections/all"
       }
     },
-    "press": {
-      "type": "zadavibe-press-bar",
-      "settings": {
-        "heading": "AS FEATURED IN GLOBAL MENSWEAR MEDIA",
-        "bg_color": "#f8f6f2",
-        "text_color": "#1a1d1b"
-      }
-    },
     "benefits": {
       "type": "zadavibe-benefits",
       "blocks": {
