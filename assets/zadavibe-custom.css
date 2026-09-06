@@ -1580,6 +1580,22 @@ html, body {
     max-width: 100% !important;
     box-sizing: border-box !important;
   }
+
+  .zv-ugc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    margin-top: 24px !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .zv-ugc-card {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 280px !important;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1781,21 +1797,61 @@ html, body {
     line-height: 1.35;
   }
 
-  /* UGC Horizontal Scroll edge-to-edge */
-  .zv-ugc-grid {
-    margin: 0 -16px;
-    padding: 0 16px 12px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  /* UGC Section: Perfect 2-Column Responsive Grid on Mobile (Zero Right Overflow) */
+  .zv-ugc-section {
+    padding: 44px 0 !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  .zv-ugc-grid::-webkit-scrollbar {
-    display: none;
+  .zv-ugc-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    margin: 24px 0 0 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .zv-ugc-card {
-    min-width: 230px !important;
-    height: 320px;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 270px !important;
+    border-radius: var(--zv-radius-md) !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .zv-ugc-overlay {
+    padding: 12px 10px !important;
+  }
+
+  .zv-ugc-play-icon {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .zv-ugc-play-icon svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .zv-ugc-reviewer {
+    font-size: 0.86rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 2px !important;
+  }
+
+  .zv-ugc-tag {
+    font-size: 0.74rem !important;
+    line-height: 1.28 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   /* Review Strip edge-to-edge */
