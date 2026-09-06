@@ -41,12 +41,12 @@
 
         <div class="zv-price-row">
           <span class="zv-price-current" id="zv-display-price">
-            {%- if product.price -%}{{ product.price | money }}{%- else -%}$39.99{%- endif -%}
+            {%- if product.price -%}{{ product.price | money }}{%- else -%}AED 149.00{%- endif -%}
           </span>
           <span class="zv-price-compare" id="zv-display-compare">
-            {%- if product.compare_at_price -%}{{ product.compare_at_price | money }}{%- else -%}$65.00{%- endif -%}
+            {%- if product.compare_at_price -%}{{ product.compare_at_price | money }}{%- else -%}AED 249.00{%- endif -%}
           </span>
-          <span class="zv-sale-pill">SAVE 38% OFF</span>
+          <span class="zv-sale-pill">SAVE 40% OFF</span>
         </div>
 
         <ul class="zv-product-bullets">
@@ -84,7 +84,7 @@
           
           <div class="zv-buy-actions">
             <button type="submit" class="zv-btn-primary zv-btn-atc">
-              <span>ADD TO CART</span> • <span id="zv-btn-price">{%- if product.price -%}{{ product.price | money }}{%- else -%}$39.99{%- endif -%}</span>
+              <span>ADD TO CART</span> • <span id="zv-btn-price">{%- if product.price -%}{{ product.price | money }}{%- else -%}AED 149.00{%- endif -%}</span>
             </button>
             <button type="button" class="zv-btn-buynow" onclick="window.location.href='/checkout'">
               BUY IT NOW (EXPRESS CHECKOUT)
@@ -96,15 +96,15 @@
         <div class="zv-trust-badges">
           <div class="zv-trust-badge-item">
             <div class="zv-trust-badge-icon">✈️</div>
-            <div class="zv-trust-badge-text">Free Worldwide Express Delivery</div>
+            <div class="zv-trust-badge-text">Express Delivery Across UAE</div>
           </div>
           <div class="zv-trust-badge-item">
             <div class="zv-trust-badge-icon">🔄</div>
-            <div class="zv-trust-badge-text">30-Day Risk-Free Returns & Swaps</div>
+            <div class="zv-trust-badge-text">30-Day Hassle-Free Returns & Swaps</div>
           </div>
           <div class="zv-trust-badge-item">
             <div class="zv-trust-badge-icon">🔒</div>
-            <div class="zv-trust-badge-text">100% Encrypted Safe Checkout</div>
+            <div class="zv-trust-badge-text">100% Encrypted Safe Checkout & COD</div>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@
     </div>
     <div>
       <div class="zv-sticky-title">Zadavibe Signature Henley</div>
-      <div class="zv-sticky-price" id="zv-sticky-price-text">{%- if product.price -%}{{ product.price | money }}{%- else -%}$39.99{%- endif -%}</div>
+      <div class="zv-sticky-price" id="zv-sticky-price-text">{%- if product.price -%}{{ product.price | money }}{%- else -%}AED 149.00{%- endif -%}</div>
     </div>
   </div>
   <div>
@@ -131,7 +131,8 @@
 </div>
 
 <script>
-  const basePrice = {%- if product.price -%}{{ product.price | divided_by: 100.0 }}{%- else -%}39.99{%- endif -%};
+  const currencyPrefix = 'AED ';
+  const basePrice = {%- if product.price -%}{{ product.price | divided_by: 100.0 }}{%- else -%}149.00{%- endif -%};
 
   function switchMainImage(src, el) {
     const mainImg = document.getElementById('zv-main-img');
@@ -154,10 +155,11 @@
     input.value = qty;
 
     const totalPrice = (qty * basePrice).toFixed(2);
+    const formatted = currencyPrefix + totalPrice;
     const btnPrice = document.getElementById('zv-btn-price');
     const stickyPrice = document.getElementById('zv-sticky-price-text');
-    if (btnPrice) btnPrice.textContent = '$' + totalPrice;
-    if (stickyPrice) stickyPrice.textContent = '$' + totalPrice;
+    if (btnPrice) btnPrice.textContent = formatted;
+    if (stickyPrice) stickyPrice.textContent = formatted;
   }
 
   // Dynamic Real-Time Live Viewers Fluctuation
