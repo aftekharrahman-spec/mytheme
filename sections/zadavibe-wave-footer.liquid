@@ -6,11 +6,19 @@
         <defs>
           <path id="zv-river-curve" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
         </defs>
-        <g class="zv-river-parallax">
-          <use xlink:href="#zv-river-curve" x="48" y="0" class="zv-wave-layer zv-wave-1" />
-          <use xlink:href="#zv-river-curve" x="48" y="3" class="zv-wave-layer zv-wave-2" />
-          <use xlink:href="#zv-river-curve" x="48" y="5" class="zv-wave-layer zv-wave-3" />
-          <use xlink:href="#zv-river-curve" x="48" y="7" class="zv-wave-layer zv-wave-4" />
+        <g class="zv-parallax-wave">
+          <g class="zv-wave-anim zv-wave-anim-1">
+            <use xlink:href="#zv-river-curve" x="48" y="0" fill="var(--zv-footer-bg)" opacity="0.25" />
+          </g>
+          <g class="zv-wave-anim zv-wave-anim-2">
+            <use xlink:href="#zv-river-curve" x="48" y="3" fill="var(--zv-footer-bg)" opacity="0.48" />
+          </g>
+          <g class="zv-wave-anim zv-wave-anim-3">
+            <use xlink:href="#zv-river-curve" x="48" y="5" fill="var(--zv-footer-bg)" opacity="0.72" />
+          </g>
+          <g class="zv-wave-anim zv-wave-anim-4">
+            <use xlink:href="#zv-river-curve" x="48" y="7" fill="var(--zv-footer-bg)" opacity="1.0" />
+          </g>
         </g>
       </svg>
     </div>
@@ -51,17 +59,17 @@
         </div>
       </div>
 
-      <!-- Col 2: Quick Links (Dynamic Menu from Shopify Admin) -->
+      <!-- Col 2: Quick Links (Dynamic Menu from Shopify Admin + Policies) -->
       <div class="zv-footer-col zv-footer-links-col">
         <h3 class="zv-footer-heading">{{ section.settings.quick_links_heading | default: 'Quick links' }}</h3>
         <ul class="zv-footer-nav-list">
           {%- assign footer_menu = linklists[section.settings.menu] -%}
-          {%- if footer_menu != blank and footer_menu.links.size > 0 -%}
+          {%- if footer_menu != blank and footer_menu.links.size > 1 -%}
             {%- for link in footer_menu.links -%}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
-            <!-- Default Essential Policy & Store Pages matching user's reference -->
+            <!-- Exact list of essential store pages from user's reference image -->
             <li><a href="/search">Search</a></li>
             <li><a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">Privacy Policy</a></li>
             <li><a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">Refund Policy</a></li>
@@ -188,10 +196,10 @@
   /* Multi-layered Animated River Waves */
   .zv-river-wave-wrap {
     position: absolute;
-    top: -55px;
+    top: -76px;
     left: 0;
     width: 100%;
-    height: 58px;
+    height: 80px;
     overflow: hidden;
     line-height: 0;
     pointer-events: none;
@@ -202,32 +210,32 @@
     position: relative;
     display: block;
     width: 100%;
-    height: 58px;
-    min-height: 48px;
+    height: 80px;
+    min-height: 60px;
   }
 
-  .zv-wave-layer {
-    fill: var(--zv-footer-bg);
+  .zv-wave-anim {
+    animation: zvRiverWaveFlow 20s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
   }
 
-  .zv-wave-1 {
-    opacity: 0.22;
-    animation: zvRiverWaveFlow 26s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+  .zv-wave-anim-1 {
+    animation-delay: -2s;
+    animation-duration: 7s;
   }
 
-  .zv-wave-2 {
-    opacity: 0.45;
-    animation: zvRiverWaveFlow 16s cubic-bezier(0.55, 0.5, 0.45, 0.5) -5s infinite;
+  .zv-wave-anim-2 {
+    animation-delay: -4s;
+    animation-duration: 11s;
   }
 
-  .zv-wave-3 {
-    opacity: 0.72;
-    animation: zvRiverWaveFlow 10s cubic-bezier(0.55, 0.5, 0.45, 0.5) -2s infinite;
+  .zv-wave-anim-3 {
+    animation-delay: -3s;
+    animation-duration: 15s;
   }
 
-  .zv-wave-4 {
-    opacity: 1;
-    animation: zvRiverWaveFlow 6s cubic-bezier(0.55, 0.5, 0.45, 0.5) -3s infinite;
+  .zv-wave-anim-4 {
+    animation-delay: -5s;
+    animation-duration: 22s;
   }
 
   @keyframes zvRiverWaveFlow {
