@@ -166,9 +166,9 @@
           <!-- Specific Category Empty State (e.g. Shoes or any custom category) -->
           <div class="zv-empty-collection-container">
             <div class="zv-empty-icon-bubble">
-              {%- if collection.handle contains 'shoe' -%}
+              {%- if collection.handle contains 'shoe' or collection.handle contains 'footwear' -%}
                 👟
-              {%- elsif collection.handle contains 'pant' or collection.handle contains 'trouser' -%}
+              {%- elsif collection.handle contains 'pant' or collection.handle contains 'trouser' or collection.handle contains 'jean' or collection.handle contains 'denim' -%}
                 👖
               {%- elsif collection.handle contains 'jacket' or collection.handle contains 'hoodie' -%}
                 🧥

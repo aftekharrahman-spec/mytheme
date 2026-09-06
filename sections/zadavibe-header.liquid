@@ -31,20 +31,27 @@
             {%- endfor -%}
           {%- else -%}
             <li class="zv-nav-item">
-              <a href="/collections/all" class="zv-nav-link active"><span>Shop All</span></a>
+              <a href="/collections/all" class="zv-nav-link{% if request.path == '/collections/all' %} active{% endif %}"><span>Shop All</span></a>
             </li>
             <li class="zv-nav-item">
-              <a href="/collections/shoes" class="zv-nav-link">
+              <a href="/collections/shoes" class="zv-nav-link{% if collection.handle == 'shoes' %} active{% endif %}">
                 <span>Shoes</span>
                 <span class="zv-nav-badge-hot">HOT</span>
               </a>
             </li>
             <li class="zv-nav-item">
-              <a href="/collections/all" class="zv-nav-link"><span>Signature Henley</span></a>
+              <a href="/collections/jeans" class="zv-nav-link{% if collection.handle == 'jeans' %} active{% endif %}">
+                <span>Jeans</span>
+                <span class="zv-nav-badge-hot" style="background:#2b5c8f;">NEW</span>
+              </a>
             </li>
-            <li class="zv-nav-item">
-              <a href="/collections/all" class="zv-nav-link"><span>Knitwear</span></a>
-            </li>
+            {%- for col in collections -%}
+              {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle == 'shoes' or col.handle == 'jeans' -%}
+                <li class="zv-nav-item">
+                  <a href="{{ col.url }}" class="zv-nav-link{% if collection.handle == col.handle %} active{% endif %}"><span>{{ col.title }}</span></a>
+                </li>
+              {%- endunless -%}
+            {%- endfor -%}
             <li class="zv-nav-item">
               <a href="/pages/contact" class="zv-nav-link"><span>Track Order</span></a>
             </li>
@@ -191,17 +198,22 @@
         </a>
       </li>
       <li>
-        <a href="/collections/all" class="zv-drawer-link">
-          <span class="zv-drawer-icon">👕</span>
-          <span>Signature Lace-Up Henley</span>
+        <a href="/collections/jeans" class="zv-drawer-link">
+          <span class="zv-drawer-icon">👖</span>
+          <span>Jeans & Denim</span>
+          <span class="zv-nav-badge-hot" style="background:#2b5c8f;">NEW</span>
         </a>
       </li>
-      <li>
-        <a href="/collections/all" class="zv-drawer-link">
-          <span class="zv-drawer-icon">🧶</span>
-          <span>Ribbed Knits & Tunics</span>
-        </a>
-      </li>
+      {%- for col in collections -%}
+        {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle == 'shoes' or col.handle == 'jeans' -%}
+          <li>
+            <a href="{{ col.url }}" class="zv-drawer-link">
+              <span class="zv-drawer-icon">✨</span>
+              <span>{{ col.title }}</span>
+            </a>
+          </li>
+        {%- endunless -%}
+      {%- endfor -%}
       <li>
         <a href="/pages/contact" class="zv-drawer-link">
           <span class="zv-drawer-icon">📦</span>

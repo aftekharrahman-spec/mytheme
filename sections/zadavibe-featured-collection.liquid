@@ -13,8 +13,8 @@
     <div class="zv-fp-filter-bar">
       <button type="button" class="zv-fp-filter-chip active" onclick="filterHomeProducts('all', this)">🔥 All Drops</button>
       <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('henley', this)">👔 Vintage Henleys</button>
+      <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('jeans', this)">👖 Jeans & Denim</button>
       <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('knit', this)">🧶 Ribbed Knits</button>
-      <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('earth', this)">🌿 Earth Tones</button>
     </div>
 
     <!-- Products Grid -->
@@ -22,7 +22,14 @@
       {%- assign feat_collection = section.settings.collection -%}
       {%- if feat_collection != blank and feat_collection.products.size > 0 -%}
         {%- for prod in feat_collection.products limit: section.settings.products_to_show -%}
-          <div class="zv-fp-card" data-category="{% cycle 'henley', 'knit', 'earth', 'henley' %}">
+          {%- assign prod_cat = 'henley' -%}
+          {%- assign p_title_lower = prod.title | downcase -%}
+          {%- if p_title_lower contains 'jean' or p_title_lower contains 'denim' or p_title_lower contains 'pant' -%}
+            {%- assign prod_cat = 'jeans' -%}
+          {%- elsif p_title_lower contains 'knit' or p_title_lower contains 'pullover' -%}
+            {%- assign prod_cat = 'knit' -%}
+          {%- endif -%}
+          <div class="zv-fp-card" data-category="{{ prod_cat }}">
             <div class="zv-fp-media">
               {%- if prod.compare_at_price > prod.price -%}
                 <span class="zv-fp-badge-sale">SAVE 40%</span>

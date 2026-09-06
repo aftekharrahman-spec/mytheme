@@ -6,6 +6,8 @@
     assign col_handle_lower = collection.handle | downcase
     if col_title_lower contains 'shoe' or col_handle_lower contains 'shoe' or col_title_lower contains 'footwear'
       assign banner_desc = "Discover ZadaVibe luxury men's footwear, handcrafted leather loafers, sneakers, and slip-ons engineered with premium materials for Dubai and UAE gentlemen."
+    elsif col_title_lower contains 'jean' or col_handle_lower contains 'jean' or col_title_lower contains 'denim'
+      assign banner_desc = "Discover ZadaVibe luxury men's jeans, relaxed straight cuts, vintage washed denim, and tailored athletic drape for UAE gentlemen."
     elsif col_title_lower contains 'shirt' or col_handle_lower contains 'shirt' or col_title_lower contains 'henley'
       assign banner_desc = "Explore our signature vintage lace-up henleys and ribbed knits engineered with 100% organic breathable cotton and athletic tailored drape."
     else
@@ -35,8 +37,11 @@
         <a href="/collections/shoes" class="zv-cat-pill{% if collection.handle == 'shoes' %} active{% endif %}">
           👟 Shoes & Footwear
         </a>
-        {%- for col in collections limit: 8 -%}
-          {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle == 'shoes' -%}
+        <a href="/collections/jeans" class="zv-cat-pill{% if collection.handle == 'jeans' %} active{% endif %}">
+          👖 Jeans & Denim
+        </a>
+        {%- for col in collections -%}
+          {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle == 'shoes' or col.handle == 'jeans' -%}
             <a href="{{ col.url }}" class="zv-cat-pill{% if collection.handle == col.handle %} active{% endif %}">
               {{ col.title }}
             </a>

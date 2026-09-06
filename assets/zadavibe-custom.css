@@ -29,9 +29,12 @@
 
 html, body {
   overflow-x: hidden !important;
-  max-width: 100vw !important;
+  max-width: 100% !important;
   width: 100% !important;
+  position: relative;
   box-sizing: border-box !important;
+  margin: 0;
+  padding: 0;
 }
 
 *, *::before, *::after {
@@ -1491,40 +1494,97 @@ html, body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .zv-hero-section {
     padding: 24px 0 36px !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .zv-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 26px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .zv-hero-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 8px !important;
+    box-sizing: border-box !important;
+    text-align: left !important;
   }
 
   .zv-hero-title {
-    font-size: clamp(1.85rem, 7vw, 2.4rem) !important;
-    line-height: 1.15;
+    font-size: clamp(1.75rem, 6.8vw, 2.35rem) !important;
+    line-height: 1.22 !important;
+    letter-spacing: 0 !important;
+    padding-left: 2px !important;
+    margin-left: 0 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
   }
 
   .zv-hero-pill-badge {
-    font-size: 0.86rem;
-    padding: 6px 14px;
-    margin-bottom: 14px;
+    max-width: 100% !important;
+    font-size: 0.82rem !important;
+    white-space: normal !important;
+    padding: 6px 14px !important;
+    margin-bottom: 14px !important;
+    margin-left: 2px !important;
   }
 
   .zv-hero-pills-list {
-    margin: 14px 0 20px;
-    gap: 8px;
+    margin: 14px 0 20px !important;
+    padding-left: 2px !important;
+    gap: 8px !important;
   }
 
   .zv-hero-pill {
-    padding: 6px 14px;
-    font-size: 0.88rem;
+    padding: 6px 12px !important;
+    font-size: 0.84rem !important;
+  }
+
+  .zv-hero-cta-group {
+    padding-left: 2px !important;
   }
 
   .zv-hero-media-wrapper {
-    margin-top: 24px;
+    margin-top: 18px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 4px !important;
+    box-sizing: border-box !important;
+  }
+
+  .zv-hero-image-card {
+    max-width: 100% !important;
+    border-radius: var(--zv-radius-md) !important;
   }
 
   .zv-hero-image-card img {
     height: auto !important;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 1 !important;
     max-height: 320px !important;
+  }
+
+  .zv-ticker-wrapper,
+  .zv-ugc-section,
+  .zv-reviews-section,
+  .zv-comparison-section {
+    overflow: hidden !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .zv-hero-section {
+    padding: 20px 0 32px !important;
   }
 
   /* Product Page Mobile Overhaul */

@@ -17,8 +17,9 @@
         <div class="zv-categories-quick-pills">
           <a href="/collections/all" class="zv-cat-pill active">🔥 All Products</a>
           <a href="/collections/shoes" class="zv-cat-pill">👟 Shoes & Footwear</a>
-          {%- for col in collections limit: 6 -%}
-            {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle == 'shoes' -%}
+          <a href="/collections/jeans" class="zv-cat-pill">👖 Jeans & Denim</a>
+          {%- for col in collections -%}
+            {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle == 'shoes' or col.handle == 'jeans' -%}
               <a href="{{ col.url }}" class="zv-cat-pill">
                 {{ col.title }}
               </a>
@@ -68,6 +69,15 @@
                       loading="lazy"
                       class="zv-category-img"
                     >
+                  {%- elsif collection.handle contains 'jean' or collection.handle contains 'denim' -%}
+                    <img
+                      src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}"
+                      alt="{{ collection.title | escape }} - Jeans & Denim UAE"
+                      width="500"
+                      height="600"
+                      loading="lazy"
+                      class="zv-category-img"
+                    >
                   {%- else -%}
                     <img
                       src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}"
@@ -94,6 +104,8 @@
                     {{ collection.description | strip_html | truncate: 90 }}
                   {%- elsif collection.handle contains 'shoe' -%}
                     Luxury leather footwear, sneakers, and slip-ons engineered for UAE gentlemen.
+                  {%- elsif collection.handle contains 'jean' or collection.handle contains 'denim' -%}
+                    Classic loose straight fit and dark washed vintage denim engineered for UAE gentlemen.
                   {%- else -%}
                     Breathable organic knits and vintage tailored designs with fast UAE delivery.
                   {%- endif -%}
@@ -138,6 +150,23 @@
               <h3 class="zv-category-title"><a href="/collections/shoes">Shoes & Footwear</a></h3>
               <p class="zv-category-desc">Tailored leather loafers, modern sneakers, and comfort slip-ons for Dubai gentlemen.</p>
               <a href="/collections/shoes" class="zv-category-btn">
+                <span>EXPLORE COLLECTION</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="zv-category-card">
+            <div class="zv-category-media">
+              <a href="/collections/jeans" class="zv-category-img-link">
+                <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Jeans & Denim" width="500" height="600" class="zv-category-img">
+              </a>
+              <div class="zv-category-count-badge"><span>Trending Drop</span></div>
+            </div>
+            <div class="zv-category-body">
+              <h3 class="zv-category-title"><a href="/collections/jeans">Jeans & Denim</a></h3>
+              <p class="zv-category-desc">Classic loose straight fit and dark washed vintage denim engineered for all-day comfort.</p>
+              <a href="/collections/jeans" class="zv-category-btn">
                 <span>EXPLORE COLLECTION</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
