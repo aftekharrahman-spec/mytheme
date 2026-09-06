@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -52,6 +61,15 @@
       "settings": {
         "bg_color": "#2d3b31",
         "text_color": "#ffffff"
+      }
+    },
+    "press": {
+      "type": "zadavibe-press-bar",
+      "settings": {
+        "heading": "",
+        "bg_color": "#c2d2be",
+        "text_color": "#142217",
+        "speed": 28
       }
     },
     "featured_collection": {
