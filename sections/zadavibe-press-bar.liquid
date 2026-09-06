@@ -1,22 +1,217 @@
-<div class="zv-press-section">
-  <div class="zv-container">
-    <div class="zv-press-grid">
-      <div class="zv-press-item">GQ</div>
-      <div class="zv-press-item">ESQUIRE</div>
-      <div class="zv-press-item">VOGUE MEN</div>
-      <div class="zv-press-item">MEN'S HEALTH</div>
-      <div class="zv-press-item">COMPLEX</div>
+<section class="zv-press-marquee-section" style="background-color: {{ section.settings.bg_color }};">
+  {%- if section.settings.subheading != blank -%}
+    <div class="zv-press-header">
+      <span class="zv-press-tag">{{ section.settings.subheading }}</span>
+    </div>
+  {%- endif -%}
+
+  <div class="zv-press-marquee-container" id="zv-press-scroll-container">
+    <div class="zv-press-marquee-track">
+      <!-- First Sequence -->
+      <div class="zv-press-sequence">
+        <div class="zv-press-item"><span>MEN'S HEALTH</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>GQ</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>ESQUIRE</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>VOGUE MEN</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>COMPLEX</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>HYPEBEAST</span></div>
+        <div class="zv-press-sep">✦</div>
+      </div>
+
+      <!-- Duplicate Sequence for Seamless Infinite Loop -->
+      <div class="zv-press-sequence" aria-hidden="true">
+        <div class="zv-press-item"><span>MEN'S HEALTH</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>GQ</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>ESQUIRE</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>VOGUE MEN</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>COMPLEX</span></div>
+        <div class="zv-press-sep">✦</div>
+        <div class="zv-press-item"><span>HYPEBEAST</span></div>
+        <div class="zv-press-sep">✦</div>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<style>
+  .zv-press-marquee-section {
+    padding: 36px 0;
+    overflow: hidden;
+    position: relative;
+    border-top: 1px solid var(--zv-border);
+    border-bottom: 1px solid var(--zv-border);
+    background: #ffffff;
+  }
+
+  .zv-press-header {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .zv-press-tag {
+    font-family: var(--zv-font-heading);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--zv-text-muted);
+  }
+
+  .zv-press-marquee-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE */
+    display: flex;
+    user-select: none;
+    cursor: grab;
+    mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 92%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 8%, rgba(0,0,0,1) 92%, rgba(0,0,0,0) 100%);
+  }
+
+  .zv-press-marquee-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .zv-press-marquee-track {
+    display: flex;
+    white-space: nowrap;
+    animation: zvPressFlow 26s linear infinite;
+    will-change: transform;
+  }
+
+  .zv-press-marquee-container:hover .zv-press-marquee-track {
+    animation-play-state: paused;
+  }
+
+  .zv-press-sequence {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .zv-press-item {
+    padding: 10px 32px;
+    font-family: var(--zv-font-heading);
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #9aa19c;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .zv-press-item span {
+    position: relative;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .zv-press-item:hover {
+    color: var(--zv-primary);
+  }
+
+  .zv-press-item:hover span {
+    transform: scale(1.12);
+  }
+
+  .zv-press-sep {
+    font-size: 1rem;
+    color: var(--zv-accent);
+    opacity: 0.7;
+    margin: 0 10px;
+    user-select: none;
+  }
+
+  @keyframes zvPressFlow {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .zv-press-marquee-section {
+      padding: 24px 0;
+    }
+    .zv-press-item {
+      padding: 6px 18px;
+    }
+    .zv-press-sep {
+      margin: 0 4px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    const container = document.getElementById('zv-press-scroll-container');
+    if (!container) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener('mousedown', (e) => {
+      isDown = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    });
+
+    container.addEventListener('mouseup', () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    });
+
+    container.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 2;
+      container.scrollLeft = scrollLeft - walk;
+    });
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "ZV Press Logos Bar",
-  "settings": [],
+  "name": "ZV Press Marquee Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Top Label",
+      "default": "AS FEATURED IN GLOBAL MENSWEAR MEDIA"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
   "presets": [
     {
-      "name": "ZV Press Logos Bar"
+      "name": "ZV Press Marquee Bar"
     }
   ]
 }
