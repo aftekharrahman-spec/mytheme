@@ -1,15 +1,5 @@
 {
   "sections": {
-    "announcement": {
-      "type": "zadavibe-announcement-bar",
-      "settings": {
-        "show_announcement": true,
-        "icon": "✈️",
-        "text": "FREE EXPRESS WORLDWIDE SHIPPING ON ORDERS OVER $50",
-        "bg_color": "#2d3b31",
-        "text_color": "#ffffff"
-      }
-    },
     "main_product": {
       "type": "zadavibe-main-product",
       "settings": {}
@@ -300,18 +290,9 @@
         "faq_4"
       ],
       "settings": {}
-    },
-    "footer": {
-      "type": "zadavibe-wave-footer",
-      "settings": {
-        "bg_color": "#2d3b31",
-        "brand_title": "ZadaVibe",
-        "brand_bio": "Crafting signature men’s apparel that fuses timeless vintage aesthetics with modern tailoring and all-day comfort."
-      }
     }
   },
   "order": [
-    "announcement",
     "main_product",
     "ticker",
     "press",
@@ -320,7 +301,6 @@
     "reviews_dark",
     "how_it_works",
     "comparison",
-    "faq",
-    "footer"
+    "faq"
   ]
 }

@@ -1,0 +1,79 @@
+<div class="zv-collection-banner">
+  <div class="zv-container">
+    <div class="zv-collection-banner-content">
+      <span class="zv-hero-pill-badge" style="margin-bottom: 12px;">
+        <span>✨</span> {{ section.settings.badge | default: 'Signature Menswear Collection' }}
+      </span>
+      <h1 class="zv-section-title" style="font-size: clamp(2.4rem, 4vw, 3.5rem); margin-bottom: 14px;">
+        {{ collection.title | default: "Men's Vintage & Ribbed Apparel" }}
+      </h1>
+      <p class="zv-section-subtitle" style="max-width: 680px; margin: 0 auto 28px;">
+        {{ collection.description | default: "Discover handcrafted men’s henleys and ribbed knits engineered with breathable organic fibers, vintage lace-up details, and tailored athletic drape." }}
+      </p>
+
+      <!-- Quick Category Filter Pills -->
+      <div class="zv-collection-pills">
+        <a href="/collections/all" class="zv-cat-pill active">All Styles</a>
+        <a href="/collections/all" class="zv-cat-pill">Signature Henleys</a>
+        <a href="/collections/all" class="zv-cat-pill">Ribbed Knits</a>
+        <a href="/collections/all" class="zv-cat-pill">Earth Tones</a>
+        <a href="/collections/all" class="zv-cat-pill">Limited Drops</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .zv-collection-banner {
+    background: linear-gradient(180deg, #fdfbf7 0%, #f4efe6 100%);
+    padding: 60px 0 50px;
+    text-align: center;
+    border-bottom: 1px solid var(--zv-border);
+  }
+
+  .zv-collection-pills {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .zv-cat-pill {
+    background: #ffffff;
+    border: 1.5px solid var(--zv-border);
+    border-radius: var(--zv-radius-pill);
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--zv-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .zv-cat-pill:hover,
+  .zv-cat-pill.active {
+    background: var(--zv-primary);
+    color: #ffffff;
+    border-color: var(--zv-primary);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "ZV Collection Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Top Badge",
+      "default": "Signature Menswear Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Collection Banner"
+    }
+  ]
+}
+{% endschema %}

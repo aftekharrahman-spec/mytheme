@@ -1,0 +1,352 @@
+<link rel="stylesheet" href="{{ 'zadavibe-custom.css' | asset_url }}">
+
+<header class="zv-header-wrapper" id="zv-main-header">
+  <div class="zv-container">
+    <div class="zv-header-inner">
+      <!-- Mobile Hamburger -->
+      <div class="zv-header-mobile-toggle" onclick="toggleMobileNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- Left Nav (Desktop) -->
+      <nav class="zv-header-nav">
+        <ul class="zv-nav-list">
+          {%- if section.settings.menu != blank -%}
+            {%- for link in linklists[section.settings.menu].links -%}
+              <li class="zv-nav-item">
+                <a href="{{ link.url }}" class="zv-nav-link {% if link.active %}active{% endif %}">
+                  {{ link.title }}
+                </a>
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            <li class="zv-nav-item"><a href="/collections/all" class="zv-nav-link">Shop All</a></li>
+            <li class="zv-nav-item"><a href="/collections/all" class="zv-nav-link">New Arrivals</a></li>
+            <li class="zv-nav-item"><a href="/products" class="zv-nav-link">Signature Henley</a></li>
+            <li class="zv-nav-item"><a href="/pages/contact" class="zv-nav-link">Our Story</a></li>
+          {%- endif -%}
+        </ul>
+      </nav>
+
+      <!-- Center Brand Logo -->
+      <div class="zv-header-logo">
+        <a href="/" class="zv-logo-link">
+          {%- if section.settings.logo != blank -%}
+            {{ section.settings.logo | image_url: width: 220 | image_tag: alt: shop.name }}
+          {%- else -%}
+            <span class="zv-logo-text">ZADAVIBE</span>
+            <span class="zv-logo-sub">STUDIO</span>
+          {%- endif -%}
+        </a>
+      </div>
+
+      <!-- Right Actions (Search, Account, Cart) -->
+      <div class="zv-header-actions">
+        <a href="/search" class="zv-action-icon" aria-label="Search" title="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
+        <a href="/account" class="zv-action-icon zv-hide-mobile" aria-label="Account" title="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+
+        <a href="/cart" class="zv-action-icon zv-cart-trigger" aria-label="Cart" title="Cart">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="zv-cart-count" id="zv-cart-count-badge">{{ cart.item_count }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="zv-mobile-drawer" id="zv-mobile-drawer">
+  <div class="zv-drawer-backdrop" onclick="toggleMobileNav()"></div>
+  <div class="zv-drawer-content">
+    <div class="zv-drawer-header">
+      <span class="zv-logo-text" style="font-size: 1.4rem;">ZADAVIBE</span>
+      <button type="button" class="zv-drawer-close" onclick="toggleMobileNav()">&times;</button>
+    </div>
+    <ul class="zv-mobile-nav-list">
+      <li><a href="/collections/all">Shop All Collections</a></li>
+      <li><a href="/collections/all">New Arrivals</a></li>
+      <li><a href="/products">Signature Ribbed Henley</a></li>
+      <li><a href="/pages/contact">Track Order</a></li>
+      <li><a href="/pages/contact">Contact & FAQ</a></li>
+    </ul>
+    <div class="zv-drawer-footer">
+      <a href="/account" class="zv-btn-primary" style="width: 100%; padding: 12px; font-size: 0.9rem;">Sign In / Account</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .zv-header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--zv-border);
+    transition: all 0.3s ease;
+  }
+
+  .zv-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 74px;
+  }
+
+  .zv-header-nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .zv-nav-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 28px;
+  }
+
+  .zv-nav-link {
+    font-family: var(--zv-font-body);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--zv-text);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    padding: 6px 0;
+    transition: color 0.2s ease;
+  }
+
+  .zv-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--zv-primary);
+    transition: width 0.25s ease;
+  }
+
+  .zv-nav-link:hover::after,
+  .zv-nav-link.active::after {
+    width: 100%;
+  }
+
+  .zv-header-logo {
+    text-align: center;
+  }
+
+  .zv-logo-link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .zv-logo-text {
+    font-family: var(--zv-font-heading);
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    color: var(--zv-primary);
+    line-height: 1;
+  }
+
+  .zv-logo-sub {
+    font-size: 0.62rem;
+    letter-spacing: 0.38em;
+    color: var(--zv-accent);
+    font-weight: 800;
+    margin-top: 2px;
+  }
+
+  .zv-header-actions {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 18px;
+  }
+
+  .zv-action-icon {
+    color: var(--zv-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-decoration: none;
+    position: relative;
+    transition: background 0.2s ease;
+  }
+
+  .zv-action-icon:hover {
+    background: var(--zv-bg-soft);
+  }
+
+  .zv-cart-count {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: var(--zv-primary);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .zv-header-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+  }
+
+  .zv-header-mobile-toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--zv-text);
+    border-radius: 2px;
+  }
+
+  /* Mobile Drawer */
+  .zv-mobile-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+  }
+
+  .zv-mobile-drawer.open {
+    display: block;
+  }
+
+  .zv-drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+  }
+
+  .zv-drawer-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 320px;
+    max-width: 85%;
+    background: #ffffff;
+    box-shadow: var(--zv-shadow-lg);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .zv-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--zv-border);
+  }
+
+  .zv-drawer-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--zv-text);
+  }
+
+  .zv-mobile-nav-list {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+    flex: 1;
+  }
+
+  .zv-mobile-nav-list li {
+    margin-bottom: 16px;
+  }
+
+  .zv-mobile-nav-list a {
+    font-family: var(--zv-font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--zv-text);
+    text-decoration: none;
+  }
+
+  @media (max-width: 860px) {
+    .zv-header-nav,
+    .zv-hide-mobile {
+      display: none;
+    }
+
+    .zv-header-mobile-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  function toggleMobileNav() {
+    const drawer = document.getElementById('zv-mobile-drawer');
+    if (drawer) {
+      drawer.classList.toggle('open');
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "ZV Modern Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Custom Logo Image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Modern Header"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,318 @@
+<div class="zv-collection-section">
+  <div class="zv-container">
+    <!-- Filter & Sort Toolbar -->
+    <div class="zv-collection-toolbar">
+      <div class="zv-toolbar-left">
+        <span class="zv-product-count">
+          Showing <strong>{{ collection.products_count | default: 8 }}</strong> Styles
+        </span>
+      </div>
+
+      <div class="zv-toolbar-right">
+        <label for="zv-sort-by" style="font-size: 0.9rem; font-weight: 600; color: var(--zv-text-muted);">SORT BY:</label>
+        <select id="zv-sort-by" class="zv-sort-select" onchange="location = this.value;">
+          <option value="{{ collection.url }}?sort_by=best-selling" selected>Featured & Best Selling</option>
+          <option value="{{ collection.url }}?sort_by=price-ascending">Price: Low to High</option>
+          <option value="{{ collection.url }}?sort_by=price-descending">Price: High to Low</option>
+          <option value="{{ collection.url }}?sort_by=created-descending">New Arrivals</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="zv-product-grid-catalog">
+      {%- if collection.products.size > 0 -%}
+        {%- for product in collection.products -%}
+          <div class="zv-card">
+            <div class="zv-card-media">
+              <span class="zv-card-badge">HOT DROP</span>
+              <a href="{{ product.url }}">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" class="zv-card-img-primary">
+                {%- else -%}
+                  <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Product" class="zv-card-img-primary">
+                {%- endif -%}
+              </a>
+              <div class="zv-quick-add-overlay">
+                <a href="{{ product.url }}" class="zv-quick-btn">SELECT SIZE & BUY</a>
+              </div>
+            </div>
+
+            <div class="zv-card-body">
+              <div class="zv-card-stars">★★★★★ <span style="font-size: 0.78rem; color: #888;">(4.9)</span></div>
+              <h3 class="zv-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+              <div class="zv-card-prices">
+                <span class="zv-price-now">{{ product.price | money }}</span>
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="zv-price-was">{{ product.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Demo Catalog Items showcasing ZadaVibe Men's Line -->
+        {%- assign demo_products = "Vintage Lace-Up Ribbed Henley,Classic Long-Sleeve Ribbed Tunic,Boho Corded Knit Henley,Textured Waffle-Knit Pullover,Athletic Ribbed Camp Shirt,Heritage Lace Collar Henley,Earthy Linen-Cotton Tunic,Minimalist Heavyweight Longsleeve" | split: "," -%}
+        {%- assign demo_prices = "$39.99,$44.99,$42.00,$49.99,$38.50,$45.00,$48.00,$39.00" | split: "," -%}
+        {%- assign demo_compares = "$65.00,$75.00,$68.00,$80.00,$60.00,$70.00,$78.00,$62.00" | split: "," -%}
+
+        {%- for title in demo_products -%}
+          {%- assign idx = forloop.index0 -%}
+          <div class="zv-card">
+            <div class="zv-card-media">
+              {%- if forloop.index == 1 or forloop.index == 2 -%}
+                <span class="zv-card-badge">BESTSELLER • 38% OFF</span>
+              {%- elsif forloop.index == 3 or forloop.index == 5 -%}
+                <span class="zv-card-badge" style="background: var(--zv-accent);">LIMITED DROP</span>
+              {%- else -%}
+                <span class="zv-card-badge" style="background: #111;">ORGANIC COTTON</span>
+              {%- endif -%}
+
+              <a href="/products">
+                {%- if forloop.index == 1 or forloop.index == 3 or forloop.index == 5 -%}
+                  <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="{{ title }}" class="zv-card-img-primary" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
+                {%- else -%}
+                  <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="{{ title }}" class="zv-card-img-primary" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+                {%- endif -%}
+              </a>
+
+              <div class="zv-quick-add-overlay">
+                <a href="/products" class="zv-quick-btn">SELECT SIZE & BUY</a>
+              </div>
+            </div>
+
+            <div class="zv-card-body">
+              <div class="zv-card-stars">★★★★★ <span style="font-size: 0.78rem; color: #888;">4.9 (1,280)</span></div>
+              <h3 class="zv-card-title"><a href="/products">{{ title }}</a></h3>
+
+              <div class="zv-card-swatches">
+                <span class="zv-swatch" style="background: #4b5320;" title="Olive Green"></span>
+                <span class="zv-swatch" style="background: #2b2b2b;" title="Charcoal"></span>
+                <span class="zv-swatch" style="background: #c2b280;" title="Earth Sand"></span>
+                <span class="zv-swatch" style="background: #1c2833;" title="Midnight Navy"></span>
+              </div>
+
+              <div class="zv-card-prices">
+                <span class="zv-price-now">{{ demo_prices[idx] }}</span>
+                <span class="zv-price-was">{{ demo_compares[idx] }}</span>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .zv-collection-section {
+    padding: 40px 0 90px;
+    background: #ffffff;
+  }
+
+  .zv-collection-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 24px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--zv-border);
+  }
+
+  .zv-sort-select {
+    padding: 8px 16px;
+    border-radius: var(--zv-radius-pill);
+    border: 1.5px solid var(--zv-border);
+    background: #ffffff;
+    font-family: var(--zv-font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--zv-text);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .zv-product-grid-catalog {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px 24px;
+  }
+
+  .zv-card {
+    background: #ffffff;
+    border-radius: var(--zv-radius-md);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .zv-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--zv-shadow-md);
+  }
+
+  .zv-card-media {
+    position: relative;
+    border-radius: var(--zv-radius-md);
+    overflow: hidden;
+    background: var(--zv-bg-soft);
+    aspect-ratio: 4 / 5;
+  }
+
+  .zv-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .zv-card:hover .zv-card-media img {
+    transform: scale(1.06);
+  }
+
+  .zv-card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--zv-primary);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: var(--zv-radius-pill);
+    z-index: 2;
+    text-transform: uppercase;
+  }
+
+  .zv-quick-add-overlay {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.25s ease;
+  }
+
+  .zv-card:hover .zv-quick-add-overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .zv-quick-btn {
+    display: block;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    color: var(--zv-primary);
+    text-align: center;
+    padding: 12px;
+    border-radius: var(--zv-radius-pill);
+    font-family: var(--zv-font-heading);
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    transition: background 0.2s ease;
+  }
+
+  .zv-quick-btn:hover {
+    background: var(--zv-primary);
+    color: #ffffff;
+  }
+
+  .zv-card-body {
+    padding: 16px 8px 12px;
+  }
+
+  .zv-card-stars {
+    color: var(--zv-gold);
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .zv-card-title {
+    font-family: var(--zv-font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 8px;
+  }
+
+  .zv-card-title a {
+    color: var(--zv-text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .zv-card-title a:hover {
+    color: var(--zv-accent);
+  }
+
+  .zv-card-swatches {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .zv-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.2);
+    cursor: pointer;
+  }
+
+  .zv-card-prices {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .zv-price-now {
+    font-family: var(--zv-font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--zv-primary);
+  }
+
+  .zv-price-was {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+
+  @media (max-width: 992px) {
+    .zv-product-grid-catalog {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .zv-product-grid-catalog {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px 12px;
+    }
+    
+    .zv-quick-add-overlay {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "ZV Collection Grid",
+  "settings": [],
+  "presets": [
+    {
+      "name": "ZV Collection Grid"
+    }
+  ]
+}
+{% endschema %}

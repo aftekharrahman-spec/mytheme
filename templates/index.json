@@ -1,15 +1,5 @@
 {
   "sections": {
-    "announcement": {
-      "type": "zadavibe-announcement-bar",
-      "settings": {
-        "show_announcement": true,
-        "icon": "✈️",
-        "text": "FREE EXPRESS WORLDWIDE SHIPPING ON ORDERS OVER $50",
-        "bg_color": "#2d3b31",
-        "text_color": "#ffffff"
-      }
-    },
     "hero": {
       "type": "zadavibe-hero",
       "blocks": {
@@ -378,18 +368,9 @@
         "heading": "ON THE FEED",
         "subheading": "Tag @zadavibe on Instagram to be featured on our official channel"
       }
-    },
-    "footer": {
-      "type": "zadavibe-wave-footer",
-      "settings": {
-        "bg_color": "#2d3b31",
-        "brand_title": "ZadaVibe",
-        "brand_bio": "Crafting signature men’s apparel that fuses timeless vintage aesthetics with modern tailoring and all-day comfort."
-      }
     }
   },
   "order": [
-    "announcement",
     "hero",
     "ticker",
     "ugc",
@@ -399,7 +380,6 @@
     "stats",
     "reviews",
     "comparison",
-    "feed",
-    "footer"
+    "feed"
   ]
 }
