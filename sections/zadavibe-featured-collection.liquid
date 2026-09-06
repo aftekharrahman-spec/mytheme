@@ -12,32 +12,48 @@
     <!-- Interactive Category Filter Chips -->
     <div class="zv-fp-filter-bar">
       <button type="button" class="zv-fp-filter-chip active" onclick="filterHomeProducts('all', this)">🔥 All Drops</button>
-      <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('henley', this)">👔 Vintage Henleys</button>
       <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('jeans', this)">👖 Jeans & Denim</button>
-      <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('knit', this)">🧶 Ribbed Knits</button>
+      <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('tops', this)">👔 Sweatshirts & Polos</button>
+      <button type="button" class="zv-fp-filter-chip" onclick="filterHomeProducts('tshirt', this)">👕 Graphic Tees</button>
     </div>
 
     <!-- Products Grid -->
     <div class="zv-fp-grid" id="zv-home-products-grid">
       {%- assign feat_collection = section.settings.collection -%}
-      {%- if feat_collection != blank and feat_collection.products.size > 0 -%}
+      {%- if feat_collection == blank or feat_collection.products.size == 0 -%}
+        {%- assign feat_collection = collections['all'] -%}
+      {%- endif -%}
+      {%- if feat_collection == blank or feat_collection.products.size == 0 -%}
+        {%- assign feat_collection = collections.all -%}
+      {%- endif -%}
+
+      {%- if feat_collection.products.size > 0 -%}
         {%- for prod in feat_collection.products limit: section.settings.products_to_show -%}
-          {%- assign prod_cat = 'henley' -%}
           {%- assign p_title_lower = prod.title | downcase -%}
-          {%- if p_title_lower contains 'jean' or p_title_lower contains 'denim' or p_title_lower contains 'pant' -%}
+          {%- if p_title_lower contains 'jean' or p_title_lower contains 'denim' -%}
             {%- assign prod_cat = 'jeans' -%}
-          {%- elsif p_title_lower contains 'knit' or p_title_lower contains 'pullover' -%}
-            {%- assign prod_cat = 'knit' -%}
+          {%- elsif p_title_lower contains 't-shirt' or p_title_lower contains 'banana' or p_title_lower contains 'tee' -%}
+            {%- assign prod_cat = 'tshirt' -%}
+          {%- elsif p_title_lower contains 'sweatshirt' or p_title_lower contains 'polo' or p_title_lower contains 'pullover' or p_title_lower contains 'shirt' or p_title_lower contains 'top' -%}
+            {%- assign prod_cat = 'tops' -%}
+          {%- else -%}
+            {%- assign prod_cat = 'tops' -%}
           {%- endif -%}
+
           <div class="zv-fp-card" data-category="{{ prod_cat }}">
             <div class="zv-fp-media">
               {%- if prod.compare_at_price > prod.price -%}
-                <span class="zv-fp-badge-sale">SAVE 40%</span>
+                {%- assign save_pct = prod.compare_at_price | minus: prod.price | times: 100.0 | divided_by: prod.compare_at_price | round -%}
+                <span class="zv-fp-badge-sale">SAVE {{ save_pct }}%</span>
+              {%- elsif prod.title contains 'Jean' or prod.title contains 'Denim' -%}
+                <span class="zv-fp-badge-hot" style="background:#2b5c8f;">👖 DENIM DROP</span>
               {%- elsif forloop.first -%}
-                <span class="zv-fp-badge-hot">BESTSELLER</span>
+                <span class="zv-fp-badge-hot">🔥 BESTSELLER</span>
+              {%- else -%}
+                <span class="zv-fp-badge-hot">TRENDING</span>
               {%- endif -%}
 
-              <a href="{{ prod.url }}" class="zv-fp-img-link">
+              <a href="{{ prod.url }}" class="zv-fp-img-link" title="{{ prod.title | escape }}">
                 {%- if prod.featured_image -%}
                   <img
                     src="{{ prod.featured_image | image_url: width: 600 }}"
@@ -47,6 +63,16 @@
                     loading="lazy"
                     class="zv-fp-main-img"
                   >
+                  {%- if prod.images.size > 1 -%}
+                    <img
+                      src="{{ prod.images[1] | image_url: width: 600 }}"
+                      alt="{{ prod.title | escape }} - Fit Angle"
+                      width="500"
+                      height="650"
+                      loading="lazy"
+                      class="zv-fp-secondary-img"
+                    >
+                  {%- endif -%}
                 {%- else -%}
                   <img
                     src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}"
@@ -84,11 +110,25 @@
               </div>
 
               <!-- Color dots preview -->
-              <div class="zv-fp-swatches">
-                <span class="zv-swatch-dot zv-swatch-olive" title="Olive Green"></span>
-                <span class="zv-swatch-dot zv-swatch-sand" title="Sand Beige"></span>
-                <span class="zv-swatch-dot zv-swatch-black" title="Charcoal Black"></span>
-              </div>
+              {%- assign has_swatches = false -%}
+              {%- for option in prod.options_with_values -%}
+                {%- assign opt_name = option.name | downcase -%}
+                {%- if opt_name == 'color' or opt_name == 'colour' -%}
+                  {%- assign has_swatches = true -%}
+                  <div class="zv-fp-swatches">
+                    {%- for val in option.values limit: 5 -%}
+                      <span class="zv-swatch-dot" style="background-color: {{ val | downcase | remove: ' ' }};" title="{{ val }}"></span>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- unless has_swatches -%}
+                <div class="zv-fp-swatches">
+                  <span class="zv-swatch-dot zv-swatch-olive" title="Olive Green"></span>
+                  <span class="zv-swatch-dot zv-swatch-sand" title="Sand Beige"></span>
+                  <span class="zv-swatch-dot zv-swatch-black" title="Charcoal Black"></span>
+                </div>
+              {%- endunless -%}
             </div>
           </div>
         {%- endfor -%}
@@ -320,6 +360,22 @@
   }
 
   .zv-fp-card:hover .zv-fp-main-img {
+    transform: scale(1.06);
+  }
+
+  .zv-fp-secondary-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+  }
+
+  .zv-fp-card:hover .zv-fp-secondary-img {
+    opacity: 1;
     transform: scale(1.06);
   }
 
