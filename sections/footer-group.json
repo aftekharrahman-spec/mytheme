@@ -6,8 +6,19 @@
       "type": "zadavibe-wave-footer",
       "settings": {
         "bg_color": "#2d3b31",
+        "text_color": "#ffffff",
+        "enable_wave_animation": true,
         "brand_title": "ZADAVIBE",
-        "brand_bio": "Crafting signature men’s apparel that fuses timeless vintage aesthetics with modern tailoring and all-day comfort."
+        "brand_bio": "Crafting signature luxury men’s apparel that fuses timeless vintage aesthetics with modern tailoring.",
+        "quick_links_heading": "Quick links",
+        "menu": "footer",
+        "newsletter_heading": "Subscribe to our emails",
+        "newsletter_subtext": "",
+        "newsletter_placeholder": "Email",
+        "newsletter_btn_label": "Sign up",
+        "copyright_text": "© 2026, ZadaVibe Powered by Shopify",
+        "show_payment_icons": true,
+        "show_scroll_top": true
       }
     }
   },
