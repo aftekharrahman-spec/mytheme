@@ -266,10 +266,12 @@
   }
 
   .zv-header-inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
     height: 76px;
+    width: 100%;
+    box-sizing: border-box;
     transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -277,9 +279,10 @@
      Desktop Navigation Links
      ========================================================================== */
   .zv-header-nav {
-    flex: 1;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
   }
 
   .zv-nav-list {
@@ -358,6 +361,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    justify-self: center;
+    margin: 0 auto;
+    padding: 0 16px;
+    min-width: 0;
   }
 
   .zv-logo-link {
@@ -419,11 +426,12 @@
      Header Right Actions
      ========================================================================== */
   .zv-header-actions {
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    justify-self: end;
     gap: 12px;
+    min-width: 0;
   }
 
   /* UAE Currency Pill */
@@ -806,8 +814,8 @@
      ========================================================================== */
   @media (max-width: 860px) {
     .zv-header-inner {
-      display: grid;
-      grid-template-columns: 48px 1fr 100px;
+      display: grid !important;
+      grid-template-columns: 1fr auto 1fr !important;
       align-items: center;
       height: 60px;
       padding: 0;
@@ -839,7 +847,9 @@
       align-items: center;
       justify-content: center;
       justify-self: center;
-      width: 100%;
+      margin: 0 auto;
+      padding: 0 6px;
+      width: auto;
     }
 
     .zv-logo-emblem {
