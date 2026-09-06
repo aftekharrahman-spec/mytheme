@@ -332,27 +332,65 @@
 
     .zv-product-grid-catalog {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px 10px;
+      gap: 12px 10px;
+      width: 100%;
+    }
+
+    .zv-card {
+      border: 1px solid var(--zv-border);
+      border-radius: var(--zv-radius-md);
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: var(--zv-shadow-sm);
+    }
+
+    .zv-card-media {
+      aspect-ratio: 1 / 1;
+      border-radius: 0;
+    }
+
+    .zv-card-body {
+      padding: 10px 8px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .zv-card-badge {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       padding: 2px 6px;
       top: 6px;
       left: 6px;
+      letter-spacing: 0.02em;
     }
 
     .zv-card-title {
-      font-size: 0.88rem;
-      min-height: 2.3em;
+      font-size: 0.85rem;
+      line-height: 1.3;
+      min-height: 2.6em;
+      margin-bottom: 4px;
+    }
+
+    .zv-card-swatches {
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .zv-swatch {
+      width: 12px;
+      height: 12px;
+    }
+
+    .zv-card-prices {
+      gap: 6px;
     }
 
     .zv-price-now {
-      font-size: 0.98rem;
+      font-size: 0.95rem;
     }
 
     .zv-price-was {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
     }
 
     .zv-quick-add-overlay {

@@ -27,10 +27,23 @@
   --zv-shadow-lg: 0 20px 48px rgba(0,0,0,0.12);
 }
 
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 .zv-container {
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Base Typography overrides for Zadavibe sections */
@@ -597,18 +610,33 @@
   text-align: center;
 }
 
+.zv-swipe-indicator {
+  display: none;
+  font-family: var(--zv-font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--zv-accent);
+  margin-top: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .zv-comparison-wrapper {
   max-width: 860px;
-  margin: 40px auto 0;
+  margin: 36px auto 0;
   background: #ffffff;
   border: 1px solid var(--zv-border);
   border-radius: var(--zv-radius-lg);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: var(--zv-shadow-md);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .zv-comparison-table {
   width: 100%;
+  min-width: 540px;
   border-collapse: collapse;
   text-align: center;
 }
@@ -648,6 +676,51 @@
 .zv-cross-gray {
   color: #9ca3af;
   font-size: 1.1rem;
+}
+
+/* 10b. How To Style It / Steps */
+.zv-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.zv-step-card {
+  background: #ffffff;
+  padding: 32px 24px;
+  border-radius: var(--zv-radius-md);
+  box-shadow: var(--zv-shadow-sm);
+  border: 1px solid var(--zv-border);
+  text-align: left;
+}
+
+.zv-step-number {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--zv-primary);
+  color: #ffffff;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  font-family: var(--zv-font-heading);
+}
+
+.zv-step-title {
+  font-family: var(--zv-font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--zv-text);
+  margin-bottom: 10px;
+}
+
+.zv-step-desc {
+  font-size: 0.95rem;
+  color: var(--zv-text-muted);
+  line-height: 1.6;
 }
 
 /* 11. Instagram / On The Feed */
@@ -716,8 +789,8 @@
 
 .zv-footer-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1.3fr;
-  gap: 50px;
+  grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+  gap: 40px;
 }
 
 .zv-footer-brand h2 {
@@ -1231,6 +1304,11 @@
     gap: 36px;
   }
 
+  .zv-steps-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px;
+  }
+
   /* CRITICAL: Disable sticky gallery on mobile/tablet to prevent buy-box overlap */
   .zv-gallery-sticky {
     position: static !important;
@@ -1240,25 +1318,18 @@
   .zv-gallery-main img {
     height: auto !important;
     aspect-ratio: 1 / 1;
-    max-height: 440px;
+    max-height: 420px;
   }
 
   .zv-hero-image-card img {
     height: auto !important;
     aspect-ratio: 1 / 1;
-    max-height: 400px;
-  }
-
-  .zv-hero-float-badge {
-    position: static !important;
-    margin: 16px auto 0 !important;
-    width: 100%;
-    box-sizing: border-box;
+    max-height: 380px;
   }
 
   .zv-callout-image img {
     min-height: unset !important;
-    height: 300px !important;
+    height: 280px !important;
   }
 
   .zv-ugc-grid,
@@ -1267,7 +1338,7 @@
   }
 
   .zv-footer-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 36px;
   }
 
@@ -1276,83 +1347,369 @@
   }
 }
 
+@media (max-width: 768px) {
+  .zv-container {
+    padding: 0 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .zv-section-title {
+    font-size: clamp(1.65rem, 6vw, 2.2rem) !important;
+    margin-bottom: 10px;
+  }
+
+  .zv-section-subtitle {
+    font-size: 0.92rem !important;
+  }
+
+  .zv-swipe-indicator {
+    display: block !important;
+  }
+
+  .zv-comparison-section {
+    padding: 44px 0 !important;
+  }
+
+  .zv-comparison-wrapper {
+    margin: 20px -16px 0 !important;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+
+  .zv-comparison-table th,
+  .zv-comparison-table td {
+    padding: 12px 14px !important;
+    font-size: 0.88rem !important;
+  }
+
+  .zv-hero-float-badge {
+    position: absolute !important;
+    bottom: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    margin: 0 !important;
+    width: auto !important;
+    padding: 10px 14px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-radius: var(--zv-radius-md) !important;
+  }
+}
+
 @media (max-width: 600px) {
   .zv-hero-section {
-    padding: 36px 0 50px;
+    padding: 24px 0 36px !important;
   }
 
   .zv-hero-title {
-    font-size: clamp(2rem, 7vw, 2.6rem);
+    font-size: clamp(1.85rem, 7vw, 2.4rem) !important;
+    line-height: 1.12;
   }
 
-  .zv-product-title {
-    font-size: clamp(1.6rem, 5.5vw, 2.1rem);
-  }
-
-  .zv-gallery-main img {
-    max-height: 340px;
-  }
-
-  .zv-hero-image-card img {
-    max-height: 320px;
-  }
-
-  .zv-thumb {
-    width: 64px;
-    height: 64px;
+  .zv-hero-pill-badge {
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    margin-bottom: 14px;
   }
 
   .zv-hero-pills-list {
-    margin: 16px 0 24px;
-    gap: 8px;
+    margin: 14px 0 20px;
+    gap: 6px;
   }
 
   .zv-hero-pill {
-    padding: 6px 14px;
+    padding: 5px 12px;
+    font-size: 0.78rem;
+  }
+
+  .zv-hero-media-wrapper {
+    margin-top: 24px;
+  }
+
+  .zv-hero-image-card img {
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    max-height: 320px !important;
+  }
+
+  /* Product Page Mobile Overhaul */
+  .zv-product-main {
+    padding: 16px 0 36px !important;
+  }
+
+  .zv-product-grid {
+    gap: 20px !important;
+  }
+
+  .zv-gallery-main img {
+    max-height: 320px !important;
+    aspect-ratio: 1 / 1;
+  }
+
+  .zv-gallery-thumbs {
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .zv-thumb {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .zv-product-title {
+    font-size: clamp(1.35rem, 5.2vw, 1.7rem) !important;
+    margin: 6px 0 10px;
+  }
+
+  .zv-price-row {
+    margin-bottom: 14px;
+    gap: 10px;
+  }
+
+  .zv-price-current {
+    font-size: 1.55rem !important;
+  }
+
+  .zv-price-compare {
+    font-size: 1rem !important;
+  }
+
+  .zv-product-bullets {
+    margin: 0 0 16px;
+    padding-bottom: 14px;
+  }
+
+  .zv-product-bullets li {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    gap: 8px;
+  }
+
+  .zv-variant-group {
+    margin-bottom: 16px;
+  }
+
+  .zv-variant-label {
     font-size: 0.82rem;
+    margin-bottom: 8px;
+  }
+
+  .zv-size-pills {
+    gap: 6px;
+  }
+
+  .zv-size-pill {
+    padding: 8px 12px !important;
+    font-size: 0.85rem !important;
+    flex: 1;
+    min-width: 48px;
+    text-align: center;
+  }
+
+  .zv-bundles-container {
+    margin: 16px 0 20px;
+    gap: 10px;
+  }
+
+  .zv-bundle-card {
+    padding: 12px 14px !important;
+    border-radius: var(--zv-radius-md) !important;
+  }
+
+  .zv-bundle-left {
+    gap: 10px;
+  }
+
+  .zv-bundle-radio {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .zv-bundle-title {
+    font-size: 0.9rem !important;
+  }
+
+  .zv-bundle-subtitle {
+    font-size: 0.76rem !important;
+  }
+
+  .zv-bundle-tag {
+    top: -9px !important;
+    right: 12px !important;
+    font-size: 0.62rem !important;
+    padding: 2px 7px !important;
+  }
+
+  .zv-bundle-price-main {
+    font-size: 1rem !important;
+  }
+
+  .zv-bundle-price-compare {
+    font-size: 0.78rem !important;
+  }
+
+  .zv-buy-actions {
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .zv-btn-atc {
+    padding: 15px !important;
+    font-size: 0.95rem !important;
+  }
+
+  .zv-btn-buynow {
+    padding: 14px !important;
+    font-size: 0.88rem !important;
   }
 
   .zv-trust-badges {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    padding: 14px 0 !important;
   }
 
-  /* Mobile Horizontal Scroll-Snap for UGC and Review Strips */
-  .zv-dark-cards-scroll {
-    grid-template-columns: repeat(6, 250px);
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding: 0 16px 16px;
+  .zv-trust-badge-icon {
+    font-size: 1.2rem;
   }
 
-  .zv-dark-card {
-    scroll-snap-align: center;
+  .zv-trust-badge-text {
+    font-size: 0.68rem !important;
+    line-height: 1.2;
   }
 
+  /* Sticky ATC Mobile */
+  .zv-sticky-atc {
+    padding: 8px 12px max(10px, env(safe-area-inset-bottom)) !important;
+    gap: 10px;
+  }
+
+  .zv-sticky-thumb {
+    width: 42px !important;
+    height: 42px !important;
+    flex-shrink: 0;
+  }
+
+  .zv-sticky-title {
+    display: none !important;
+  }
+
+  .zv-sticky-price {
+    font-size: 1.05rem !important;
+    font-weight: 800;
+  }
+
+  .zv-sticky-atc .zv-btn-primary {
+    padding: 10px 18px !important;
+    font-size: 0.85rem !important;
+    flex: 1;
+    white-space: nowrap;
+  }
+
+  /* Key benefits, stats, UGC */
+  .zv-benefits-section,
+  .zv-stats-section,
+  .zv-feed-section,
+  .zv-faq-section {
+    padding: 36px 0 !important;
+  }
+
+  .zv-benefits-photo img,
+  .zv-stats-photo img {
+    height: auto !important;
+    aspect-ratio: 16 / 10;
+    max-height: 220px;
+  }
+
+  .zv-stat-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-top: 18px !important;
+  }
+
+  .zv-stat-card {
+    padding: 14px 8px !important;
+    text-align: center;
+  }
+
+  .zv-stat-number {
+    font-size: 1.6rem !important;
+  }
+
+  .zv-stat-label {
+    font-size: 0.72rem !important;
+    line-height: 1.25;
+  }
+
+  /* UGC Horizontal Scroll edge-to-edge */
   .zv-ugc-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 16px;
-    padding-bottom: 12px;
+    margin: 0 -16px;
+    padding: 0 16px 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .zv-ugc-grid::-webkit-scrollbar {
+    display: none;
   }
 
   .zv-ugc-card {
-    min-width: 250px;
-    scroll-snap-align: center;
+    min-width: 230px !important;
+    height: 320px;
   }
 
-  .zv-feed-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+  /* Review Strip edge-to-edge */
+  .zv-dark-cards-scroll {
+    margin: 0 -16px;
+    padding: 0 16px 16px;
+    grid-template-columns: repeat(6, 240px);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
 
-  .zv-feed-item {
-    height: 180px;
+  .zv-dark-cards-scroll::-webkit-scrollbar {
+    display: none;
   }
 
-  .zv-sticky-atc {
-    padding-bottom: max(14px, env(safe-area-inset-bottom));
+  /* Step cards */
+  .zv-step-card {
+    padding: 20px 16px !important;
+  }
+
+  /* Footer */
+  .zv-wave-footer {
+    padding-top: 50px;
+    margin-top: 36px;
+  }
+
+  .zv-footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+
+  .zv-footer-brand h2 {
+    font-size: 1.6rem;
+  }
+
+  .zv-newsletter-form {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .zv-newsletter-btn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .zv-footer-bottom {
+    margin-top: 32px;
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
   }
 }
 
