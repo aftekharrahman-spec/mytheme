@@ -1,0 +1,59 @@
+<section class="zv-benefits-section" style="background: var(--zv-bg-soft);">
+  <div class="zv-container" style="text-align: center;">
+    <h2 class="zv-section-title">How to <span style="color: var(--zv-accent);">style it</span></h2>
+    <p class="zv-section-subtitle">Effortless versatility designed to transition seamlessly from street to evening.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px;">
+      {%- for block in section.blocks -%}
+        <div style="background: #fff; padding: 32px 24px; border-radius: var(--zv-radius-md); box-shadow: var(--zv-shadow-sm); text-align: left;" {{ block.shopify_attributes }}>
+          <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--zv-primary); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; font-family: var(--zv-font-heading);">
+            {{ forloop.index }}
+          </div>
+          <h3 style="font-family: var(--zv-font-heading); font-size: 1.25rem; font-weight: 700; color: var(--zv-text); margin-bottom: 10px;">
+            {{ block.settings.title }}
+          </h3>
+          <p style="font-size: 0.95rem; color: var(--zv-text-muted); line-height: 1.6;">
+            {{ block.settings.description }}
+          </p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV How It Works",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Select Your Fit"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Step Description",
+          "default": "Choose true-to-size for a tailored athletic look, or size up for an effortless oversized drape."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV How It Works",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Choose Your Fit", "description": "True-to-size gives a flattering tapered chest, while one size up offers a relaxed bohemian drape." } },
+        { "type": "step", "settings": { "title": "Lace & Layer", "description": "Keep the collar strings loose for warm weather or layer under an overcoat/leather jacket." } },
+        { "type": "step", "settings": { "title": "All-Day Confidence", "description": "Micro-ribbed knit keeps you cool, crisp, and comfortable from morning meetings to evening drinks." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

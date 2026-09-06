@@ -1,0 +1,216 @@
+<section class="zv-product-main" id="zv-product-section">
+  <div class="zv-container">
+    <div class="zv-product-grid">
+      <!-- Media Gallery -->
+      <div class="zv-gallery-sticky">
+        <div class="zv-gallery-main">
+          {%- if product.featured_image -%}
+            <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.title }}">
+          {%- else -%}
+            <img id="zv-main-img" src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Product" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
+          {%- endif -%}
+        </div>
+
+        <div class="zv-gallery-thumbs">
+          <div class="zv-thumb active" onclick="switchMainImage('{{ 'zadavibe-product-shirt.jpg' | asset_url }}', this)">
+            <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Shirt Front">
+          </div>
+          <div class="zv-thumb" onclick="switchMainImage('{{ 'zadavibe-model-hero.jpg' | asset_url }}', this)">
+            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Model Fit">
+          </div>
+        </div>
+      </div>
+
+      <!-- Buy Box Info -->
+      <div class="zv-product-info">
+        <div class="zv-rating-stars">
+          ★★★★★ <span style="color: #6b726c; font-size: 0.88rem; font-weight: 600; margin-left: 6px;">4.9 / 5.0 (1,280+ REVIEWS)</span>
+        </div>
+
+        <h1 class="zv-product-title">
+          {{ product.title | default: "Zadavibe Signature Vintage Lace-Up Ribbed Henley" }}
+        </h1>
+
+        <div class="zv-price-row">
+          <span class="zv-price-current" id="zv-display-price">
+            {%- if product.price -%}{{ product.price | money }}{%- else -%}$39.99{%- endif -%}
+          </span>
+          <span class="zv-price-compare" id="zv-display-compare">
+            {%- if product.compare_at_price -%}{{ product.compare_at_price | money }}{%- else -%}$65.00{%- endif -%}
+          </span>
+          <span class="zv-sale-pill">SAVE 38% OFF</span>
+        </div>
+
+        <ul class="zv-product-bullets">
+          <li>✓ <strong>Fabric:</strong> 100% Breathable Micro-Ribbed Organic Cotton</li>
+          <li>✓ <strong>Detail:</strong> Handcrafted braided lace cords with reinforced eyelets</li>
+          <li>✓ <strong>Fit:</strong> Athletic tapered drape that accentuates shoulders</li>
+          <li>✓ <strong>Care:</strong> Pre-shrunk, colorfast & machine washable</li>
+        </ul>
+
+        <!-- Size Selector -->
+        <div class="zv-variant-group">
+          <label class="zv-variant-label">SELECT SIZE: <span id="zv-selected-size" style="color: var(--zv-primary);">M</span></label>
+          <div class="zv-size-pills">
+            <button type="button" class="zv-size-pill" onclick="selectSize('S', this)">S</button>
+            <button type="button" class="zv-size-pill active" onclick="selectSize('M', this)">M</button>
+            <button type="button" class="zv-size-pill" onclick="selectSize('L', this)">L</button>
+            <button type="button" class="zv-size-pill" onclick="selectSize('XL', this)">XL</button>
+            <button type="button" class="zv-size-pill" onclick="selectSize('XXL', this)">XXL</button>
+          </div>
+        </div>
+
+        <!-- DTC Quantity Breaks / Bundle Box -->
+        <div class="zv-variant-label" style="margin-top: 10px;">CHOOSE QUANTITY & SPECIAL DISCOUNT:</div>
+        <div class="zv-bundles-container">
+          <!-- Tier 1 -->
+          <div class="zv-bundle-card" onclick="selectBundle(1, 39.99, 65.00, this)">
+            <div class="zv-bundle-left">
+              <div class="zv-bundle-radio"></div>
+              <div>
+                <div class="zv-bundle-title">Buy 1 (Standard)</div>
+                <div class="zv-bundle-subtitle">1x Signature Henley</div>
+              </div>
+            </div>
+            <div class="zv-bundle-price">
+              <div class="zv-bundle-price-main">$39.99</div>
+              <div class="zv-bundle-price-compare">$65.00</div>
+            </div>
+          </div>
+
+          <!-- Tier 2 (Most Popular) -->
+          <div class="zv-bundle-card active" onclick="selectBundle(2, 67.98, 130.00, this)">
+            <div class="zv-bundle-tag">MOST POPULAR • SAVE 15%</div>
+            <div class="zv-bundle-left">
+              <div class="zv-bundle-radio"></div>
+              <div>
+                <div class="zv-bundle-title">Buy 2 (Save 15%)</div>
+                <div class="zv-bundle-subtitle">2x Signature Henleys ($33.99 each)</div>
+              </div>
+            </div>
+            <div class="zv-bundle-price">
+              <div class="zv-bundle-price-main">$67.98</div>
+              <div class="zv-bundle-price-compare">$130.00</div>
+            </div>
+          </div>
+
+          <!-- Tier 3 (Best Value) -->
+          <div class="zv-bundle-card" onclick="selectBundle(3, 95.97, 195.00, this)">
+            <div class="zv-bundle-tag" style="background: var(--zv-accent);">BEST VALUE • SAVE 20%</div>
+            <div class="zv-bundle-left">
+              <div class="zv-bundle-radio"></div>
+              <div>
+                <div class="zv-bundle-title">Buy 3 (Save 20%)</div>
+                <div class="zv-bundle-subtitle">3x Signature Henleys ($31.99 each)</div>
+              </div>
+            </div>
+            <div class="zv-bundle-price">
+              <div class="zv-bundle-price-main">$95.97</div>
+              <div class="zv-bundle-price-compare">$195.00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <form method="post" action="/cart/add" id="zv-add-form">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id | default: 1 }}">
+          <input type="hidden" name="quantity" id="zv-cart-quantity" value="2">
+          
+          <div class="zv-buy-actions">
+            <button type="submit" class="zv-btn-primary zv-btn-atc">
+              <span>ADD TO CART</span> • <span id="zv-btn-price">$67.98</span>
+            </button>
+            <button type="button" class="zv-btn-buynow" onclick="window.location.href='/checkout'">
+              BUY IT NOW (EXPRESS CHECKOUT)
+            </button>
+          </div>
+        </form>
+
+        <!-- Trust Badges -->
+        <div class="zv-trust-badges">
+          <div class="zv-trust-badge-item">
+            <div class="zv-trust-badge-icon">✈️</div>
+            <div class="zv-trust-badge-text">Free Worldwide Express Delivery</div>
+          </div>
+          <div class="zv-trust-badge-item">
+            <div class="zv-trust-badge-icon">🔄</div>
+            <div class="zv-trust-badge-text">30-Day Risk-Free Returns & Swaps</div>
+          </div>
+          <div class="zv-trust-badge-item">
+            <div class="zv-trust-badge-icon">🔒</div>
+            <div class="zv-trust-badge-text">100% Encrypted Safe Checkout</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky Add To Cart Bar -->
+<div class="zv-sticky-atc" id="zv-sticky-bar">
+  <div class="zv-sticky-left">
+    <div class="zv-sticky-thumb">
+      <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Thumb">
+    </div>
+    <div>
+      <div class="zv-sticky-title">Zadavibe Signature Henley</div>
+      <div class="zv-sticky-price" id="zv-sticky-price-text">$67.98</div>
+    </div>
+  </div>
+  <div>
+    <button type="button" class="zv-btn-primary" style="padding: 10px 24px; font-size: 0.9rem;" onclick="document.getElementById('zv-add-form').submit()">
+      ADD TO CART
+    </button>
+  </div>
+</div>
+
+<script>
+  function switchMainImage(src, el) {
+    const mainImg = document.getElementById('zv-main-img');
+    if (mainImg) mainImg.src = src;
+    document.querySelectorAll('.zv-thumb').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+
+  function selectSize(size, el) {
+    document.getElementById('zv-selected-size').textContent = size;
+    document.querySelectorAll('.zv-size-pill').forEach(p => p.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+
+  function selectBundle(qty, price, compare, el) {
+    document.getElementById('zv-cart-quantity').value = qty;
+    document.getElementById('zv-display-price').textContent = '$' + price.toFixed(2);
+    document.getElementById('zv-display-compare').textContent = '$' + compare.toFixed(2);
+    document.getElementById('zv-btn-price').textContent = '$' + price.toFixed(2);
+    document.getElementById('zv-sticky-price-text').textContent = '$' + price.toFixed(2);
+
+    document.querySelectorAll('.zv-bundle-card').forEach(c => c.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+
+  // Sticky Bar Scroll Listener
+  window.addEventListener('scroll', function() {
+    const buyBox = document.getElementById('zv-product-section');
+    const stickyBar = document.getElementById('zv-sticky-bar');
+    if (!buyBox || !stickyBar) return;
+    const rect = buyBox.getBoundingClientRect();
+    if (rect.bottom < 100) {
+      stickyBar.classList.add('visible');
+    } else {
+      stickyBar.classList.remove('visible');
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "ZV Main Product",
+  "settings": [],
+  "presets": [
+    {
+      "name": "ZV Main Product"
+    }
+  ]
+}
+{% endschema %}

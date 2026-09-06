@@ -1,0 +1,134 @@
+<section class="zv-hero-section">
+  <div class="zv-container">
+    <div class="zv-hero-grid">
+      <div class="zv-hero-content">
+        {%- if section.settings.top_badge != blank -%}
+          <div class="zv-hero-pill-badge">
+            <span>✨</span> {{ section.settings.top_badge }}
+          </div>
+        {%- endif -%}
+
+        <h1 class="zv-hero-title">
+          {{ section.settings.heading_line_1 }}
+          <span>{{ section.settings.heading_highlight }}</span>
+        </h1>
+
+        <p class="zv-section-subtitle">
+          {{ section.settings.subheading }}
+        </p>
+
+        <div class="zv-hero-pills-list">
+          {%- for block in section.blocks -%}
+            <span class="zv-hero-pill" {{ block.shopify_attributes }}>
+              {{ block.settings.icon }} {{ block.settings.title }}
+            </span>
+          {%- endfor -%}
+        </div>
+
+        <div>
+          <a href="{{ section.settings.button_link }}" class="zv-btn-primary">
+            {{ section.settings.button_label }}
+          </a>
+        </div>
+      </div>
+
+      <div class="zv-hero-media-wrapper">
+        <div class="zv-hero-image-card">
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'eager', alt: 'Zadavibe Hero' }}
+          {%- else -%}
+            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Zadavibe Men's Luxury Henley" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+          {%- endif -%}
+
+          <div class="zv-hero-float-badge">
+            <div class="zv-badge-icon">🌿</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.95rem; color: #1a1e1b;">100% Organic Ribbed Cotton</div>
+              <div style="font-size: 0.8rem; color: #6b726c;">Breathable • Tailored Fit</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV Hero Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "top_badge",
+      "label": "Top Pill Badge",
+      "default": "New Season Arrival • Signature Drop"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading Line",
+      "default": "Elevate Your Style With"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Heading Highlight (Colored)",
+      "default": "Timeless Comfort"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Engineered with breathable ribbed knit fabric, classic vintage lace-up collar, and a modern tailored fit designed for every occasion."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Feature Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon/Emoji",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature Title",
+          "default": "Breathable Fabric"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Hero Section",
+      "blocks": [
+        { "type": "pill", "settings": { "icon": "✓", "title": "Ultra-Breathable Knit" } },
+        { "type": "pill", "settings": { "icon": "✓", "title": "Tailored Relaxed Fit" } },
+        { "type": "pill", "settings": { "icon": "✓", "title": "Lace-Up Detail" } },
+        { "type": "pill", "settings": { "icon": "✓", "title": "Daily Versatility" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

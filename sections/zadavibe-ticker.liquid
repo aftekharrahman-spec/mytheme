@@ -1,0 +1,43 @@
+<div class="zv-ticker-wrapper" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="zv-ticker-track">
+    {%- for i in (1..6) -%}
+      <div class="zv-ticker-item">
+        <span>BUY 1 SAVE 10%</span>
+        <span class="zv-ticker-dot"></span>
+        <span>BUY 2 SAVE 15%</span>
+        <span class="zv-ticker-dot"></span>
+        <span>BUY 3 SAVE 20%</span>
+        <span class="zv-ticker-dot"></span>
+        <span>FREE EXPRESS DELIVERY OVER $50</span>
+        <span class="zv-ticker-dot"></span>
+        <span>30-DAY HASSLE FREE RETURNS</span>
+        <span class="zv-ticker-dot"></span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "ZV Discount Ticker",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#2d3b31"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Discount Ticker"
+    }
+  ]
+}
+{% endschema %}

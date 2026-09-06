@@ -1,0 +1,83 @@
+<section class="zv-stats-section">
+  <div class="zv-container">
+    <div class="zv-stats-grid">
+      <div class="zv-stats-photo">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'Zadavibe Craft' }}
+        {%- else -%}
+          <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Zadavibe Men's Lifestyle" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+        {%- endif -%}
+      </div>
+
+      <div>
+        <h2 class="zv-section-title">{{ section.settings.heading }}</h2>
+        <p class="zv-section-subtitle">{{ section.settings.subheading }}</p>
+
+        <div class="zv-stat-cards">
+          {%- for block in section.blocks -%}
+            <div class="zv-stat-card" {{ block.shopify_attributes }}>
+              <div class="zv-stat-number">{{ block.settings.stat_value }}</div>
+              <div class="zv-stat-label">{{ block.settings.stat_label }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV Power Stats",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Power of Zadavibe"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "We set out to reinvent the modern men's wardrobe by blending historical vintage aesthetic with modern fabric engineering."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Lifestyle Photo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Metric Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_value",
+          "label": "Stat Value",
+          "default": "98%"
+        },
+        {
+          "type": "text",
+          "id": "stat_label",
+          "label": "Stat Label",
+          "default": "Customer Satisfaction"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Power Stats",
+      "blocks": [
+        { "type": "stat", "settings": { "stat_value": "4.9 ★", "stat_label": "Over 2,400+ Verified 5-Star Reviews" } },
+        { "type": "stat", "settings": { "stat_value": "98%", "stat_label": "Reported Superior Fit & Comfort" } },
+        { "type": "stat", "settings": { "stat_value": "50,000+", "stat_label": "Men Styled Across 40+ Countries" } },
+        { "type": "stat", "settings": { "stat_value": "100%", "stat_label": "Ethically Sourced Organic Cotton" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

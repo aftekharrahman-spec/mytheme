@@ -1,75 +1,405 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "announcement": {
+      "type": "zadavibe-announcement-bar",
+      "settings": {
+        "show_announcement": true,
+        "icon": "✈️",
+        "text": "FREE EXPRESS WORLDWIDE SHIPPING ON ORDERS OVER $50",
+        "bg_color": "#2d3b31",
+        "text_color": "#ffffff"
+      }
+    },
+    "hero": {
+      "type": "zadavibe-hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "pill_1": {
+          "type": "pill",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "icon": "✓",
+            "title": "Ultra-Breathable Knit"
           }
         },
-        "button": {
-          "type": "buttons",
+        "pill_2": {
+          "type": "pill",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "icon": "✓",
+            "title": "Tailored Relaxed Fit"
+          }
+        },
+        "pill_3": {
+          "type": "pill",
+          "settings": {
+            "icon": "✓",
+            "title": "Braided Lace Collar"
+          }
+        },
+        "pill_4": {
+          "type": "pill",
+          "settings": {
+            "icon": "✓",
+            "title": "Daily Versatility"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "pill_1",
+        "pill_2",
+        "pill_3",
+        "pill_4"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "top_badge": "Signature Autumn/Spring Drop • Limited Release",
+        "heading_line_1": "Elevate Your Style With",
+        "heading_highlight": "Timeless Comfort",
+        "subheading": "Engineered with breathable ribbed knit fabric, vintage boho lace-up collar, and a modern athletic cut designed for men of substance.",
+        "button_label": "SHOP NOW",
+        "button_link": "/collections/all"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "ticker": {
+      "type": "zadavibe-ticker",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "bg_color": "#2d3b31",
+        "text_color": "#ffffff"
+      }
+    },
+    "ugc": {
+      "type": "zadavibe-video-ugc",
+      "blocks": {
+        "reel_1": {
+          "type": "reel",
+          "settings": {
+            "name": "Julian R.",
+            "badge": "Size Large • Olive",
+            "quote": "Best henley I own. Heavy drape, zero itchiness, and fits shoulders perfectly."
+          }
+        },
+        "reel_2": {
+          "type": "reel",
+          "settings": {
+            "name": "David S.",
+            "badge": "Size Medium • Olive",
+            "quote": "The ribbed texture looks ultra-premium. Got compliments the first hour wearing it."
+          }
+        },
+        "reel_3": {
+          "type": "reel",
+          "settings": {
+            "name": "Liam T.",
+            "badge": "Verified Buyer",
+            "quote": "Breathes so well even in warm weather. Vintage cords add unique flair."
+          }
+        },
+        "reel_4": {
+          "type": "reel",
+          "settings": {
+            "name": "Aaron M.",
+            "badge": "Size XL • Olive",
+            "quote": "Pair it with dark trousers or denim—effortless luxury aesthetic."
+          }
+        }
+      },
+      "block_order": [
+        "reel_1",
+        "reel_2",
+        "reel_3",
+        "reel_4"
+      ],
+      "settings": {
+        "heading": "Real people, real style",
+        "subheading": "See how thousands of men wear and style Zadavibe daily"
+      }
+    },
+    "callout": {
+      "type": "zadavibe-featured-callout",
+      "blocks": {
+        "feat_1": {
+          "type": "feature",
+          "settings": {
+            "text": "Ultra-soft pre-shrunk organic ribbed cotton"
+          }
+        },
+        "feat_2": {
+          "type": "feature",
+          "settings": {
+            "text": "Reinforced metal eyelets & durable lace cords"
+          }
+        },
+        "feat_3": {
+          "type": "feature",
+          "settings": {
+            "text": "Flattering athletic taper through chest and arms"
+          }
+        },
+        "feat_4": {
+          "type": "feature",
+          "settings": {
+            "text": "Colorfast and machine wash tested"
+          }
+        }
+      },
+      "block_order": [
+        "feat_1",
+        "feat_2",
+        "feat_3",
+        "feat_4"
+      ],
+      "settings": {
+        "product_title": "Zadavibe Signature Vintage Lace-Up Henley",
+        "description": "Crafted from heavy-drape breathable ribbed knit. Designed with authentic bohemian lace cords and reinforced seams for all-day confidence.",
+        "button_label": "SHOP NOW",
+        "button_link": "/products"
+      }
+    },
+    "press": {
+      "type": "zadavibe-press-bar",
+      "settings": {}
+    },
+    "benefits": {
+      "type": "zadavibe-benefits",
+      "blocks": {
+        "ben_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "👔",
+            "title": "Visibly sharp silhouette",
+            "description": "Tailored cut flatters your chest and arms while remaining comfortable all day."
+          }
+        },
+        "ben_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "💨",
+            "title": "Keeps your skin cool & fresh",
+            "description": "Natural micro-ribbed knit allows continuous airflow, keeping sweat and heat away."
+          }
+        },
+        "ben_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🧵",
+            "title": "Engineered for longevity",
+            "description": "Double-stitched hems and reinforced lace eyelets that never fray or pull loose."
+          }
+        },
+        "ben_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "🛡️",
+            "title": "Retains shape wash after wash",
+            "description": "Pre-washed fabric eliminates shrinkage so your favorite fit stays true forever."
+          }
+        }
+      },
+      "block_order": [
+        "ben_1",
+        "ben_2",
+        "ben_3",
+        "ben_4"
+      ],
+      "settings": {
+        "heading": "Style that lives with you",
+        "subheading": "Designed for men who refuse to compromise between rugged aesthetic appeal and effortless everyday comfort."
+      }
+    },
+    "stats": {
+      "type": "zadavibe-power-stats",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "4.9 ★",
+            "stat_label": "Over 2,400+ Verified 5-Star Reviews"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "98%",
+            "stat_label": "Reported Superior Fit & Breathability"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "50,000+",
+            "stat_label": "Men Styled Across 40+ Countries"
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "100%",
+            "stat_label": "Ethically Sourced Organic Ribbed Cotton"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "stat_4"
+      ],
+      "settings": {
+        "heading": "The Power of Zadavibe",
+        "subheading": "We set out to reinvent the modern men's wardrobe by blending historical vintage aesthetic with modern fabric engineering."
+      }
+    },
+    "reviews": {
+      "type": "zadavibe-review-strip",
+      "blocks": {
+        "rev_1": {
+          "type": "review",
+          "settings": {
+            "author": "Brandon K.",
+            "quote": "The texture and lace collar are unmatched. Got so many compliments."
+          }
+        },
+        "rev_2": {
+          "type": "review",
+          "settings": {
+            "author": "Liam T.",
+            "quote": "I wear this weekly. Breathable and looks ruggedly elegant."
+          }
+        },
+        "rev_3": {
+          "type": "review",
+          "settings": {
+            "author": "Marcus E.",
+            "quote": "Finally a shirt that fits wide shoulders and tapers nicely."
+          }
+        },
+        "rev_4": {
+          "type": "review",
+          "settings": {
+            "author": "Noah P.",
+            "quote": "Love the vintage cords. Gives off effortless bohemian style."
+          }
+        },
+        "rev_5": {
+          "type": "review",
+          "settings": {
+            "author": "Ethan W.",
+            "quote": "Washed 5 times already, zero color bleed or shrinkage."
+          }
+        },
+        "rev_6": {
+          "type": "review",
+          "settings": {
+            "author": "Samuel H.",
+            "quote": "Worth every single penny. Ordered 2 more colors."
+          }
+        }
+      },
+      "block_order": [
+        "rev_1",
+        "rev_2",
+        "rev_3",
+        "rev_4",
+        "rev_5",
+        "rev_6"
+      ],
+      "settings": {
+        "heading": "Trusted by Men for Style, Comfort, and Real Confidence"
+      }
+    },
+    "comparison": {
+      "type": "zadavibe-comparison",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Premium Heavyweight Ribbed Knit",
+            "generic_check": false
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Reinforced Metal Lace Eyelets",
+            "generic_check": false
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "feature_name": "True Tailored Athletic Silhouette",
+            "generic_check": true
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Zero Shrinkage After Machine Wash",
+            "generic_check": false
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "feature_name": "All-Day Micro-Airflow Breathability",
+            "generic_check": false
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "feature_name": "30-Day Hassle-Free Exchange Guarantee",
+            "generic_check": true
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ],
+      "settings": {}
+    },
+    "feed": {
+      "type": "zadavibe-feed",
+      "blocks": {
+        "feed_1": { "type": "feed_item" },
+        "feed_2": { "type": "feed_item" },
+        "feed_3": { "type": "feed_item" },
+        "feed_4": { "type": "feed_item" }
+      },
+      "block_order": [
+        "feed_1",
+        "feed_2",
+        "feed_3",
+        "feed_4"
+      ],
+      "settings": {
+        "heading": "ON THE FEED",
+        "subheading": "Tag @zadavibe on Instagram to be featured on our official channel"
+      }
+    },
+    "footer": {
+      "type": "zadavibe-wave-footer",
+      "settings": {
+        "bg_color": "#2d3b31",
+        "brand_title": "ZadaVibe",
+        "brand_bio": "Crafting signature men’s apparel that fuses timeless vintage aesthetics with modern tailoring and all-day comfort."
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "announcement",
+    "hero",
+    "ticker",
+    "ugc",
+    "callout",
+    "press",
+    "benefits",
+    "stats",
+    "reviews",
+    "comparison",
+    "feed",
+    "footer"
   ]
 }

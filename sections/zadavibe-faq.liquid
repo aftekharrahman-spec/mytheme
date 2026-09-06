@@ -1,0 +1,62 @@
+<section class="zv-faq-section">
+  <div class="zv-container">
+    <div style="text-align: center;">
+      <h2 class="zv-section-title">Frequently Asked Questions</h2>
+      <p class="zv-section-subtitle">Got questions? We've got clear, direct answers.</p>
+    </div>
+
+    <div class="zv-faq-container">
+      {%- for block in section.blocks -%}
+        <div class="zv-faq-item" {{ block.shopify_attributes }}>
+          <details style="cursor: pointer;">
+            <summary class="zv-faq-question">
+              <span>{{ block.settings.question }}</span>
+              <span style="font-size: 1.3rem; color: var(--zv-primary);">+</span>
+            </summary>
+            <div class="zv-faq-answer">
+              {{ block.settings.answer }}
+            </div>
+          </details>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV FAQs",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question & Answer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is the sizing and fit like?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Our shirts are designed with a tailored athletic fit. If you prefer a looser or oversized look, we recommend sizing up one size."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV FAQs",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "What is the fabric composition?", "answer": "It is crafted from 100% premium ribbed organic cotton blend, providing optimal breathability, softness, and durability." } },
+        { "type": "faq", "settings": { "question": "How do I care for and wash this shirt?", "answer": "Machine wash cold with similar colors. Tumble dry on low or hang dry to preserve the natural fabric texture for years." } },
+        { "type": "faq", "settings": { "question": "What is your return & exchange policy?", "answer": "We offer a 30-day risk-free exchange and return policy. If the fit isn't 100% perfect, return it for an instant size swap or full refund." } },
+        { "type": "faq", "settings": { "question": "How fast is shipping?", "answer": "Orders are processed within 24-48 hours. Express shipping typically arrives within 3-7 business days with full online tracking." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

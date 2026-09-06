@@ -1,0 +1,49 @@
+{%- if section.settings.show_announcement -%}
+<div class="zv-announcement" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <span>{{ section.settings.icon | default: '✈️' }}</span>
+  <span>{{ section.settings.text }}</span>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "ZV Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icon/Emoji",
+      "default": "✈️"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement Text",
+      "default": "Free Express Worldwide Shipping on Orders Over $50"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#2d3b31"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,99 @@
+<section class="zv-ugc-section">
+  <div class="zv-container">
+    <h2 class="zv-section-title" style="color: var(--zv-accent);">{{ section.settings.heading }}</h2>
+    <p class="zv-section-subtitle">{{ section.settings.subheading }}</p>
+
+    <div class="zv-ugc-grid">
+      {%- for block in section.blocks -%}
+        <div class="zv-ugc-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.name }}
+          {%- else -%}
+            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="{{ block.settings.name }}" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+          {%- endif -%}
+
+          <div class="zv-ugc-overlay">
+            <div>
+              <span style="background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; color: #fff;">
+                {{ block.settings.badge | default: 'Verified Buyer' }}
+              </span>
+            </div>
+
+            <div class="zv-ugc-play-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+
+            <div>
+              <div class="zv-ugc-reviewer">{{ block.settings.name }}</div>
+              <div class="zv-ugc-tag">"{{ block.settings.quote }}"</div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV UGC Video Reels",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real people, real style"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "See how our community wears and styles Zadavibe daily"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "UGC Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portrait Image / Video Thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer Name / Handle",
+          "default": "Marcus K. • Brooklyn"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Tag",
+          "default": "Verified Purchase"
+        },
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Review Quote",
+          "default": "The texture and lace collar are unmatched. Got so many compliments."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV UGC Video Reels",
+      "blocks": [
+        { "type": "reel", "settings": { "name": "Julian R.", "badge": "Size Large • Olive", "quote": "Best henley I own. Breathable, heavy drape, perfect fit." } },
+        { "type": "reel", "settings": { "name": "David S.", "badge": "Size Medium • Olive", "quote": "The ribbed texture looks high-end in person." } },
+        { "type": "reel", "settings": { "name": "Liam T.", "badge": "Verified Buyer", "quote": "Fits comfortably without clinging. Very stylish." } },
+        { "type": "reel", "settings": { "name": "Aaron M.", "badge": "Size XL • Olive", "quote": "Super versatile. Dress it up with trousers or casual denim." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

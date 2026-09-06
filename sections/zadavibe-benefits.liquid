@@ -1,0 +1,122 @@
+<section class="zv-benefits-section">
+  <div class="zv-container">
+    <div class="zv-benefits-grid">
+      <div>
+        <h2 class="zv-section-title">{{ section.settings.heading }}</h2>
+        <p class="zv-section-subtitle">{{ section.settings.subheading }}</p>
+
+        <div class="zv-benefits-list">
+          {%- for block in section.blocks -%}
+            <div class="zv-benefit-item" {{ block.shopify_attributes }}>
+              <div class="zv-benefit-icon-box">
+                {{ block.settings.icon }}
+              </div>
+              <div>
+                <div class="zv-benefit-title">{{ block.settings.title }}</div>
+                <div class="zv-benefit-desc">{{ block.settings.description }}</div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="zv-benefits-photo">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'Zadavibe Style' }}
+        {%- else -%}
+          <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Zadavibe Men's Fit" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV Key Benefits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Style that lives with you"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Designed for men who refuse to compromise between rugged aesthetic appeal and everyday comfort."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Side Model Photo"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon/Emoji",
+          "default": "✨"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Visibly sharp silhouette"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Tailored through the chest and shoulders with a clean, relaxed drape at the waist."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Key Benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "👔",
+            "title": "Visibly sharp silhouette",
+            "description": "Tailored cut flatters your chest and arms while remaining comfortable all day."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "💨",
+            "title": "Keeps your skin cool & fresh",
+            "description": "Natural micro-ribbed knit allows maximum airflow, keeping sweat and heat away."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🧵",
+            "title": "Engineered for longevity",
+            "description": "Double-stitched hems and reinforced lace eyelets that never fray or tear."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🛡️",
+            "title": "Retains shape wash after wash",
+            "description": "Pre-washed fabric eliminates shrinkage so your favorite fit stays true forever."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

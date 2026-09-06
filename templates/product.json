@@ -1,103 +1,326 @@
 {
   "sections": {
-    "main": {
-      "type": "main-product",
+    "announcement": {
+      "type": "zadavibe-announcement-bar",
+      "settings": {
+        "show_announcement": true,
+        "icon": "✈️",
+        "text": "FREE EXPRESS WORLDWIDE SHIPPING ON ORDERS OVER $50",
+        "bg_color": "#2d3b31",
+        "text_color": "#ffffff"
+      }
+    },
+    "main_product": {
+      "type": "zadavibe-main-product",
+      "settings": {}
+    },
+    "ticker": {
+      "type": "zadavibe-ticker",
+      "settings": {
+        "bg_color": "#2d3b31",
+        "text_color": "#ffffff"
+      }
+    },
+    "press": {
+      "type": "zadavibe-press-bar",
+      "settings": {}
+    },
+    "benefits": {
+      "type": "zadavibe-benefits",
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "ben_1": {
+          "type": "benefit",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "icon": "👔",
+            "title": "Visibly sharp silhouette",
+            "description": "Tailored cut flatters your chest and arms while remaining comfortable all day."
           }
         },
-        "title": {
-          "type": "title"
-        },
-        "price": {
-          "type": "price"
-        },
-        "variant_picker": {
-          "type": "variant_picker",
+        "ben_2": {
+          "type": "benefit",
           "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
+            "icon": "💨",
+            "title": "Keeps your skin cool & fresh",
+            "description": "Natural micro-ribbed knit allows continuous airflow, keeping sweat and heat away."
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector"
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
+        "ben_3": {
+          "type": "benefit",
           "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "icon": "🧵",
+            "title": "Engineered for longevity",
+            "description": "Double-stitched hems and reinforced lace eyelets that never fray or pull loose."
           }
         },
-        "description": {
-          "type": "description"
-        },
-        "share": {
-          "type": "share",
+        "ben_4": {
+          "type": "benefit",
           "settings": {
-            "share_label": "Share"
+            "icon": "🛡️",
+            "title": "Retains shape wash after wash",
+            "description": "Pre-washed fabric eliminates shrinkage so your favorite fit stays true forever."
           }
         }
       },
       "block_order": [
-        "vendor",
-        "title",
-        "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
-        "description",
-        "share"
+        "ben_1",
+        "ben_2",
+        "ben_3",
+        "ben_4"
       ],
       "settings": {
-        "enable_sticky_info": true,
-        "color_scheme": "scheme-1",
-        "media_position": "left",
-        "gallery_layout": "stacked",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "image_zoom": "lightbox",
-        "mobile_thumbnails": "hide",
-        "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 12
+        "heading": "Style that lives with you",
+        "subheading": "Designed for men who refuse to compromise between rugged aesthetic appeal and effortless everyday comfort."
       }
     },
-    "disclosures": {
-      "type": "disclosures",
+    "stats": {
+      "type": "zadavibe-power-stats",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "4.9 ★",
+            "stat_label": "Over 2,400+ Verified 5-Star Reviews"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "98%",
+            "stat_label": "Reported Superior Fit & Breathability"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "50,000+",
+            "stat_label": "Men Styled Across 40+ Countries"
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "100%",
+            "stat_label": "Ethically Sourced Organic Ribbed Cotton"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "stat_4"
+      ],
       "settings": {
-        "padding_top": 36,
-        "padding_bottom": 0
+        "heading": "The Power of Zadavibe",
+        "subheading": "We set out to reinvent the modern men's wardrobe by blending historical vintage aesthetic with modern fabric engineering."
       }
     },
-    "related-products": {
-      "type": "related-products",
+    "reviews_dark": {
+      "type": "zadavibe-review-strip",
+      "blocks": {
+        "rev_1": {
+          "type": "review",
+          "settings": {
+            "author": "Brandon K.",
+            "quote": "The texture and lace collar are unmatched. Got so many compliments."
+          }
+        },
+        "rev_2": {
+          "type": "review",
+          "settings": {
+            "author": "Liam T.",
+            "quote": "I wear this weekly. Breathable and looks ruggedly elegant."
+          }
+        },
+        "rev_3": {
+          "type": "review",
+          "settings": {
+            "author": "Marcus E.",
+            "quote": "Finally a shirt that fits wide shoulders and tapers nicely."
+          }
+        },
+        "rev_4": {
+          "type": "review",
+          "settings": {
+            "author": "Noah P.",
+            "quote": "Love the vintage cords. Gives off effortless bohemian style."
+          }
+        },
+        "rev_5": {
+          "type": "review",
+          "settings": {
+            "author": "Ethan W.",
+            "quote": "Washed 5 times already, zero color bleed or shrinkage."
+          }
+        },
+        "rev_6": {
+          "type": "review",
+          "settings": {
+            "author": "Samuel H.",
+            "quote": "Worth every single penny. Ordered 2 more colors."
+          }
+        }
+      },
+      "block_order": [
+        "rev_1",
+        "rev_2",
+        "rev_3",
+        "rev_4",
+        "rev_5",
+        "rev_6"
+      ],
       "settings": {
-        "heading": "You may also like",
-        "heading_size": "h2",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 28
+        "heading": "Trusted by Men for Style, Comfort, and Real Confidence"
+      }
+    },
+    "how_it_works": {
+      "type": "zadavibe-how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Choose Your Fit",
+            "description": "True-to-size gives a flattering tapered chest, while one size up offers a relaxed bohemian drape."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Lace & Layer",
+            "description": "Keep the collar strings loose for warm weather or layer under an overcoat/leather jacket."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "All-Day Confidence",
+            "description": "Micro-ribbed knit keeps you cool, crisp, and comfortable from morning meetings to evening drinks."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {}
+    },
+    "comparison": {
+      "type": "zadavibe-comparison",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Premium Heavyweight Ribbed Knit",
+            "generic_check": false
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Reinforced Metal Lace Eyelets",
+            "generic_check": false
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "feature_name": "True Tailored Athletic Silhouette",
+            "generic_check": true
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "feature_name": "Zero Shrinkage After Machine Wash",
+            "generic_check": false
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "feature_name": "All-Day Micro-Airflow Breathability",
+            "generic_check": false
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "feature_name": "30-Day Hassle-Free Exchange Guarantee",
+            "generic_check": true
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6"
+      ],
+      "settings": {}
+    },
+    "faq": {
+      "type": "zadavibe-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the sizing and fit like?",
+            "answer": "Our shirts are designed with a tailored athletic fit. If you prefer a looser or oversized look, we recommend sizing up one size."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the fabric composition?",
+            "answer": "It is crafted from 100% premium ribbed organic cotton blend, providing optimal breathability, softness, and durability."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I care for and wash this shirt?",
+            "answer": "Machine wash cold with similar colors. Tumble dry on low or hang dry to preserve the natural fabric texture for years."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return & exchange policy?",
+            "answer": "We offer a 30-day risk-free exchange and return policy. If the fit isn't 100% perfect, return it for an instant size swap or full refund."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ],
+      "settings": {}
+    },
+    "footer": {
+      "type": "zadavibe-wave-footer",
+      "settings": {
+        "bg_color": "#2d3b31",
+        "brand_title": "ZadaVibe",
+        "brand_bio": "Crafting signature men’s apparel that fuses timeless vintage aesthetics with modern tailoring and all-day comfort."
       }
     }
   },
   "order": [
-    "main",
-    "disclosures",
-    "related-products"
+    "announcement",
+    "main_product",
+    "ticker",
+    "press",
+    "benefits",
+    "stats",
+    "reviews_dark",
+    "how_it_works",
+    "comparison",
+    "faq",
+    "footer"
   ]
 }

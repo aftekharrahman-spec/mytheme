@@ -1,0 +1,79 @@
+<section class="zv-dark-strip">
+  <div class="zv-container">
+    <div class="zv-rating-stars">
+      ★★★★★ <span style="font-size: 0.9rem; color: #fff; margin-left: 8px; font-weight: 600;">[ OVER 10,000+ MEN TRUST US ]</span>
+    </div>
+
+    <h2 class="zv-dark-title">{{ section.settings.heading }}</h2>
+
+    <div class="zv-dark-cards-scroll">
+      {%- for block in section.blocks -%}
+        <div class="zv-dark-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.author }}
+          {%- else -%}
+            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="{{ block.settings.author }}" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+          {%- endif -%}
+
+          <div class="zv-dark-card-content">
+            <div style="color: var(--zv-gold); font-size: 0.85rem; margin-bottom: 4px;">★★★★★</div>
+            <div class="zv-dark-card-quote">"{{ block.settings.quote }}"</div>
+            <div class="zv-dark-card-author">{{ block.settings.author }} • Verified</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV Dark Review Strip",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted by Men for Style, Comfort, and Real Confidence"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Customer Review Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer Photo"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer Name",
+          "default": "Brandon K."
+        },
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Review Quote",
+          "default": "The texture and lace collar are unmatched. Got so many compliments."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Dark Review Strip",
+      "blocks": [
+        { "type": "review", "settings": { "author": "Liam T.", "quote": "I wear this weekly. Breathable and looks ruggedly elegant." } },
+        { "type": "review", "settings": { "author": "Marcus E.", "quote": "Finally a shirt that fits wide shoulders and tapers nicely." } },
+        { "type": "review", "settings": { "author": "Chris B.", "quote": "Fabric has substantial weight without overheating." } },
+        { "type": "review", "settings": { "author": "Noah P.", "quote": "Love the vintage cords. Gives off effortless bohemian style." } },
+        { "type": "review", "settings": { "author": "Ethan W.", "quote": "Washed 5 times already, zero color bleed or shrinkage." } },
+        { "type": "review", "settings": { "author": "Samuel H.", "quote": "Worth every single penny. Ordered 2 more colors." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

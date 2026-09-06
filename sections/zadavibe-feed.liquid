@@ -1,0 +1,62 @@
+<section class="zv-feed-section">
+  <div class="zv-container">
+    <h2 class="zv-section-title" style="letter-spacing: 0.08em; text-transform: uppercase;">{{ section.settings.heading }}</h2>
+    <p class="zv-section-subtitle">{{ section.settings.subheading }}</p>
+
+    <div class="zv-feed-grid">
+      {%- for block in section.blocks -%}
+        <div class="zv-feed-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Zadavibe Feed' }}
+          {%- else -%}
+            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Zadavibe Style" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV Social Feed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "ON THE FEED"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Tag @zadavibe on Instagram to be featured on our official channel"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feed_item",
+      "name": "Feed Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Feed Photo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Social Feed",
+      "blocks": [
+        { "type": "feed_item" },
+        { "type": "feed_item" },
+        { "type": "feed_item" },
+        { "type": "feed_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

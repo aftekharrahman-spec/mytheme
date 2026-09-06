@@ -1,0 +1,79 @@
+<section class="zv-comparison-section">
+  <div class="zv-container">
+    <h2 class="zv-section-title">How we <span style="color: var(--zv-accent);">stack up</span></h2>
+    <p class="zv-section-subtitle">See why thousands of men are replacing ordinary fast-fashion with Zadavibe craftsmanship.</p>
+
+    <div class="zv-comparison-wrapper">
+      <table class="zv-comparison-table">
+        <thead>
+          <tr>
+            <th style="text-align: left; width: 40%;">Key Attributes</th>
+            <th class="zv-col-highlight" style="width: 25%;">ZADAVIBE</th>
+            <th style="width: 20%;">Generic Brands</th>
+            <th style="width: 15%;">Cheap Fast Fashion</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <td>{{ block.settings.feature_name }}</td>
+              <td class="zv-col-highlight">
+                <span class="zv-check-green">✓</span>
+              </td>
+              <td>
+                {%- if block.settings.generic_check -%}
+                  <span class="zv-check-green">✓</span>
+                {%- else -%}
+                  <span class="zv-cross-gray">✕</span>
+                {%- endif -%}
+              </td>
+              <td>
+                <span class="zv-cross-gray">✕</span>
+              </td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV Comparison Table",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_name",
+          "label": "Feature Name",
+          "default": "Pre-shrunk organic ribbed cotton"
+        },
+        {
+          "type": "checkbox",
+          "id": "generic_check",
+          "label": "Generic Brands Have This?",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Comparison Table",
+      "blocks": [
+        { "type": "row", "settings": { "feature_name": "Premium Heavyweight Ribbed Knit", "generic_check": false } },
+        { "type": "row", "settings": { "feature_name": "Reinforced Metal Lace Eyelets", "generic_check": false } },
+        { "type": "row", "settings": { "feature_name": "True Tailored Athletic Silhouette", "generic_check": true } },
+        { "type": "row", "settings": { "feature_name": "Zero Shrinkage After Machine Wash", "generic_check": false } },
+        { "type": "row", "settings": { "feature_name": "All-Day Micro-Airflow Breathability", "generic_check": false } },
+        { "type": "row", "settings": { "feature_name": "30-Day Hassle-Free Exchange Guarantee", "generic_check": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,100 @@
+<section class="zv-callout-section">
+  <div class="zv-container">
+    <div class="zv-callout-card">
+      <div class="zv-callout-image">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.product_title }}
+        {%- else -%}
+          <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Product Spotlight" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
+        {%- endif -%}
+      </div>
+
+      <div class="zv-callout-info">
+        <div class="zv-rating-stars">
+          <span>★★★★★</span>
+          <span style="color: #6b726c; font-size: 0.85rem; font-weight: 600; margin-left: 6px;">[ OVER 10,000+ REVIEWS ]</span>
+        </div>
+
+        <h2 class="zv-section-title" style="margin-bottom: 8px;">{{ section.settings.product_title }}</h2>
+        <p class="zv-section-subtitle">{{ section.settings.description }}</p>
+
+        <ul class="zv-callout-checklist">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="zv-checkmark-icon">✓</span>
+              <span>{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        <div>
+          <a href="{{ section.settings.button_link }}" class="zv-btn-primary">
+            {{ section.settings.button_label }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ZV Feature Callout",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Callout Image"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Product Title",
+      "default": "Zadavibe Vintage Lace-Up Ribbed Henley"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Short Description",
+      "default": "Crafted from heavy-drape breathable ribbed cotton. Designed with authentic vintage boho lace cords and reinforced seams for long-lasting daily wear."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/products"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Checkmark Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Feature Text",
+          "default": "All-day breathable airflow knit"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Feature Callout",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Ultra-soft pre-shrunk organic cotton" } },
+        { "type": "feature", "settings": { "text": "Reinforced lace-up collar eyelets" } },
+        { "type": "feature", "settings": { "text": "Modern tapered athletic silhouette" } },
+        { "type": "feature", "settings": { "text": "Machine wash safe & fade resistant" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

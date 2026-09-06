@@ -1,0 +1,81 @@
+<footer class="zv-wave-footer" style="background-color: {{ section.settings.bg_color }};">
+  <div class="zv-wave-svg">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,0 C150,90 350,-40 500,60 C650,160 900,10 1200,40 L1200,120 L0,120 Z" style="fill: {{ section.settings.bg_color }};"></path>
+    </svg>
+  </div>
+
+  <div class="zv-container">
+    <div class="zv-footer-grid">
+      <div class="zv-footer-brand">
+        <h2>{{ section.settings.brand_title | default: 'ZadaVibe' }}</h2>
+        <p>{{ section.settings.brand_bio | default: 'Crafting signature men’s apparel that fuses timeless vintage aesthetics with modern tailoring and all-day comfort.' }}</p>
+      </div>
+
+      <div class="zv-footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/collections/all">All Collections</a></li>
+          <li><a href="/products">Featured Drop</a></li>
+          <li><a href="/pages/contact">Track Order</a></li>
+          <li><a href="/pages/contact">Help & Support</a></li>
+        </ul>
+      </div>
+
+      <div class="zv-footer-newsletter">
+        <h3>Subscribe & Save 15%</h3>
+        <p style="color: #c5cdc7; font-size: 0.9rem; margin-bottom: 12px;">Get exclusive access to new seasonal drops, style guides, and secret discounts.</p>
+        
+        {% form 'customer', class: 'zv-newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input
+            type="email"
+            name="contact[email]"
+            class="zv-newsletter-input"
+            value="{{ form.email }}"
+            placeholder="Enter your email"
+            required
+          >
+          <button type="submit" class="zv-newsletter-btn">
+            Sign Up
+          </button>
+        {% endform %}
+      </div>
+    </div>
+
+    <div class="zv-footer-bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Powered by Zadavibe OS 2.0. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "ZV Wave Footer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Footer Background Color",
+      "default": "#2d3b31"
+    },
+    {
+      "type": "text",
+      "id": "brand_title",
+      "label": "Brand Title",
+      "default": "ZadaVibe"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_bio",
+      "label": "Brand Bio",
+      "default": "Crafting signature men’s apparel that fuses timeless vintage aesthetics with modern tailoring and all-day comfort."
+    }
+  ],
+  "presets": [
+    {
+      "name": "ZV Wave Footer"
+    }
+  ]
+}
+{% endschema %}
