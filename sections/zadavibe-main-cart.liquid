@@ -1,0 +1,1016 @@
+<section class="zv-cart-section" id="zv-cart-app">
+  <div class="zv-container">
+    {%- if cart.item_count > 0 -%}
+      <!-- Free Shipping Meter -->
+      {%- assign free_shipping_threshold = 15000 -%}
+      {%- if cart.total_price >= free_shipping_threshold -%}
+        {%- assign progress_pct = 100 -%}
+        {%- assign is_free = true -%}
+      {%- else -%}
+        {%- assign remaining_amount = free_shipping_threshold | minus: cart.total_price -%}
+        {%- assign progress_pct = cart.total_price | times: 100 | divided_by: free_shipping_threshold -%}
+        {%- assign is_free = false -%}
+      {%- endif -%}
+
+      <div class="zv-shipping-meter-card">
+        <div class="zv-shipping-meter-text">
+          {%- if is_free -%}
+            <span class="zv-meter-icon">🎉</span>
+            <span>You've unlocked <strong>FREE EXPRESS UAE DELIVERY</strong> on this order!</span>
+          {%- else -%}
+            <span class="zv-meter-icon">🚚</span>
+            <span>Add <strong>{{ remaining_amount | money }}</strong> more to unlock <strong>FREE EXPRESS UAE DELIVERY</strong>!</span>
+          {%- endif -%}
+        </div>
+        <div class="zv-shipping-meter-bar">
+          <div class="zv-shipping-meter-fill" style="width: {{ progress_pct }}%;"></div>
+        </div>
+      </div>
+
+      <div class="zv-cart-grid">
+        <!-- Left: Line Items List -->
+        <div class="zv-cart-items-column">
+          <div class="zv-cart-header-row">
+            <h1 class="zv-cart-title">Your Bag <span>({{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %})</span></h1>
+            <a href="/collections/all" class="zv-cart-continue-link">Continue Shopping →</a>
+          </div>
+
+          <form action="{{ routes.cart_url }}" method="post" id="zv-cart-form">
+            <div class="zv-cart-items-list">
+              {%- for item in cart.items -%}
+                <div class="zv-cart-item" data-line-key="{{ item.key }}" data-line-index="{{ forloop.index }}">
+                  <!-- Product Image -->
+                  <div class="zv-cart-item-media">
+                    <a href="{{ item.url }}">
+                      {%- if item.image -%}
+                        <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}">
+                      {%- else -%}
+                        <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Item">
+                      {%- endif -%}
+                    </a>
+                  </div>
+
+                  <!-- Product Details -->
+                  <div class="zv-cart-item-info">
+                    <div class="zv-cart-item-top">
+                      <div>
+                        <h2 class="zv-cart-item-title">
+                          <a href="{{ item.url }}">{{ item.product.title }}</a>
+                        </h2>
+                        {%- unless item.product.has_only_default_variant -%}
+                          <div class="zv-cart-item-variants">
+                            {%- for option in item.options_with_values -%}
+                              <span>{{ option.name }}: <strong>{{ option.value }}</strong></span>{% unless forloop.last %} • {% endunless %}
+                            {%- endfor -%}
+                          </div>
+                        {%- endunless -%}
+                      </div>
+
+                      <div class="zv-cart-item-price-col">
+                        <div class="zv-cart-item-total-price">
+                          {{ item.final_line_price | money }}
+                        </div>
+                        {%- if item.original_line_price > item.final_line_price -%}
+                          <div class="zv-cart-item-original-price">
+                            {{ item.original_line_price | money }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+
+                    <!-- Bottom Controls: Stepper & Remove -->
+                    <div class="zv-cart-item-bottom">
+                      <div class="zv-cart-stepper">
+                        <button
+                          type="button"
+                          class="zv-stepper-btn"
+                          onclick="updateCartItem('{{ item.key }}', {{ item.quantity | minus: 1 }})"
+                          aria-label="Decrease quantity"
+                        >−</button>
+                        <span class="zv-stepper-value">{{ item.quantity }}</span>
+                        <button
+                          type="button"
+                          class="zv-stepper-btn"
+                          onclick="updateCartItem('{{ item.key }}', {{ item.quantity | plus: 1 }})"
+                          aria-label="Increase quantity"
+                        >+</button>
+                      </div>
+
+                      <button
+                        type="button"
+                        class="zv-cart-remove-btn"
+                        onclick="updateCartItem('{{ item.key }}', 0)"
+                        title="Remove item"
+                      >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                        <span>Remove</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </form>
+        </div>
+
+        <!-- Right: Sticky Order Summary -->
+        <div class="zv-cart-summary-column">
+          <div class="zv-cart-summary-card">
+            <h2 class="zv-summary-title">Order Summary</h2>
+
+            <div class="zv-summary-rows">
+              <div class="zv-summary-row">
+                <span>Subtotal</span>
+                <span class="zv-summary-val">{{ cart.total_price | money }}</span>
+              </div>
+
+              <div class="zv-summary-row">
+                <span>Estimated UAE Shipping</span>
+                <span class="zv-summary-val">
+                  {%- if is_free -%}
+                    <strong style="color: #16a34a;">FREE</strong>
+                  {%- else -%}
+                    Calculated at Checkout
+                  {%- endif -%}
+                </span>
+              </div>
+
+              <div class="zv-summary-row">
+                <span>UAE VAT (5%)</span>
+                <span class="zv-summary-val" style="color: var(--zv-text-muted);">Included in price</span>
+              </div>
+
+              <div class="zv-summary-divider"></div>
+
+              <div class="zv-summary-total-row">
+                <span>Estimated Total</span>
+                <span class="zv-summary-total-price">{{ cart.total_price | money }}</span>
+              </div>
+            </div>
+
+            <!-- Order Notes / Gift Message Toggle -->
+            <details class="zv-cart-note-details">
+              <summary class="zv-cart-note-summary">
+                <span>📝 Add Order Note / Delivery Instructions</span>
+                <span class="zv-note-arrow">▾</span>
+              </summary>
+              <div class="zv-cart-note-content">
+                <textarea
+                  name="note"
+                  form="zv-cart-form"
+                  class="zv-cart-note-input"
+                  placeholder="Apartment/villa number, buzzer code, or special gift message..."
+                >{{ cart.note }}</textarea>
+              </div>
+            </details>
+
+            <!-- Checkout Action -->
+            <div class="zv-cart-checkout-actions">
+              <button
+                type="submit"
+                form="zv-cart-form"
+                name="checkout"
+                class="zv-btn-primary zv-btn-checkout"
+              >
+                PROCEED TO CHECKOUT 🔒
+              </button>
+            </div>
+
+            <!-- COD Reassurance Notice for UAE -->
+            <div class="zv-cart-cod-notice">
+              <span class="zv-cod-icon">💵</span>
+              <span><strong>Cash on Delivery (COD)</strong> available across Dubai, Abu Dhabi, & all Emirates.</span>
+            </div>
+
+            <!-- Trust Guarantee Badges -->
+            <div class="zv-cart-guarantees">
+              <div class="zv-guarantee-item">
+                <span class="zv-guarantee-icon">🛡️</span>
+                <span>100% Encrypted Safe Checkout</span>
+              </div>
+              <div class="zv-guarantee-item">
+                <span class="zv-guarantee-icon">⚡</span>
+                <span>Same-Day Dispatch Across UAE</span>
+              </div>
+              <div class="zv-guarantee-item">
+                <span class="zv-guarantee-icon">🔄</span>
+                <span>30-Day Hassle-Free Returns & Swaps</span>
+              </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="zv-cart-payments">
+              <div class="zv-payment-badges">
+                <!-- Visa -->
+                <span class="zv-payment-badge" title="Visa">
+                  <svg viewBox="0 0 38 24" width="34" height="20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Visa">
+                    <path fill="#1434CB" d="M15.2 16.9l1.8-10.3h2.8l-1.8 10.3h-2.8zm8.6-10.1c-.6-.2-1.5-.4-2.6-.4-2.9 0-4.9 1.4-4.9 3.5 0 1.5 1.4 2.4 2.5 2.9 1.1.5 1.5.8 1.5 1.3 0 .7-.9 1.1-1.7 1.1-1.1 0-1.8-.2-2.7-.6l-.4-.2-.4 2.2c.6.3 1.8.5 3 .5 3 0 5-1.4 5-3.6 0-1.2-.8-2.2-2.5-2.9-1-.5-1.6-.9-1.6-1.4 0-.5.6-1 1.8-1 .9 0 1.6.2 2.2.4l.3.1.4-2.3zm6.3 6.9c.2-.5 1-2.5 1-2.5.0-.1.2-.4.3-.6l.1.6s.4 1.9.5 2.5h-1.9zm2.8-7.1h-2.2c-.7 0-1.2.2-1.5.8l-4.2 9.5h3l.6-1.6h3.6l.3 1.6h2.6l-2.2-10.3zm-19.9 0l-2.8 7.1-.3-1.4c-.5-1.6-2.1-3.4-3.9-4.3l2.5 9h3l4.5-10.4h-3z"/>
+                    <path fill="#F9A01B" d="M7.7 6.6H3.3l-.1.4c3.4.8 5.7 2.8 6.6 5.3l-.9-4.8c-.2-.6-.6-.8-1.2-.9z"/>
+                  </svg>
+                </span>
+
+                <!-- Mastercard -->
+                <span class="zv-payment-badge" title="Mastercard">
+                  <svg viewBox="0 0 38 24" width="34" height="20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mastercard">
+                    <circle cx="14" cy="12" r="7" fill="#EB001B"/>
+                    <circle cx="24" cy="12" r="7" fill="#F79E1B"/>
+                    <path fill="#FF5F00" d="M19 6.8c1.7 1.3 2.7 3.3 2.7 5.2s-1 3.9-2.7 5.2c-1.7-1.3-2.7-3.3-2.7-5.2s1-3.9 2.7-5.2z"/>
+                  </svg>
+                </span>
+
+                <!-- Apple Pay -->
+                <span class="zv-payment-badge" title="Apple Pay">
+                  <svg viewBox="0 0 38 24" width="34" height="20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Apple Pay">
+                    <path fill="#000000" d="M12.9 10.3c-.4.5-1.1.9-1.7.9-.1 0-.3 0-.4-.1-.1-.8.2-1.6.6-2.1.4-.5 1.1-.9 1.7-.9.1 0 .3 0 .4.1 0 .8-.2 1.5-.6 2.1zm1.2 4.6c-.3.7-.8 1.6-1.4 2.4-.6.8-1.2 1.5-2 1.5-.8 0-1-.5-2-.5s-1.2.5-2 .5c-.8 0-1.4-.7-2-1.5-1.2-1.8-2.1-5-2.1-7.8 0-4.5 2.9-6.9 5.8-6.9 1.5 0 2.6.9 3.4.9.7 0 1.8-.9 3.5-.9 1.4 0 3 .7 3.9 2-2.7 1.6-2.3 5.4.3 6.6-.7 1.4-1.5 2.9-2.4 3.7h-.2zm6.4-9.3h3.5c1.8 0 3.2 1.2 3.2 2.9 0 1.8-1.4 2.9-3.2 2.9h-1.6v3.7h-1.9V5.6zm1.9 4.3h1.4c1 0 1.6-.6 1.6-1.4s-.6-1.4-1.6-1.4h-1.4v2.8zm7.1 5.3c0-1.4 1.1-2.2 3.1-2.3l1.8-.1v-.5c0-.8-.6-1.3-1.6-1.3-.9 0-1.5.4-1.7 1h-1.8c.2-1.5 1.6-2.4 3.5-2.4 2.1 0 3.4 1.1 3.4 2.9v4.9h-1.8v-1.1c-.6.8-1.6 1.3-2.6 1.3-1.4 0-2.3-.9-2.3-2.4zm4.9-.8v-.7l-1.6.1c-1 .1-1.5.5-1.5 1.1 0 .6.5 1 1.3 1 .9 0 1.8-.6 1.8-1.5zm6.3 3.9l1.9-5.6h2l-3.2 8.4h-1.9l1.2-3.1-2.8-5.3h2.1l1.7 3.6z"/>
+                  </svg>
+                </span>
+
+                <!-- Google Pay -->
+                <span class="zv-payment-badge" title="Google Pay">
+                  <svg viewBox="0 0 38 24" width="34" height="20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Google Pay">
+                    <path fill="#4285F4" d="M14.6 12.3c0-.3 0-.6-.1-.9h-5.4v1.8h3.1c-.1.7-.5 1.4-1.1 1.8v1.5h1.8c1-1 1.7-2.5 1.7-4.2z"/>
+                    <path fill="#34A853" d="M9.1 17.8c1.6 0 2.9-.5 3.8-1.4l-1.8-1.5c-.5.3-1.2.6-2 .6-1.5 0-2.8-1-3.3-2.4H3.9v1.5c1 2 3.1 3.2 5.2 3.2z"/>
+                    <path fill="#FBBC05" d="M5.8 13.1c-.1-.4-.2-.8-.2-1.2s.1-.8.2-1.2V9.2H3.9c-.4.9-.6 1.8-.6 2.7s.2 1.9.6 2.7l1.9-1.5z"/>
+                    <path fill="#EA4335" d="M9.1 6.3c.9 0 1.6.3 2.2.9l1.6-1.6C12 4.7 10.7 4.1 9.1 4.1c-2.1 0-4.2 1.3-5.2 3.2l1.9 1.5c.5-1.4 1.8-2.5 3.3-2.5z"/>
+                  </svg>
+                </span>
+
+                <!-- Amex -->
+                <span class="zv-payment-badge" title="American Express">
+                  <svg viewBox="0 0 38 24" width="34" height="20" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="American Express">
+                    <rect width="38" height="24" rx="3" fill="#006FCF"/>
+                    <path fill="#ffffff" d="M6 15.5l1.6-4.5 1.6 4.5h2.1L8.8 9.5H6.4L3.8 15.5H6zm1.6-1.7l-.6-1.7-.6 1.7h1.2zm6.2 1.7V9.5h-2.1l-1.8 4.2-1.8-4.2H6.1v6h1.9v-4.1l1.5 3.5h.9l1.5-3.5v4.1h1.9zm4.8 0v-6h-4.3v6h4.3zm-1.9-4.4h-1v.9h1v1.1h-1v1h1.2v1.4h-2.5V9.5h2.3v1.6zm6.8 4.4l-1.8-2.6 1.7-2.4h-2.1l-1.1 1.6-1-1.6h-2.1l1.7 2.4-1.8 2.6h2.1l1.2-1.7 1.2 1.7h2zm6.7 0v-6h-4.3v6h4.3zm-1.9-4.4h-1v.9h1v1.1h-1v1h1.2v1.4h-2.5V9.5h2.3v1.6z"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {%- else -%}
+      <!-- Empty Bag State -->
+      <div class="zv-cart-empty-card">
+        <div class="zv-empty-bag-icon-wrapper">
+          <div class="zv-empty-pulse-ring"></div>
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+        </div>
+
+        <h1 class="zv-empty-title">Your Bag Is Currently Empty</h1>
+        <p class="zv-empty-subtitle">
+          Discover our signature handcrafted men's ribbed henleys and knits engineered with breathable organic fibers and modern athletic tailoring.
+        </p>
+
+        <a href="/collections/all" class="zv-btn-primary" style="padding: 16px 40px; font-size: 1rem;">
+          EXPLORE MENSWEAR COLLECTION
+        </a>
+
+        <!-- Curated Essentials Mini Grid -->
+        <div class="zv-empty-curated-section">
+          <div class="zv-curated-header">
+            <span>POPULAR PICKS RIGHT NOW</span>
+          </div>
+          <div class="zv-empty-curated-grid">
+            <div class="zv-curated-card">
+              <a href="/products" class="zv-curated-img-wrap">
+                <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Signature Henley">
+              </a>
+              <div class="zv-curated-info">
+                <h4><a href="/products">Vintage Lace-Up Ribbed Henley</a></h4>
+                <div class="zv-curated-price">AED 149.00</div>
+                <a href="/products" class="zv-curated-btn">View Product</a>
+              </div>
+            </div>
+
+            <div class="zv-curated-card">
+              <a href="/products" class="zv-curated-img-wrap">
+                <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Ribbed Knit Tunic">
+              </a>
+              <div class="zv-curated-info">
+                <h4><a href="/products">Boho Corded Knit Henley</a></h4>
+                <div class="zv-curated-price">AED 159.00</div>
+                <a href="/products" class="zv-curated-btn">View Product</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<!-- Loading Overlay for AJAX actions -->
+<div class="zv-cart-loading-overlay" id="zv-cart-loader">
+  <div class="zv-cart-spinner"></div>
+</div>
+
+<style>
+  .zv-cart-section {
+    padding: 50px 0 90px;
+    background: #fdfbf7;
+    min-height: 70vh;
+  }
+
+  /* Free Shipping Progress Card */
+  .zv-shipping-meter-card {
+    background: #ffffff;
+    border: 1px solid var(--zv-border);
+    border-radius: var(--zv-radius-md);
+    padding: 18px 24px;
+    margin-bottom: 32px;
+    box-shadow: var(--zv-shadow-sm);
+  }
+
+  .zv-shipping-meter-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: var(--zv-text);
+    margin-bottom: 12px;
+    font-family: var(--zv-font-body);
+  }
+
+  .zv-meter-icon {
+    font-size: 1.3rem;
+  }
+
+  .zv-shipping-meter-bar {
+    width: 100%;
+    height: 9px;
+    background: #e9ece9;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .zv-shipping-meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2d3b31 0%, #c07a50 100%);
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+
+  .zv-shipping-meter-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+    animation: zvMeterShimmer 2.2s infinite;
+  }
+
+  @keyframes zvMeterShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* Cart Layout Grid */
+  .zv-cart-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  /* Cart Header Row */
+  .zv-cart-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 18px;
+    border-bottom: 1.5px solid var(--zv-border);
+    margin-bottom: 24px;
+  }
+
+  .zv-cart-title {
+    font-family: var(--zv-font-heading);
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--zv-text);
+    margin: 0;
+  }
+
+  .zv-cart-title span {
+    font-size: 1.1rem;
+    color: var(--zv-text-muted);
+    font-weight: 500;
+  }
+
+  .zv-cart-continue-link {
+    font-size: 0.92rem;
+    color: var(--zv-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .zv-cart-continue-link:hover {
+    color: var(--zv-accent);
+  }
+
+  /* Cart Item Card */
+  .zv-cart-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .zv-cart-item {
+    background: #ffffff;
+    border: 1px solid var(--zv-border);
+    border-radius: var(--zv-radius-md);
+    padding: 18px;
+    display: flex;
+    gap: 20px;
+    box-shadow: var(--zv-shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .zv-cart-item:hover {
+    box-shadow: var(--zv-shadow-md);
+  }
+
+  .zv-cart-item-media {
+    width: 100px;
+    height: 115px;
+    flex-shrink: 0;
+    border-radius: var(--zv-radius-sm);
+    overflow: hidden;
+    background: var(--zv-bg-soft);
+  }
+
+  .zv-cart-item-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .zv-cart-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .zv-cart-item-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .zv-cart-item-title {
+    font-family: var(--zv-font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 6px;
+  }
+
+  .zv-cart-item-title a {
+    color: var(--zv-text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .zv-cart-item-title a:hover {
+    color: var(--zv-accent);
+  }
+
+  .zv-cart-item-variants {
+    font-size: 0.85rem;
+    color: var(--zv-text-muted);
+  }
+
+  .zv-cart-item-price-col {
+    text-align: right;
+  }
+
+  .zv-cart-item-total-price {
+    font-family: var(--zv-font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--zv-primary);
+  }
+
+  .zv-cart-item-original-price {
+    font-size: 0.88rem;
+    color: #9ca3af;
+    text-decoration: line-through;
+    margin-top: 2px;
+  }
+
+  .zv-cart-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #f2f0ea;
+  }
+
+  /* Stepper in Cart */
+  .zv-cart-stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid var(--zv-border);
+    border-radius: var(--zv-radius-pill);
+    background: #fdfbf7;
+    overflow: hidden;
+  }
+
+  .zv-stepper-btn {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--zv-text);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .zv-stepper-btn:hover {
+    background: #eae7df;
+  }
+
+  .zv-stepper-value {
+    width: 34px;
+    text-align: center;
+    font-family: var(--zv-font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--zv-text);
+  }
+
+  .zv-cart-remove-btn {
+    background: none;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 6px 8px;
+  }
+
+  .zv-cart-remove-btn:hover {
+    color: #ef4444;
+  }
+
+  /* Right: Order Summary Card */
+  .zv-cart-summary-column {
+    position: sticky;
+    top: 90px;
+  }
+
+  .zv-cart-summary-card {
+    background: #ffffff;
+    border: 1px solid var(--zv-border);
+    border-radius: var(--zv-radius-lg);
+    padding: 28px 24px;
+    box-shadow: var(--zv-shadow-md);
+  }
+
+  .zv-summary-title {
+    font-family: var(--zv-font-heading);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--zv-text);
+    margin: 0 0 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--zv-border);
+  }
+
+  .zv-summary-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .zv-summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    color: var(--zv-text-muted);
+  }
+
+  .zv-summary-val {
+    font-weight: 600;
+    color: var(--zv-text);
+  }
+
+  .zv-summary-divider {
+    height: 1px;
+    background: var(--zv-border);
+    margin: 8px 0;
+  }
+
+  .zv-summary-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--zv-font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--zv-text);
+    padding-top: 4px;
+  }
+
+  .zv-summary-total-price {
+    font-size: 1.6rem;
+    color: var(--zv-primary);
+  }
+
+  /* Cart Note Accordion */
+  .zv-cart-note-details {
+    margin-top: 18px;
+    border-top: 1px solid #f2f0ea;
+    padding-top: 12px;
+  }
+
+  .zv-cart-note-summary {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--zv-text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+
+  .zv-cart-note-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .zv-cart-note-content {
+    margin-top: 10px;
+  }
+
+  .zv-cart-note-input {
+    width: 100%;
+    height: 70px;
+    border: 1px solid var(--zv-border);
+    border-radius: var(--zv-radius-sm);
+    padding: 10px 12px;
+    font-family: var(--zv-font-body);
+    font-size: 0.85rem;
+    outline: none;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+
+  .zv-cart-note-input:focus {
+    border-color: var(--zv-primary);
+  }
+
+  /* Checkout Button */
+  .zv-cart-checkout-actions {
+    margin-top: 24px;
+  }
+
+  .zv-btn-checkout {
+    width: 100%;
+    padding: 18px;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* COD Reassurance Notice */
+  .zv-cart-cod-notice {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: #fdfbf7;
+    border: 1px dashed var(--zv-border);
+    border-radius: var(--zv-radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: var(--zv-primary);
+    line-height: 1.4;
+  }
+
+  .zv-cod-icon {
+    font-size: 1.2rem;
+  }
+
+  /* Guarantee Checklist */
+  .zv-cart-guarantees {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #f2f0ea;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .zv-guarantee-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--zv-text-muted);
+  }
+
+  .zv-cart-payments {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Empty State */
+  .zv-cart-empty-card {
+    background: #ffffff;
+    border: 1px solid var(--zv-border);
+    border-radius: var(--zv-radius-lg);
+    padding: 70px 30px;
+    text-align: center;
+    max-width: 680px;
+    margin: 20px auto 40px;
+    box-shadow: var(--zv-shadow-md);
+  }
+
+  .zv-empty-bag-icon-wrapper {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: #f1f6f2;
+    color: var(--zv-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .zv-empty-pulse-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid rgba(45, 59, 49, 0.2);
+    animation: zvEmptyPulse 2.5s ease-out infinite;
+  }
+
+  @keyframes zvEmptyPulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    100% { transform: scale(1.2); opacity: 0; }
+  }
+
+  .zv-empty-title {
+    font-family: var(--zv-font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--zv-text);
+    margin: 0 0 14px;
+  }
+
+  .zv-empty-subtitle {
+    font-size: 1.05rem;
+    color: var(--zv-text-muted);
+    max-width: 480px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+  }
+
+  .zv-empty-curated-section {
+    margin-top: 50px;
+    padding-top: 36px;
+    border-top: 1px solid var(--zv-border);
+  }
+
+  .zv-curated-header {
+    font-family: var(--zv-font-heading);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--zv-accent);
+    margin-bottom: 24px;
+  }
+
+  .zv-empty-curated-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .zv-curated-card {
+    background: var(--zv-bg-soft);
+    border: 1px solid var(--zv-border);
+    border-radius: var(--zv-radius-md);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .zv-curated-img-wrap {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .zv-curated-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .zv-curated-info h4 {
+    margin: 0 0 4px;
+    font-family: var(--zv-font-heading);
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .zv-curated-info h4 a {
+    color: var(--zv-text);
+    text-decoration: none;
+  }
+
+  .zv-curated-price {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--zv-primary);
+    margin-bottom: 6px;
+  }
+
+  .zv-curated-btn {
+    font-size: 0.78rem;
+    color: var(--zv-accent);
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  /* Loading Overlay */
+  .zv-cart-loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+  }
+
+  .zv-cart-loading-overlay.active {
+    display: flex;
+  }
+
+  .zv-cart-spinner {
+    width: 44px;
+    height: 44px;
+    border: 3px solid rgba(45, 59, 49, 0.15);
+    border-top-color: var(--zv-primary);
+    border-radius: 50%;
+    animation: zvSpin 0.8s linear infinite;
+  }
+
+  @keyframes zvSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 992px) {
+    .zv-cart-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .zv-cart-summary-column {
+      position: static;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .zv-cart-section {
+      padding: 24px 0 60px;
+    }
+
+    .zv-shipping-meter-card {
+      padding: 14px 16px;
+      margin-bottom: 20px;
+    }
+
+    .zv-shipping-meter-text {
+      font-size: 0.84rem;
+      gap: 6px;
+    }
+
+    .zv-cart-header-row {
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .zv-cart-title {
+      font-size: 1.45rem;
+    }
+
+    .zv-cart-item {
+      padding: 12px;
+      gap: 12px;
+    }
+
+    .zv-cart-item-media {
+      width: 76px;
+      height: 90px;
+    }
+
+    .zv-cart-item-title {
+      font-size: 0.95rem;
+    }
+
+    .zv-cart-item-total-price {
+      font-size: 1rem;
+    }
+
+    .zv-cart-summary-card {
+      padding: 20px 16px;
+    }
+
+    .zv-summary-title {
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+    }
+
+    .zv-empty-card {
+      padding: 40px 16px;
+    }
+
+    .zv-empty-title {
+      font-size: 1.7rem;
+    }
+
+    .zv-empty-curated-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+</style>
+
+<script>
+  function updateCartItem(lineKey, newQuantity) {
+    const loader = document.getElementById('zv-cart-loader');
+    if (loader) loader.classList.add('active');
+
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: lineKey,
+        quantity: parseInt(newQuantity)
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      // Reload page to reflect updated prices, shipping meter & discounts
+      window.location.reload();
+    })
+    .catch(err => {
+      console.error('Failed to update cart:', err);
+      if (loader) loader.classList.remove('active');
+      window.location.reload();
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "ZV Main Cart",
+  "settings": [],
+  "presets": [
+    {
+      "name": "ZV Main Cart"
+    }
+  ]
+}
+{% endschema %}
