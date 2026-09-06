@@ -44,9 +44,9 @@
           </div>
 
           {%- if section.settings.image != blank -%}
-            {{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'eager', alt: 'Zadavibe Hero' }}
+            {{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.heading_line_1 | default: 'ZadaVibe Luxury Vintage Ribbed Henley - Menswear Dubai UAE' }}
           {%- else -%}
-            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Zadavibe Men's Luxury Henley" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="ZadaVibe Luxury Vintage Ribbed Henley - Menswear Dubai UAE" width="600" height="700" loading="eager" fetchpriority="high" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
           {%- endif -%}
 
           <div class="zv-hero-float-badge">

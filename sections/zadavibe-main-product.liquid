@@ -39,9 +39,9 @@
             <!-- Main Image -->
             <div class="zv-stage-img-wrap" id="zv-stage-img-wrap">
               {%- if product.featured_image -%}
-                <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}">
+                <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }} - Men's Fashion UAE" width="600" height="720" fetchpriority="high" loading="eager">
               {%- else -%}
-                <img id="zv-main-img" src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Product" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
+                <img id="zv-main-img" src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="ZadaVibe Vintage Ribbed Henley Dubai UAE" width="600" height="720" fetchpriority="high" loading="eager" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
               {%- endif -%}
             </div>
 

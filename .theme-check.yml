@@ -21,3 +21,6 @@ UnusedAssign:
 
 OrphanedSnippet:
   enabled: false
+
+RemoteAsset:
+  enabled: false

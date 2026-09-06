@@ -34,14 +34,18 @@
                 {%- if prod.featured_image -%}
                   <img
                     src="{{ prod.featured_image | image_url: width: 600 }}"
-                    alt="{{ prod.title | escape }}"
+                    alt="{{ prod.title | escape }} - Men's Fashion Dubai UAE | ZadaVibe"
+                    width="500"
+                    height="650"
                     loading="lazy"
                     class="zv-fp-main-img"
                   >
                 {%- else -%}
                   <img
                     src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}"
-                    alt="{{ prod.title | escape }}"
+                    alt="{{ prod.title | escape }} - Men's Fashion Dubai UAE | ZadaVibe"
+                    width="500"
+                    height="650"
                     loading="lazy"
                     class="zv-fp-main-img"
                   >
@@ -98,14 +102,18 @@
                 {%- if forloop.index == 2 or forloop.index == 4 -%}
                   <img
                     src="{{ 'zadavibe-model-hero.jpg' | asset_url }}"
-                    alt="{{ title }}"
+                    alt="{{ title }} - Luxury Ribbed Menswear Dubai UAE"
+                    width="500"
+                    height="650"
                     loading="lazy"
                     class="zv-fp-main-img"
                   >
                 {%- else -%}
                   <img
                     src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}"
-                    alt="{{ title }}"
+                    alt="{{ title }} - Vintage Lace-Up Henley Dubai UAE"
+                    width="500"
+                    height="650"
                     loading="lazy"
                     class="zv-fp-main-img"
                   >
