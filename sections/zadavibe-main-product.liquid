@@ -14,7 +14,7 @@
       <!-- Media Gallery Column -->
       <div class="zv-gallery-col">
         <div class="zv-gallery-box">
-          <!-- Main Hero Image Stage (Capped at 440px for Crisp, Proportional Display) -->
+          <!-- Main Hero Image Stage (Capped at 400px for Crisp Display) -->
           <div class="zv-main-stage" id="zv-main-stage">
             <!-- Badges -->
             <div class="zv-stage-badges">
@@ -24,7 +24,7 @@
 
             <!-- Fullscreen Lightbox Button -->
             <button type="button" class="zv-stage-zoom" onclick="openLightbox()" aria-label="Open Fullscreen View">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Zoom">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Zoom">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 <line x1="11" y1="8" x2="11" y2="14"></line>
@@ -39,7 +39,7 @@
             <!-- Main Image -->
             <div class="zv-stage-img-wrap" id="zv-stage-img-wrap">
               {%- if product.featured_image -%}
-                <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title | escape }}">
+                <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}">
               {%- else -%}
                 <img id="zv-main-img" src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Product" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
               {%- endif -%}
@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <!-- Compact Thumbnails Row -->
+          <!-- Compact Thumbnails Row (Sleek Horizontal Scroll) -->
           <div class="zv-thumbs-row" id="zv-thumbs-row">
             {%- if product.images.size > 0 -%}
               {%- for image in product.images -%}
@@ -59,11 +59,11 @@
                   type="button"
                   class="zv-thumb-item{% if forloop.first %} active{% endif %}"
                   data-index="{{ forloop.index0 }}"
-                  data-full-src="{{ image | image_url: width: 1400 }}"
-                  onclick="selectGalleryImage({{ forloop.index0 }}, '{{ image | image_url: width: 900 }}', this)"
+                  data-full-src="{{ image | image_url: width: 1200 }}"
+                  onclick="selectGalleryImage({{ forloop.index0 }}, '{{ image | image_url: width: 800 }}', this)"
                   aria-label="View product image {{ forloop.index }}"
                 >
-                  <img src="{{ image | image_url: width: 140 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy">
+                  <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy">
                 </button>
               {%- endfor -%}
             {%- else -%}
@@ -232,7 +232,7 @@
           </div>
           <div class="zv-trust-card">
             <span class="zv-tc-icon">💵</span>
-            <span>Cash on Delivery</span>
+            <span>Cash on Delivery (COD)</span>
           </div>
           <div class="zv-trust-card">
             <span class="zv-tc-icon">🔄</span>
@@ -244,9 +244,9 @@
           </div>
         </div>
 
-        <!-- Clean Accordions (Compact Hairlines) -->
+        <!-- Clean Accordions (Compact, Closed by Default, Sanitized Text Only) -->
         <div class="zv-accordions">
-          <!-- Item 1: Details -->
+          <!-- Item 1: Details & Fit (Suppliers raw tables & images stripped) -->
           <div class="zv-acc-box">
             <button type="button" class="zv-acc-head" onclick="toggleAcc(this)">
               <span>👔 Product Highlights & Fit</span>
@@ -254,15 +254,17 @@
             </button>
             <div class="zv-acc-body">
               <div class="zv-acc-content">
-                {%- if product.description != blank -%}
-                  <div class="zv-rich-text">{{ product.description }}</div>
+                {%- assign raw_desc = product.description -%}
+                {%- assign clean_text_desc = raw_desc | split: 'PRODUCT PARAMETERS' | first | split: 'Product parameters' | first | split: 'product parameters' | first | split: '<table' | first | split: '<img' | first | strip_html | strip -%}
+                {%- if clean_text_desc.size > 25 -%}
+                  <p class="zv-clean-desc">{{ clean_text_desc }}</p>
                 {%- else -%}
-                  <p>Tailored athletic cut engineered to flatter shoulders and chest with micro-ribbed breathable stretch.</p>
+                  <p class="zv-clean-desc">Crafted from premium 260 GSM organic micro-ribbed cotton with an athletic silhouette that flatters chest and shoulders.</p>
                 {%- endif -%}
                 <ul class="zv-bullet-list">
-                  <li>Handcrafted lace-up placket with reinforced grommets</li>
-                  <li>260 GSM heavyweight micro-ribbed knit</li>
-                  <li>Pre-shrunk cotton fabric that retains its shape</li>
+                  <li>Reinforced lace-up placket with rust-free grommets</li>
+                  <li>Breathable micro-ribbed knit with natural all-day stretch</li>
+                  <li>Pre-shrunk cotton fabric that retains fit after wash</li>
                 </ul>
               </div>
             </div>
@@ -386,10 +388,10 @@
 
 <style>
   /* ==========================================================================
-     Zadavibe Balanced, Human-Scale Luxury Product Page
+     Zadavibe Balanced, Compact Luxury Product Page (Strictly Constrained)
      ========================================================================== */
   .zv-product-main {
-    padding: 16px 0 44px;
+    padding: 14px 0 40px;
     background: #ffffff;
   }
 
@@ -398,9 +400,9 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: #88928a;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     font-weight: 500;
   }
   .zv-breadcrumb a {
@@ -413,22 +415,26 @@
   .zv-bc-current {
     color: var(--zv-text);
     font-weight: 600;
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  /* Compact Product Grid: Capped at 1020px Max Width on Desktop */
+  /* Compact Product Grid: Strict 400px Left Column & Max 920px Total Container */
   .zv-product-grid {
     display: grid;
-    grid-template-columns: 440px 1fr;
+    grid-template-columns: 400px 1fr;
     gap: 36px;
     align-items: flex-start;
-    max-width: 1000px;
+    max-width: 940px;
     margin: 0 auto;
   }
 
   /* Gallery Column */
   .zv-gallery-col {
     width: 100%;
-    max-width: 440px;
+    max-width: 400px;
   }
 
   .zv-gallery-box {
@@ -436,21 +442,21 @@
     top: 80px;
   }
 
-  /* Main Image Stage: Proportional 1:1 or 4:5 with 440px cap */
+  /* Main Image Stage: Capped at 400px x 400px */
   .zv-main-stage {
     position: relative;
     width: 100%;
-    max-width: 440px;
+    max-width: 400px;
     border-radius: 10px;
     overflow: hidden;
     background: #f4f6f4;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   }
 
   .zv-stage-img-wrap {
     width: 100%;
-    aspect-ratio: 4 / 5;
-    max-height: 460px;
+    aspect-ratio: 1 / 1;
+    max-height: 400px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -470,39 +476,39 @@
   /* Badges */
   .zv-stage-badges {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 8px;
+    left: 8px;
     display: flex;
-    gap: 6px;
+    gap: 5px;
     z-index: 3;
     pointer-events: none;
   }
   .zv-badge-best {
     background: #2d3b31;
     color: #ffffff;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 14px;
+    padding: 3px 7px;
+    border-radius: 12px;
     letter-spacing: 0.04em;
   }
   .zv-badge-discount {
     background: #c85a32;
     color: #ffffff;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 14px;
+    padding: 3px 7px;
+    border-radius: 12px;
     letter-spacing: 0.04em;
   }
 
   /* Zoom Button */
   .zv-stage-zoom {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 32px;
-    height: 32px;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(0,0,0,0.06);
@@ -512,7 +518,7 @@
     color: #1a241c;
     cursor: pointer;
     z-index: 3;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   }
 
   /* Nav Arrows */
@@ -520,55 +526,56 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.85);
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #1a241c;
     cursor: pointer;
     z-index: 3;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     opacity: 0;
     transition: opacity 0.2s ease;
   }
   .zv-main-stage:hover .zv-stage-nav {
     opacity: 1;
   }
-  .zv-nav-prev { left: 10px; }
-  .zv-nav-next { right: 10px; }
+  .zv-nav-prev { left: 8px; }
+  .zv-nav-next { right: 8px; }
 
   .zv-stage-counter {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 8px;
+    right: 8px;
     background: rgba(0,0,0,0.55);
     color: #ffffff;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
     padding: 2px 6px;
-    border-radius: 8px;
+    border-radius: 6px;
   }
 
-  /* Thumbnails */
+  /* Thumbnails Row */
   .zv-thumbs-row {
     display: flex;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 6px;
+    margin-top: 8px;
     overflow-x: auto;
-    scrollbar-width: none;
+    scrollbar-width: thin;
+    max-width: 400px;
   }
   .zv-thumb-item {
-    width: 62px;
-    height: 74px;
+    width: 50px;
+    height: 58px;
+    flex: 0 0 50px;
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
-    flex-shrink: 0;
     border: 1.5px solid transparent;
     background: #f1f3f1;
     padding: 0;
@@ -587,23 +594,23 @@
   .zv-product-info {
     display: flex;
     flex-direction: column;
-    max-width: 480px;
+    max-width: 450px;
   }
 
   .zv-brand-eyebrow {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: #6b776e;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .zv-product-title {
     font-family: var(--zv-font-heading);
-    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-size: clamp(1.25rem, 2vw, 1.55rem);
     font-weight: 800;
     color: var(--zv-text);
-    line-height: 1.22;
+    line-height: 1.25;
     margin: 0 0 8px;
   }
 
@@ -612,8 +619,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.82rem;
-    margin-bottom: 12px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
   }
   .zv-stars-group {
     display: flex;
@@ -622,7 +629,7 @@
   }
   .zv-stars {
     color: #f59e0b;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
   .zv-rating-text {
     font-weight: 600;
@@ -637,7 +644,7 @@
     gap: 5px;
     color: #166534;
     font-weight: 600;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     background: #f0fdf4;
     padding: 1px 7px;
     border-radius: 10px;
@@ -655,16 +662,16 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .zv-price-current {
-    font-size: 1.55rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: #2d3b31;
     font-family: var(--zv-font-heading);
   }
   .zv-price-compare {
-    font-size: 1rem;
+    font-size: 0.95rem;
     text-decoration: line-through;
     color: #94a3b8;
   }
@@ -672,10 +679,10 @@
     background: #fef2f2;
     color: #b91c1c;
     border: 1px solid #fecaca;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 12px;
+    padding: 2px 6px;
+    border-radius: 10px;
   }
 
   /* UAE Delivery Strip */
@@ -686,18 +693,18 @@
     background: #f8faf9;
     border: 1px solid #e2e8e4;
     border-radius: 6px;
-    padding: 7px 10px;
-    font-size: 0.78rem;
+    padding: 6px 10px;
+    font-size: 0.76rem;
     color: #2d3b31;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .zv-strip-icon {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
-  /* Size Selector */
+  /* Options / Variants */
   .zv-variant-group {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .zv-variant-label-bar {
     display: flex;
@@ -706,7 +713,7 @@
     margin-bottom: 6px;
   }
   .zv-variant-label {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
     color: var(--zv-text);
   }
@@ -718,7 +725,7 @@
     background: none;
     border: none;
     color: #2d3b31;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 700;
     cursor: pointer;
     text-decoration: underline;
@@ -732,14 +739,14 @@
   }
   .zv-size-pill {
     border: 1.5px solid #d8ded9;
-    padding: 7px 13px;
+    padding: 6px 12px;
     border-radius: 6px;
     font-weight: 700;
-    font-size: 0.84rem;
+    font-size: 0.82rem;
     cursor: pointer;
     background: #ffffff;
     color: var(--zv-text);
-    min-width: 44px;
+    min-width: 40px;
     text-align: center;
     transition: all 0.15s ease;
   }
@@ -754,7 +761,7 @@
 
   /* Form & Actions */
   .zv-form-container {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .zv-actions-row {
     display: flex;
@@ -768,12 +775,12 @@
     align-items: center;
     border: 1.5px solid #d8ded9;
     border-radius: 6px;
-    height: 44px;
+    height: 42px;
     background: #ffffff;
     flex-shrink: 0;
   }
   .zv-step-btn {
-    width: 36px;
+    width: 32px;
     height: 100%;
     background: none;
     border: none;
@@ -785,31 +792,31 @@
     justify-content: center;
   }
   .zv-stepper-box input {
-    width: 32px;
+    width: 28px;
     text-align: center;
     font-weight: 700;
     border: none;
     outline: none;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: #1a241c;
     background: transparent;
   }
 
   .zv-btn-atc {
     flex: 1;
-    height: 44px;
+    height: 42px;
     background: #2d3b31;
     color: #ffffff;
     border: none;
     border-radius: 6px;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 800;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    box-shadow: 0 3px 10px rgba(45, 59, 49, 0.2);
+    box-shadow: 0 2px 8px rgba(45, 59, 49, 0.2);
     transition: all 0.15s ease;
   }
   .zv-btn-atc:hover {
@@ -821,12 +828,12 @@
 
   .zv-btn-cod {
     width: 100%;
-    height: 40px;
+    height: 38px;
     background: #f8faf9;
     color: #2d3b31;
     border: 1.5px solid #2d3b31;
     border-radius: 6px;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 800;
     cursor: pointer;
   }
@@ -839,24 +846,24 @@
   .zv-trust-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    padding-top: 12px;
-    margin-bottom: 14px;
+    gap: 6px;
+    padding-top: 10px;
+    margin-bottom: 12px;
     border-top: 1px solid #edf1ee;
   }
   .zv-trust-card {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.76rem;
+    gap: 5px;
+    font-size: 0.74rem;
     color: #4b5563;
     font-weight: 600;
   }
   .zv-tc-icon {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
-  /* Accordions */
+  /* Accordions (Clean, Compact, No Images, No Tables) */
   .zv-accordions {
     display: flex;
     flex-direction: column;
@@ -870,38 +877,57 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 11px 0;
+    padding: 9px 0;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.86rem;
+    font-size: 0.82rem;
     font-weight: 700;
     color: var(--zv-text);
     text-align: left;
   }
   .zv-acc-sym {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #64748b;
   }
   .zv-acc-body {
     display: none;
-    padding-bottom: 12px;
-    font-size: 0.82rem;
+    padding-bottom: 10px;
+    font-size: 0.8rem;
     color: #4b5563;
-    line-height: 1.55;
+    line-height: 1.5;
   }
   .zv-acc-body.open {
     display: block;
   }
+  .zv-clean-desc {
+    margin: 0 0 6px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* Strict Protection: Never allow raw supplier images or tables to render */
+  .zv-acc-content img,
+  .zv-acc-content table,
+  .zv-acc-content figure,
+  .zv-acc-content iframe,
+  .zv-acc-content video {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+  }
+
   .zv-bullet-list {
     list-style: none;
     padding: 0;
     margin: 6px 0 0;
   }
   .zv-bullet-list li {
-    padding-left: 14px;
+    padding-left: 12px;
     position: relative;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
   .zv-bullet-list li::before {
     content: "•";
@@ -928,22 +954,22 @@
     background: #ffffff;
     border-radius: 10px;
     width: 100%;
-    max-width: 520px;
-    padding: 20px;
+    max-width: 500px;
+    padding: 18px;
   }
   .zv-modal-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     border-bottom: 1px solid #edf1ee;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
   }
-  .zv-modal-h3 { font-size: 1rem; font-weight: 800; margin: 0; }
+  .zv-modal-h3 { font-size: 0.95rem; font-weight: 800; margin: 0; }
   .zv-modal-x { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #64748b; }
-  .zv-guide-tip { font-size: 0.8rem; background: #f8faf9; padding: 8px 12px; border-left: 3px solid #2d3b31; margin-bottom: 12px; }
-  .zv-tbl { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-  .zv-tbl th, .zv-tbl td { padding: 7px 8px; border-bottom: 1px solid #edf1ee; text-align: left; }
+  .zv-guide-tip { font-size: 0.78rem; background: #f8faf9; padding: 6px 10px; border-left: 3px solid #2d3b31; margin-bottom: 10px; }
+  .zv-tbl { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .zv-tbl th, .zv-tbl td { padding: 6px 7px; border-bottom: 1px solid #edf1ee; text-align: left; }
   .zv-tbl th { background: #f4f6f4; font-weight: 700; color: #2d3b31; }
   .zv-row-active { background: #f0fdf4; }
 
@@ -966,10 +992,10 @@
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
     border: none;
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -977,7 +1003,7 @@
   }
   .zv-lb-prev { left: 16px; }
   .zv-lb-next { right: 16px; }
-  .zv-lb-view img { max-width: 88vw; max-height: 82vh; object-fit: contain; }
+  .zv-lb-view img { max-width: 86vw; max-height: 80vh; object-fit: contain; }
 
   /* Sticky ATC Bar */
   .zv-sticky-atc {
@@ -987,45 +1013,45 @@
     right: 0;
     background: #ffffff;
     border-top: 1px solid #edf1ee;
-    padding: 10px 20px;
+    padding: 8px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     z-index: 900;
-    box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
     transform: translateY(100%);
     transition: transform 0.25s ease;
   }
   .zv-sticky-atc.visible { transform: translateY(0); }
-  .zv-sticky-left { display: flex; align-items: center; gap: 10px; }
-  .zv-sticky-thumb { width: 42px; height: 48px; border-radius: 4px; overflow: hidden; }
+  .zv-sticky-left { display: flex; align-items: center; gap: 8px; }
+  .zv-sticky-thumb { width: 38px; height: 42px; border-radius: 4px; overflow: hidden; }
   .zv-sticky-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .zv-sticky-title { font-size: 0.82rem; font-weight: 700; color: var(--zv-text); }
-  .zv-sticky-meta { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; }
+  .zv-sticky-title { font-size: 0.78rem; font-weight: 700; color: var(--zv-text); }
+  .zv-sticky-meta { display: flex; align-items: center; gap: 6px; font-size: 0.74rem; }
   .zv-sticky-price { font-weight: 800; color: #2d3b31; }
-  .zv-sticky-size { background: #edf1ee; padding: 1px 5px; border-radius: 4px; font-size: 0.72rem; }
+  .zv-sticky-size { background: #edf1ee; padding: 1px 4px; border-radius: 4px; font-size: 0.7rem; }
   .zv-btn-atc-sticky {
-    height: 38px;
-    padding: 0 18px;
+    height: 36px;
+    padding: 0 16px;
     background: #2d3b31;
     color: #ffffff;
     border: none;
     border-radius: 6px;
     font-weight: 800;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     cursor: pointer;
   }
 
   /* ==========================================================================
-     MOBILE RESPONSIVE (Strict Max 320px Image & Compact Ergonomics)
+     MOBILE RESPONSIVE (Strict 280px Max Image & Zero Clutter)
      ========================================================================== */
-  @media (max-width: 860px) {
+  @media (max-width: 820px) {
     .zv-product-main {
-      padding: 12px 0 36px;
+      padding: 10px 0 32px;
     }
     .zv-product-grid {
       grid-template-columns: 1fr !important;
-      gap: 18px;
+      gap: 16px;
     }
     .zv-gallery-col {
       max-width: 100%;
@@ -1034,38 +1060,41 @@
       position: static;
     }
     .zv-main-stage {
-      max-width: 320px;
+      max-width: 290px;
       margin: 0 auto;
     }
     .zv-stage-img-wrap {
       aspect-ratio: 1 / 1;
-      max-height: 320px;
+      max-height: 290px;
     }
     .zv-stage-nav {
       opacity: 1;
     }
     .zv-thumbs-row {
-      justify-content: center;
-      margin-top: 8px;
+      max-width: 290px;
+      margin: 8px auto 0;
+      justify-content: flex-start;
     }
     .zv-thumb-item {
-      width: 52px;
-      height: 62px;
+      width: 48px;
+      height: 56px;
+      flex: 0 0 48px;
     }
     .zv-product-info {
       max-width: 100%;
+      padding: 0 4px;
     }
     .zv-product-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
     }
     .zv-size-pill {
       flex: 1;
-      min-width: 40px;
-      padding: 7px 6px;
-      font-size: 0.82rem;
+      min-width: 36px;
+      padding: 6px 4px;
+      font-size: 0.8rem;
     }
     .zv-sticky-atc {
-      padding: 8px 12px;
+      padding: 6px 12px;
     }
   }
 </style>
@@ -1101,7 +1130,7 @@
 
   if (stageWrap && mainImg) {
     stageWrap.addEventListener('mousemove', function(e) {
-      if (window.innerWidth < 860) return;
+      if (window.innerWidth < 820) return;
       const rect = stageWrap.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
@@ -1126,7 +1155,7 @@
 
     stageWrap.addEventListener('touchend', function(e) {
       touchEndX = e.changedTouches[0].screenX;
-      if (Math.abs(touchEndX - touchStartX) > 40) {
+      if (Math.abs(touchEndX - touchStartX) > 35) {
         if (touchEndX < touchStartX) nextGalleryImage();
         else prevGalleryImage();
       }
