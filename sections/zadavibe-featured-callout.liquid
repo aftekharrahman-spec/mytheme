@@ -28,7 +28,7 @@
         </ul>
 
         <div>
-          <a href="{{ section.settings.button_link }}" class="zv-btn-primary">
+          <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="zv-btn-primary">
             {{ section.settings.button_label }}
           </a>
         </div>
@@ -67,8 +67,7 @@
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button Link",
-      "default": "/products"
+      "label": "Button Link"
     }
   ],
   "blocks": [

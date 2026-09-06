@@ -54,7 +54,7 @@
         "heading_highlight": "Timeless Comfort",
         "subheading": "Engineered with breathable ribbed knit fabric, vintage boho lace-up collar, and a modern athletic cut designed for men of substance.",
         "button_label": "SHOP NOW",
-        "button_link": "/collections/all"
+        "button_link": "shopify://collections/all"
       }
     },
     "ticker": {
@@ -149,7 +149,7 @@
         "product_title": "Zadavibe Signature Vintage Lace-Up Henley",
         "description": "Crafted from heavy-drape breathable ribbed knit. Designed with authentic bohemian lace cords and reinforced seams for all-day confidence.",
         "button_label": "SHOP NOW",
-        "button_link": "/products"
+        "button_link": "shopify://collections/all"
       }
     },
     "press": {
