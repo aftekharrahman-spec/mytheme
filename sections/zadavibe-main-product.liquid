@@ -5,19 +5,27 @@
       <div class="zv-gallery-sticky">
         <div class="zv-gallery-main">
           {%- if product.featured_image -%}
-            <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.title }}">
+            <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.title | escape }}">
           {%- else -%}
             <img id="zv-main-img" src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Product" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
           {%- endif -%}
         </div>
 
         <div class="zv-gallery-thumbs">
-          <div class="zv-thumb active" onclick="switchMainImage('{{ 'zadavibe-product-shirt.jpg' | asset_url }}', this)">
-            <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Shirt Front">
-          </div>
-          <div class="zv-thumb" onclick="switchMainImage('{{ 'zadavibe-model-hero.jpg' | asset_url }}', this)">
-            <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Model Fit">
-          </div>
+          {%- if product.images.size > 0 -%}
+            {%- for image in product.images -%}
+              <div class="zv-thumb{% if forloop.first %} active{% endif %}" onclick="switchMainImage('{{ image | image_url: width: 1000 }}', this)">
+                <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | default: product.title | escape }}">
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <div class="zv-thumb active" onclick="switchMainImage('{{ 'zadavibe-product-shirt.jpg' | asset_url }}', this)">
+              <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Shirt Front">
+            </div>
+            <div class="zv-thumb" onclick="switchMainImage('{{ 'zadavibe-model-hero.jpg' | asset_url }}', this)">
+              <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="Model Fit">
+            </div>
+          {%- endif -%}
         </div>
       </div>
 
@@ -41,10 +49,22 @@
 
         <div class="zv-price-row">
           <span class="zv-price-current" id="zv-display-price">
-            {%- if product.price -%}{{ product.price | money }}{%- else -%}AED 149.00{%- endif -%}
+            {%- if product.selected_or_first_available_variant.price -%}
+              {{ product.selected_or_first_available_variant.price | money }}
+            {%- elsif product.price -%}
+              {{ product.price | money }}
+            {%- else -%}
+              AED 149.00
+            {%- endif -%}
           </span>
           <span class="zv-price-compare" id="zv-display-compare">
-            {%- if product.compare_at_price -%}{{ product.compare_at_price | money }}{%- else -%}AED 249.00{%- endif -%}
+            {%- if product.selected_or_first_available_variant.compare_at_price -%}
+              {{ product.selected_or_first_available_variant.compare_at_price | money }}
+            {%- elsif product.compare_at_price -%}
+              {{ product.compare_at_price | money }}
+            {%- else -%}
+              AED 249.00
+            {%- endif -%}
           </span>
           <span class="zv-sale-pill">SAVE 40% OFF</span>
         </div>
@@ -56,21 +76,45 @@
           <li>✓ <strong>Care:</strong> Pre-shrunk, colorfast & machine washable</li>
         </ul>
 
-        <!-- Size Selector -->
-        <div class="zv-variant-group">
-          <label class="zv-variant-label">SELECT SIZE: <span id="zv-selected-size" style="color: var(--zv-primary);">M</span></label>
-          <div class="zv-size-pills">
-            <button type="button" class="zv-size-pill" onclick="selectSize('S', this)">S</button>
-            <button type="button" class="zv-size-pill active" onclick="selectSize('M', this)">M</button>
-            <button type="button" class="zv-size-pill" onclick="selectSize('L', this)">L</button>
-            <button type="button" class="zv-size-pill" onclick="selectSize('XL', this)">XL</button>
-            <button type="button" class="zv-size-pill" onclick="selectSize('XXL', this)">XXL</button>
+        <!-- Dynamic Product Options (Size, Color, etc. imported from CJ Dropshipping) -->
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="zv-variant-group" data-option-index="{{ forloop.index0 }}">
+              <label class="zv-variant-label">
+                SELECT {{ option.name | upcase }}: <span class="zv-selected-val" id="zv-val-{{ forloop.index0 }}" style="color: var(--zv-primary);">{{ option.selected_value }}</span>
+              </label>
+              <div class="zv-size-pills">
+                {%- for value in option.values -%}
+                  <button
+                    type="button"
+                    class="zv-size-pill{% if option.selected_value == value %} active{% endif %}"
+                    data-option-index="{{ forloop.parentloop.index0 }}"
+                    data-value="{{ value | escape }}"
+                    onclick="selectVariantOption({{ forloop.parentloop.index0 }}, '{{ value | escape }}', this)"
+                  >
+                    {{ value }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback demo sizes for preview mode when default variant -->
+          <div class="zv-variant-group">
+            <label class="zv-variant-label">SELECT SIZE: <span class="zv-selected-val" id="zv-val-0" style="color: var(--zv-primary);">M</span></label>
+            <div class="zv-size-pills">
+              <button type="button" class="zv-size-pill" onclick="selectFallbackSize('S', this)">S</button>
+              <button type="button" class="zv-size-pill active" onclick="selectFallbackSize('M', this)">M</button>
+              <button type="button" class="zv-size-pill" onclick="selectFallbackSize('L', this)">L</button>
+              <button type="button" class="zv-size-pill" onclick="selectFallbackSize('XL', this)">XL</button>
+              <button type="button" class="zv-size-pill" onclick="selectFallbackSize('XXL', this)">XXL</button>
+            </div>
           </div>
-        </div>
+        {%- endunless -%}
 
         <!-- Actions Form -->
         <form method="post" action="/cart/add" id="zv-add-form">
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id | default: 1 }}">
+          <input type="hidden" name="id" id="zv-variant-id-input" value="{{ product.selected_or_first_available_variant.id | default: 1 }}">
 
           <!-- Modern Quantity Stepper -->
           <div class="zv-quantity-group">
@@ -83,10 +127,10 @@
           </div>
           
           <div class="zv-buy-actions">
-            <button type="submit" class="zv-btn-primary zv-btn-atc">
-              <span>ADD TO CART</span> • <span id="zv-btn-price">{%- if product.price -%}{{ product.price | money }}{%- else -%}AED 149.00{%- endif -%}</span>
+            <button type="submit" class="zv-btn-primary zv-btn-atc" id="zv-atc-button"{% unless product.selected_or_first_available_variant.available %} disabled{% endunless %}>
+              <span>{% if product.selected_or_first_available_variant.available %}ADD TO CART{% else %}SOLD OUT{% endif %}</span> • <span id="zv-btn-price">{%- if product.selected_or_first_available_variant.price -%}{{ product.selected_or_first_available_variant.price | money }}{%- elsif product.price -%}{{ product.price | money }}{%- else -%}AED 149.00{%- endif -%}</span>
             </button>
-            <button type="button" class="zv-btn-buynow" onclick="window.location.href='/checkout'">
+            <button type="button" class="zv-btn-buynow" onclick="expressCheckout()">
               BUY IT NOW (EXPRESS CHECKOUT)
             </button>
           </div>
@@ -116,11 +160,23 @@
 <div class="zv-sticky-atc" id="zv-sticky-bar">
   <div class="zv-sticky-left">
     <div class="zv-sticky-thumb">
-      <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Thumb">
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}">
+      {%- else -%}
+        <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Thumb">
+      {%- endif -%}
     </div>
     <div>
-      <div class="zv-sticky-title">Zadavibe Signature Henley</div>
-      <div class="zv-sticky-price" id="zv-sticky-price-text">{%- if product.price -%}{{ product.price | money }}{%- else -%}AED 149.00{%- endif -%}</div>
+      <div class="zv-sticky-title">{{ product.title | default: "Zadavibe Signature Henley" }}</div>
+      <div class="zv-sticky-price" id="zv-sticky-price-text">
+        {%- if product.selected_or_first_available_variant.price -%}
+          {{ product.selected_or_first_available_variant.price | money }}
+        {%- elsif product.price -%}
+          {{ product.price | money }}
+        {%- else -%}
+          AED 149.00
+        {%- endif -%}
+      </div>
     </div>
   </div>
   <div>
@@ -130,21 +186,124 @@
   </div>
 </div>
 
+<script id="zv-variants-data" type="application/json">
+  {{ product.variants | json }}
+</script>
+
 <script>
-  const currencyPrefix = 'AED ';
-  const basePrice = {%- if product.price -%}{{ product.price | divided_by: 100.0 }}{%- else -%}149.00{%- endif -%};
+  const currencySymbol = 'AED ';
+  let basePrice = {%- if product.selected_or_first_available_variant.price -%}{{ product.selected_or_first_available_variant.price | divided_by: 100.0 }}{%- elsif product.price -%}{{ product.price | divided_by: 100.0 }}{%- else -%}149.00{%- endif -%};
+  
+  let productVariants = [];
+  try {
+    const rawVariants = document.getElementById('zv-variants-data');
+    if (rawVariants && rawVariants.textContent) {
+      productVariants = JSON.parse(rawVariants.textContent);
+    }
+  } catch (e) {
+    console.warn('Could not parse variants JSON', e);
+  }
+
+  // Selected options state array
+  const selectedOptionsState = [];
+  {%- if product.options_with_values -%}
+    {%- for option in product.options_with_values -%}
+      selectedOptionsState[{{ forloop.index0 }}] = {{ option.selected_value | json }};
+    {%- endfor -%}
+  {%- endif -%}
 
   function switchMainImage(src, el) {
     const mainImg = document.getElementById('zv-main-img');
     if (mainImg) mainImg.src = src;
-    document.querySelectorAll('.zv-thumb').forEach(t => t.classList.remove('active'));
-    if (el) el.classList.add('active');
+    if (el) {
+      document.querySelectorAll('.zv-thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
   }
 
-  function selectSize(size, el) {
-    document.getElementById('zv-selected-size').textContent = size;
-    document.querySelectorAll('.zv-size-pill').forEach(p => p.classList.remove('active'));
-    if (el) el.classList.add('active');
+  function selectVariantOption(optionIndex, value, btnEl) {
+    // 1. Update active button style
+    const parentGroup = btnEl.closest('.zv-variant-group');
+    if (parentGroup) {
+      parentGroup.querySelectorAll('.zv-size-pill').forEach(p => p.classList.remove('active'));
+      btnEl.classList.add('active');
+    }
+
+    // 2. Update label text
+    const labelSpan = document.getElementById('zv-val-' + optionIndex);
+    if (labelSpan) labelSpan.textContent = value;
+
+    // 3. Update state
+    selectedOptionsState[optionIndex] = value;
+
+    // 4. Find matching variant from CJ Dropshipping / Shopify
+    if (productVariants && productVariants.length > 0) {
+      const matchedVariant = productVariants.find(v => {
+        return v.options.every((optVal, idx) => optVal === selectedOptionsState[idx]);
+      });
+
+      if (matchedVariant) {
+        // Update hidden form variant ID
+        const inputId = document.getElementById('zv-variant-id-input');
+        if (inputId) inputId.value = matchedVariant.id;
+
+        // Update price
+        basePrice = matchedVariant.price / 100.0;
+        const formattedPrice = currencySymbol + basePrice.toFixed(2);
+        
+        const displayPrice = document.getElementById('zv-display-price');
+        if (displayPrice) displayPrice.textContent = formattedPrice;
+
+        const stickyPrice = document.getElementById('zv-sticky-price-text');
+        if (stickyPrice) stickyPrice.textContent = formattedPrice;
+
+        if (matchedVariant.compare_at_price && matchedVariant.compare_at_price > matchedVariant.price) {
+          const compFormatted = currencySymbol + (matchedVariant.compare_at_price / 100.0).toFixed(2);
+          const displayComp = document.getElementById('zv-display-compare');
+          if (displayComp) {
+            displayComp.textContent = compFormatted;
+            displayComp.style.display = 'inline';
+          }
+        }
+
+        // Recalculate quantity price
+        const qtyInput = document.getElementById('zv-cart-quantity');
+        const qty = parseInt(qtyInput ? qtyInput.value : 1) || 1;
+        const btnPrice = document.getElementById('zv-btn-price');
+        if (btnPrice) btnPrice.textContent = currencySymbol + (qty * basePrice).toFixed(2);
+
+        // Update Availability / Sold Out State
+        const atcBtn = document.getElementById('zv-atc-button');
+        if (atcBtn) {
+          if (!matchedVariant.available) {
+            atcBtn.disabled = true;
+            atcBtn.querySelector('span:first-child').textContent = 'SOLD OUT';
+            atcBtn.style.opacity = '0.6';
+            atcBtn.style.cursor = 'not-allowed';
+          } else {
+            atcBtn.disabled = false;
+            atcBtn.querySelector('span:first-child').textContent = 'ADD TO CART';
+            atcBtn.style.opacity = '1';
+            atcBtn.style.cursor = 'pointer';
+          }
+        }
+
+        // If variant has featured image, switch main image
+        if (matchedVariant.featured_image && matchedVariant.featured_image.src) {
+          switchMainImage(matchedVariant.featured_image.src);
+        }
+      }
+    }
+  }
+
+  function selectFallbackSize(size, el) {
+    const span = document.getElementById('zv-val-0');
+    if (span) span.textContent = size;
+    const parent = el.closest('.zv-variant-group');
+    if (parent) {
+      parent.querySelectorAll('.zv-size-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+    }
   }
 
   function updateQuantity(change) {
@@ -155,11 +314,18 @@
     input.value = qty;
 
     const totalPrice = (qty * basePrice).toFixed(2);
-    const formatted = currencyPrefix + totalPrice;
+    const formatted = currencySymbol + totalPrice;
     const btnPrice = document.getElementById('zv-btn-price');
     const stickyPrice = document.getElementById('zv-sticky-price-text');
     if (btnPrice) btnPrice.textContent = formatted;
     if (stickyPrice) stickyPrice.textContent = formatted;
+  }
+
+  function expressCheckout() {
+    const variantId = document.getElementById('zv-variant-id-input').value;
+    const qtyInput = document.getElementById('zv-cart-quantity');
+    const qty = qtyInput ? qtyInput.value : 1;
+    window.location.href = `/cart/${variantId}:${qty}`;
   }
 
   // Dynamic Real-Time Live Viewers Fluctuation
