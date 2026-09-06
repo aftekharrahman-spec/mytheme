@@ -1,6 +1,6 @@
 <section class="zv-product-main" id="zv-product-section">
   <div class="zv-container">
-    <!-- Clean Minimalist Breadcrumb -->
+    <!-- Breadcrumbs -->
     <nav class="zv-breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a>
       <span class="zv-bc-sep">/</span>
@@ -9,11 +9,12 @@
       <span class="zv-bc-current">{{ product.title | default: "Signature Vintage Henley" }}</span>
     </nav>
 
+    <!-- Compact, Human-Scale 2-Column Product Grid -->
     <div class="zv-product-grid">
       <!-- Media Gallery Column -->
-      <div class="zv-gallery-sticky">
+      <div class="zv-gallery-col">
         <div class="zv-gallery-box">
-          <!-- Main Hero Image Stage -->
+          <!-- Main Hero Image Stage (Capped at 440px for Crisp, Proportional Display) -->
           <div class="zv-main-stage" id="zv-main-stage">
             <!-- Badges -->
             <div class="zv-stage-badges">
@@ -23,7 +24,7 @@
 
             <!-- Fullscreen Lightbox Button -->
             <button type="button" class="zv-stage-zoom" onclick="openLightbox()" aria-label="Open Fullscreen View">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Zoom">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Zoom">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 <line x1="11" y1="8" x2="11" y2="14"></line>
@@ -38,19 +39,19 @@
             <!-- Main Image -->
             <div class="zv-stage-img-wrap" id="zv-stage-img-wrap">
               {%- if product.featured_image -%}
-                <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}">
+                <img id="zv-main-img" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title | escape }}">
               {%- else -%}
                 <img id="zv-main-img" src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Product" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
               {%- endif -%}
             </div>
 
-            <!-- Counter Chip -->
+            <!-- Mobile Counter Chip -->
             <div class="zv-stage-counter">
               <span id="zv-img-cur">1</span> / <span id="zv-img-tot">{% if product.images.size > 0 %}{{ product.images.size }}{% else %}2{% endif %}</span>
             </div>
           </div>
 
-          <!-- Thumbnails Row (Cleanly Situated Underneath Main Image) -->
+          <!-- Compact Thumbnails Row -->
           <div class="zv-thumbs-row" id="zv-thumbs-row">
             {%- if product.images.size > 0 -%}
               {%- for image in product.images -%}
@@ -59,10 +60,10 @@
                   class="zv-thumb-item{% if forloop.first %} active{% endif %}"
                   data-index="{{ forloop.index0 }}"
                   data-full-src="{{ image | image_url: width: 1400 }}"
-                  onclick="selectGalleryImage({{ forloop.index0 }}, '{{ image | image_url: width: 1200 }}', this)"
+                  onclick="selectGalleryImage({{ forloop.index0 }}, '{{ image | image_url: width: 900 }}', this)"
                   aria-label="View product image {{ forloop.index }}"
                 >
-                  <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy">
+                  <img src="{{ image | image_url: width: 140 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy">
                 </button>
               {%- endfor -%}
             {%- else -%}
@@ -91,26 +92,24 @@
         </div>
       </div>
 
-      <!-- Buy Box Info Column -->
+      <!-- Buy Box Info Column (Compact, Focused, High-Converting) -->
       <div class="zv-product-info">
-        <!-- Eyebrow Tag -->
-        <div class="zv-brand-eyebrow">ZADAVIBE • LUXURY MENSWEAR DUBAI</div>
+        <div class="zv-brand-eyebrow">ZADAVIBE • DUBAI LUXURY MENSWEAR</div>
 
-        <!-- Title -->
         <h1 class="zv-product-title">
           {{ product.title | default: "Zadavibe Signature Vintage Lace-Up Ribbed Henley" }}
         </h1>
 
-        <!-- Rating & Real-time Live Viewers -->
+        <!-- Rating & Live Viewers Line -->
         <div class="zv-meta-row">
           <div class="zv-stars-group">
             <span class="zv-stars">★★★★★</span>
-            <span class="zv-rating-text">4.9 (1,280+ Reviews)</span>
+            <span class="zv-rating-text">4.9 (1.2k)</span>
           </div>
           <span class="zv-meta-sep">•</span>
           <div class="zv-live-inline">
             <span class="zv-live-dot"></span>
-            <span><strong id="zv-live-viewers-count">34</strong> men viewing now</span>
+            <span><strong id="zv-live-viewers-count">34</strong> viewing now</span>
           </div>
         </div>
 
@@ -137,16 +136,10 @@
           <span class="zv-discount-badge">SAVE 40%</span>
         </div>
 
-        <!-- UAE Delivery Notice -->
+        <!-- Single-Line UAE Delivery Badge -->
         <div class="zv-uae-delivery-strip">
           <span class="zv-strip-icon">🚚</span>
-          <span><strong>Free Express UAE Delivery</strong> (Orders over AED 150) • <strong>Cash on Delivery (COD)</strong></span>
-        </div>
-
-        <!-- Countdown Timer -->
-        <div class="zv-timer-strip">
-          <span class="zv-timer-icon">⚡</span>
-          <span>Order in <strong id="zv-cd-timer" class="zv-timer-tag">03h 42m 18s</strong> for <strong>Next-Day Dispatch across UAE</strong></span>
+          <span><strong>Free Express UAE Delivery</strong> (Orders > AED 150) • <strong>Cash on Delivery (COD)</strong></span>
         </div>
 
         <!-- Dynamic Product Options (Sizes, Colors from CJ Dropshipping / Shopify) -->
@@ -198,16 +191,11 @@
           </div>
         {%- endunless -%}
 
-        <!-- Scarcity Note -->
-        <div class="zv-scarcity-line">
-          🔥 <span>Only <strong id="zv-stock-number">6</strong> left in stock for size <strong id="zv-stock-size-label">M</strong> — selling fast</span>
-        </div>
-
         <!-- Add To Cart Form -->
         <form method="post" action="/cart/add" id="zv-add-form" class="zv-form-container">
           <input type="hidden" name="id" id="zv-variant-id-input" value="{{ product.selected_or_first_available_variant.id | default: 1 }}">
 
-          <!-- Quantity Stepper & Add To Cart Row -->
+          <!-- Quantity Stepper & Add To Cart Button -->
           <div class="zv-actions-row">
             <div class="zv-stepper-box">
               <button type="button" class="zv-step-btn" onclick="updateQuantity(-1)" aria-label="Decrease quantity">−</button>
@@ -236,74 +224,45 @@
           </button>
         </form>
 
-        <!-- Trust Features Grid (Minimalist & Clean) -->
+        <!-- Compact Trust Badges (2x2 Grid) -->
         <div class="zv-trust-grid">
           <div class="zv-trust-card">
             <span class="zv-tc-icon">⚡</span>
-            <div>
-              <strong>1–2 Days Express Dispatch</strong>
-              <p>Delivery across Dubai & UAE Emirates</p>
-            </div>
+            <span>1–2 Days UAE Express</span>
           </div>
           <div class="zv-trust-card">
             <span class="zv-tc-icon">💵</span>
-            <div>
-              <strong>Cash on Delivery (COD)</strong>
-              <p>Inspect & pay at your doorstep</p>
-            </div>
+            <span>Cash on Delivery</span>
           </div>
           <div class="zv-trust-card">
             <span class="zv-tc-icon">🔄</span>
-            <div>
-              <strong>14-Day Free Exchange</strong>
-              <p>Hassle-free WhatsApp courier swap</p>
-            </div>
+            <span>14-Day Free Exchange</span>
           </div>
           <div class="zv-trust-card">
             <span class="zv-tc-icon">🛡️</span>
-            <div>
-              <strong>100% Organic Ribbed Cotton</strong>
-              <p>Anti-shrink & colorfast guarantee</p>
-            </div>
+            <span>100% Certified Cotton</span>
           </div>
         </div>
 
-        <!-- Safe Checkout Payment Logos -->
-        <div class="zv-pay-bar">
-          <span class="zv-pay-title">GUARANTEED SAFE CHECKOUT:</span>
-          <div class="zv-pay-icons">
-            <!-- Visa -->
-            <svg viewBox="0 0 38 24" width="36" height="22" role="img" aria-label="Visa"><rect width="38" height="24" rx="4" fill="#1434CB"/><path d="M15.4 16.5h-2.3l1.4-9h2.3l-1.4 9zm9.2-8.8c-.5-.2-1.2-.4-2.1-.4-2.3 0-4 1.2-4 3 0 1.3 1.2 2 2.1 2.4.9.5 1.2.8 1.2 1.2 0 .6-.8.9-1.5.9-.9 0-1.5-.2-2.3-.5l-.3-.2-.3 2c.6.3 1.6.5 2.7.5 2.5 0 4.1-1.2 4.1-3.1 0-1-.6-1.8-2-2.4-.8-.4-1.3-.7-1.3-1.2 0-.4.5-.8 1.4-.8.8 0 1.4.2 1.8.4l.2.1.4-1.8zm6.5 4.3l1-2.8.6 2.8h-1.6zm2.4 4.5h2.1l-1.8-9h-2c-.6 0-1.1.2-1.3.8l-3.8 8.2h2.4l.5-1.4h3l.1 1.4zm-12.7-9l-1.8 6.1-.2-1-.7-3.6c-.1-.7-.6-1.5-1.3-1.5H12l-.2.8c.8.2 1.7.5 2.3.8.3.2.5.6.6 1.1l1.8 6.7h2.4l3.6-9.4h-2.1z" fill="#FFF"/></svg>
-            <!-- Mastercard -->
-            <svg viewBox="0 0 38 24" width="36" height="22" role="img" aria-label="Mastercard"><rect width="38" height="24" rx="4" fill="#0A0A0A"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 6.8a7 7 0 010 10.4 7 7 0 010-10.4z" fill="#FF5F00"/></svg>
-            <!-- Amex -->
-            <svg viewBox="0 0 38 24" width="36" height="22" role="img" aria-label="American Express"><rect width="38" height="24" rx="4" fill="#0077A6"/><path d="M7 16h3.4l.7-1.7h3.6l.7 1.7H19l-3.5-8h-3.9L7 16zm5.8-3.4l1.1-2.7 1.1 2.7h-2.2zM20.2 8v8h5.8v-1.7h-3.8v-1.5h3.6v-1.7h-3.6V9.7H26V8h-5.8zm7.3 0l1.9 4-1.9 4h2.2l.9-1.9.9 1.9h2.2l-1.9-4 1.9-4h-2.2l-.9 1.9-.9-1.9h-2.2z" fill="#FFF"/></svg>
-            <!-- Apple Pay -->
-            <svg viewBox="0 0 38 24" width="36" height="22" role="img" aria-label="Apple Pay"><rect width="38" height="24" rx="4" fill="#000"/><path d="M15.2 10.8c-.3.4-.8.7-1.3.6-.1-.5.1-1 .4-1.3.3-.4.8-.6 1.3-.6.1.5-.1 1-.4 1.3zm.4 1.4c-.7 0-1.3.4-1.6.4-.3 0-.8-.4-1.4-.4-.7 0-1.4.4-1.8 1.1-.7 1.3-.2 3.2.5 4.3.4.5.8 1.1 1.4 1.1.5 0 .8-.4 1.4-.4.6 0 .8.4 1.4.4.6 0 1-.5 1.4-1.1.4-.6.6-1.2.6-1.2s-.7-.3-.7-1.2c0-.8.6-1.2.6-1.2-.4-.6-1-.7-1.2-.7zm4.2-2.7h1.4v7.3h-1.4V9.5zm4.8 2.2c1.1 0 1.9.8 1.9 2s-.8 2-1.9 2c-.6 0-1.1-.2-1.4-.6v2.3h-1.3V11.8h1.2v.5c.3-.4.8-.6 1.5-.6zm-.3 3c.6 0 1-.4 1-1s-.4-1-1-1-.9.4-.9 1 .3 1 .9 1zm6.7-.8c0 1.2-.9 2-2.2 2-1.2 0-2.1-.8-2.1-2s.9-2 2.1-2c1.3 0 2.2.8 2.2 2zm-1.3 0c0-.6-.4-1-1-1s-.9.4-.9 1 .4 1 .9 1c.5 0 1-.4 1-1z" fill="#FFF"/></svg>
-            <!-- Google Pay -->
-            <svg viewBox="0 0 38 24" width="36" height="22" role="img" aria-label="Google Pay"><rect width="38" height="24" rx="4" fill="#FFF" stroke="#E5E7EB"/><path d="M15.4 12.1v3.4h-1.2V7.7h3.1c.8 0 1.5.3 2 .8.5.5.8 1.2.8 2s-.3 1.5-.8 2c-.5.5-1.2.8-2 .8h-1.9zm0-3.3v2.3h1.9c.5 0 .9-.2 1.2-.5.3-.3.5-.7.5-1.2 0-.4-.2-.8-.5-1.1-.3-.3-.7-.5-1.2-.5h-1.9zm8.5 2.1c.8 0 1.4.2 1.9.6.5.4.7 1 .7 1.7v3h-1.1v-.7c-.3.5-.8.9-1.5.9-.6 0-1.1-.2-1.5-.5-.4-.3-.6-.8-.6-1.3 0-.6.2-1 .6-1.3.4-.3 1-.5 1.7-.5.6 0 1.1.1 1.5.3v-.2c0-.4-.1-.7-.4-.9-.3-.2-.7-.4-1.1-.4-.6 0-1.1.3-1.4.8l-1.1-.7c.5-.8 1.4-1.1 2.3-1.1zm-1.8 3.5c0 .3.1.5.3.7.2.2.5.3.8.3.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1-.3-.2-.8-.3-1.3-.3-.4 0-.8.1-1 .3-.3.1-.4.4-.4.6zm6.3-1.9l1.4 3.4 1.4-3.4h1.3l-2.1 4.8-1.2 2.7h-1.2l.9-1.9-2-5.6h1.5z" fill="#3C4043"/><path d="M10.8 12.1c0-.2 0-.4-.1-.6H7v1.4h2.1c-.1.5-.4 1-.8 1.3v1.1h1.3c.8-.7 1.2-1.9 1.2-3.2z" fill="#4285F4"/><path d="M7 16c1.1 0 2-.4 2.7-1.1l-1.3-1.1c-.4.3-.9.4-1.4.4-.8 0-1.5-.5-1.8-1.3H3.8v1.1C4.5 15.3 5.7 16 7 16z" fill="#34A853"/><path d="M5.2 13c-.1-.3-.1-.6-.1-.9 0-.3 0-.6.1-.9V10H3.8C3.3 11 3.3 12.2 3.8 13.2l1.4-.2z" fill="#FBBC04"/><path d="M7 8.7c.6 0 1.2.2 1.6.6l1.2-1.2C9 7.3 8 6.9 7 6.9c-1.3 0-2.5.7-3.2 1.9l1.4 1.1c.3-.7 1-1.2 1.8-1.2z" fill="#EA4335"/></svg>
-          </div>
-        </div>
-
-        <!-- Clean Accordions -->
+        <!-- Clean Accordions (Compact Hairlines) -->
         <div class="zv-accordions">
           <!-- Item 1: Details -->
           <div class="zv-acc-box">
-            <button type="button" class="zv-acc-head active" onclick="toggleAcc(this)">
-              <span>👔 Silhouette & Highlights</span>
-              <span class="zv-acc-sym">−</span>
+            <button type="button" class="zv-acc-head" onclick="toggleAcc(this)">
+              <span>👔 Product Highlights & Fit</span>
+              <span class="zv-acc-sym">+</span>
             </button>
-            <div class="zv-acc-body open">
+            <div class="zv-acc-body">
               <div class="zv-acc-content">
                 {%- if product.description != blank -%}
                   <div class="zv-rich-text">{{ product.description }}</div>
                 {%- else -%}
-                  <p>Tailored athletic cut engineered to naturally accentuate shoulders and chest while maintaining comfortable breathability.</p>
+                  <p>Tailored athletic cut engineered to flatter shoulders and chest with micro-ribbed breathable stretch.</p>
                 {%- endif -%}
                 <ul class="zv-bullet-list">
-                  <li>Hand-braided micro-cord lace placket with reinforced eyelets</li>
-                  <li>260 GSM heavyweight micro-ribbed knit for structured drape</li>
-                  <li>Pre-shrunk cotton fabric that retains fit after washing</li>
+                  <li>Handcrafted lace-up placket with reinforced grommets</li>
+                  <li>260 GSM heavyweight micro-ribbed knit</li>
+                  <li>Pre-shrunk cotton fabric that retains its shape</li>
                 </ul>
               </div>
             </div>
@@ -317,12 +276,7 @@
             </button>
             <div class="zv-acc-body">
               <div class="zv-acc-content">
-                <p>100% sustainably harvested organic cotton. Engineered with micro-air channels to keep skin cool in high temperatures.</p>
-                <ul class="zv-bullet-list">
-                  <li>Machine wash cold (30°C) with similar colors</li>
-                  <li>Tumble dry low or hang dry to preserve ribbed elasticity</li>
-                  <li>Do not bleach; warm iron inside-out if desired</li>
-                </ul>
+                <p>100% organic micro-ribbed cotton. Machine wash cold (30°C) with like colors. Hang dry or tumble dry low.</p>
               </div>
             </div>
           </div>
@@ -330,18 +284,12 @@
           <!-- Item 3: Shipping & Returns -->
           <div class="zv-acc-box">
             <button type="button" class="zv-acc-head" onclick="toggleAcc(this)">
-              <span>✈️ UAE Shipping & 14-Day Exchanges</span>
+              <span>✈️ UAE Shipping & Exchanges</span>
               <span class="zv-acc-sym">+</span>
             </button>
             <div class="zv-acc-body">
               <div class="zv-acc-content">
-                <p>Fast and reliable dispatch across Dubai, Abu Dhabi, Sharjah, Ajman, RAK, Fujairah, and UAQ.</p>
-                <ul class="zv-bullet-list">
-                  <li>Next-day express delivery for Dubai and Sharjah</li>
-                  <li>1–2 business days for Abu Dhabi and other Emirates</li>
-                  <li>Cash on Delivery (COD) supported at doorstep</li>
-                  <li>Need a size swap? Quick WhatsApp exchange service</li>
-                </ul>
+                <p>Express courier dispatch across all UAE Emirates (Dubai, Abu Dhabi, Sharjah, Ajman, RAK, Fujairah, UAQ). Easy WhatsApp size exchange service.</p>
               </div>
             </div>
           </div>
@@ -360,7 +308,7 @@
     </div>
     <div class="zv-modal-scroll">
       <p class="zv-guide-tip">
-        <strong>Fit Recommendation:</strong> Athletic tailored silhouette. If you prefer a relaxed or bohemian drape, order one size larger.
+        <strong>Fit Recommendation:</strong> Athletic tailored fit. If you prefer a loose relaxed drape, order one size larger.
       </p>
       <div class="zv-table-wrap">
         <table class="zv-tbl">
@@ -370,16 +318,15 @@
               <th>Chest (CM)</th>
               <th>Chest (Inches)</th>
               <th>Length (CM)</th>
-              <th>Shoulder (CM)</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td><strong>S</strong></td><td>96 - 101</td><td>38" - 40"</td><td>70</td><td>44</td></tr>
-            <tr class="zv-row-active"><td><strong>M (Popular)</strong></td><td>102 - 107</td><td>40" - 42"</td><td>72</td><td>46</td></tr>
-            <tr><td><strong>L</strong></td><td>108 - 113</td><td>42" - 44"</td><td>74</td><td>48</td></tr>
-            <tr><td><strong>XL</strong></td><td>114 - 119</td><td>45" - 47"</td><td>76</td><td>50</td></tr>
-            <tr><td><strong>2XL</strong></td><td>120 - 126</td><td>47" - 49"</td><td>78</td><td>52</td></tr>
-            <tr><td><strong>3XL</strong></td><td>127 - 134</td><td>50" - 52"</td><td>80</td><td>54</td></tr>
+            <tr><td><strong>S</strong></td><td>96 - 101</td><td>38" - 40"</td><td>70</td></tr>
+            <tr class="zv-row-active"><td><strong>M (Popular)</strong></td><td>102 - 107</td><td>40" - 42"</td><td>72</td></tr>
+            <tr><td><strong>L</strong></td><td>108 - 113</td><td>42" - 44"</td><td>74</td></tr>
+            <tr><td><strong>XL</strong></td><td>114 - 119</td><td>45" - 47"</td><td>76</td></tr>
+            <tr><td><strong>2XL</strong></td><td>120 - 126</td><td>47" - 49"</td><td>78</td></tr>
+            <tr><td><strong>3XL</strong></td><td>127 - 134</td><td>50" - 52"</td><td>80</td></tr>
           </tbody>
         </table>
       </div>
@@ -404,7 +351,7 @@
   <div class="zv-sticky-left">
     <div class="zv-sticky-thumb">
       {%- if product.featured_image -%}
-        <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}">
+        <img src="{{ product.featured_image | image_url: width: 100 }}" alt="{{ product.title | escape }}">
       {%- else -%}
         <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Thumb">
       {%- endif -%}
@@ -439,10 +386,10 @@
 
 <style>
   /* ==========================================================================
-     ZadaVibe Modern Luxury Product Page CSS (100% Responsive Desktop & Mobile)
+     Zadavibe Balanced, Human-Scale Luxury Product Page
      ========================================================================== */
   .zv-product-main {
-    padding: 24px 0 60px;
+    padding: 16px 0 44px;
     background: #ffffff;
   }
 
@@ -450,19 +397,15 @@
   .zv-breadcrumb {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.82rem;
+    gap: 6px;
+    font-size: 0.78rem;
     color: #88928a;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     font-weight: 500;
   }
   .zv-breadcrumb a {
     color: #555f56;
     text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  .zv-breadcrumb a:hover {
-    color: var(--zv-primary);
   }
   .zv-bc-sep {
     color: #cbd5e1;
@@ -470,46 +413,44 @@
   .zv-bc-current {
     color: var(--zv-text);
     font-weight: 600;
-    max-width: 280px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
-  /* 2-Column Grid */
+  /* Compact Product Grid: Capped at 1020px Max Width on Desktop */
   .zv-product-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
+    grid-template-columns: 440px 1fr;
+    gap: 36px;
     align-items: flex-start;
+    max-width: 1000px;
+    margin: 0 auto;
   }
 
-  /* Gallery Sticky Left Column */
-  .zv-gallery-sticky {
-    position: sticky;
-    top: 90px;
+  /* Gallery Column */
+  .zv-gallery-col {
+    width: 100%;
+    max-width: 440px;
   }
 
   .zv-gallery-box {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    position: sticky;
+    top: 80px;
   }
 
-  /* Main Stage Container */
+  /* Main Image Stage: Proportional 1:1 or 4:5 with 440px cap */
   .zv-main-stage {
     position: relative;
     width: 100%;
-    border-radius: 12px;
+    max-width: 440px;
+    border-radius: 10px;
     overflow: hidden;
     background: #f4f6f4;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    user-select: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
   }
 
   .zv-stage-img-wrap {
     width: 100%;
     aspect-ratio: 4 / 5;
+    max-height: 460px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -524,134 +465,113 @@
     display: block;
     transition: transform 0.15s ease-out;
     transform-origin: center center;
-    will-change: transform;
   }
 
-  /* Floating Badges */
+  /* Badges */
   .zv-stage-badges {
     position: absolute;
-    top: 14px;
-    left: 14px;
+    top: 10px;
+    left: 10px;
     display: flex;
-    flex-direction: column;
     gap: 6px;
-    z-index: 4;
+    z-index: 3;
     pointer-events: none;
   }
   .zv-badge-best {
     background: #2d3b31;
     color: #ffffff;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 800;
-    letter-spacing: 0.05em;
-    padding: 5px 10px;
-    border-radius: 20px;
+    padding: 3px 8px;
+    border-radius: 14px;
+    letter-spacing: 0.04em;
   }
   .zv-badge-discount {
     background: #c85a32;
     color: #ffffff;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 800;
-    letter-spacing: 0.05em;
-    padding: 5px 10px;
-    border-radius: 20px;
+    padding: 3px 8px;
+    border-radius: 14px;
+    letter-spacing: 0.04em;
   }
 
-  /* Zoom Icon */
+  /* Zoom Button */
   .zv-stage-zoom {
     position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 36px;
-    height: 36px;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(6px);
     border: 1px solid rgba(0,0,0,0.06);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #1a241c;
     cursor: pointer;
-    z-index: 4;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
-  }
-  .zv-stage-zoom:hover {
-    transform: scale(1.08);
+    z-index: 3;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
 
-  /* Navigation Arrows */
+  /* Nav Arrows */
   .zv-stage-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.85);
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: #1a241c;
     cursor: pointer;
-    z-index: 4;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: all 0.2s ease;
+    z-index: 3;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     opacity: 0;
+    transition: opacity 0.2s ease;
   }
   .zv-main-stage:hover .zv-stage-nav {
     opacity: 1;
   }
-  .zv-nav-prev { left: 12px; }
-  .zv-nav-next { right: 12px; }
-  .zv-stage-nav:hover {
-    background: #ffffff;
-    transform: translateY(-50%) scale(1.08);
-  }
+  .zv-nav-prev { left: 10px; }
+  .zv-nav-next { right: 10px; }
 
-  /* Counter Chip */
   .zv-stage-counter {
     position: absolute;
-    bottom: 12px;
-    right: 14px;
-    background: rgba(0,0,0,0.6);
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.55);
     color: #ffffff;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 12px;
-    backdrop-filter: blur(4px);
-    z-index: 4;
+    padding: 2px 6px;
+    border-radius: 8px;
   }
 
-  /* Thumbnails Underneath Main Image */
+  /* Thumbnails */
   .zv-thumbs-row {
     display: flex;
-    gap: 10px;
-    margin-top: 12px;
+    gap: 8px;
+    margin-top: 10px;
     overflow-x: auto;
     scrollbar-width: none;
-    padding-bottom: 2px;
   }
-  .zv-thumbs-row::-webkit-scrollbar {
-    display: none;
-  }
-
   .zv-thumb-item {
-    width: 72px;
-    height: 86px;
-    border-radius: 8px;
+    width: 62px;
+    height: 74px;
+    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
     flex-shrink: 0;
-    border: 2px solid transparent;
+    border: 1.5px solid transparent;
     background: #f1f3f1;
     padding: 0;
-    transition: all 0.2s ease;
   }
   .zv-thumb-item img {
     width: 100%;
@@ -661,50 +581,48 @@
   }
   .zv-thumb-item.active {
     border-color: #2d3b31;
-    box-shadow: 0 0 0 1px #2d3b31;
   }
 
-  /* Buy Box Info Styling */
+  /* Buy Box Info Column */
   .zv-product-info {
     display: flex;
     flex-direction: column;
-    padding-left: 10px;
+    max-width: 480px;
   }
 
   .zv-brand-eyebrow {
-    font-size: 0.76rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     color: #6b776e;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .zv-product-title {
     font-family: var(--zv-font-heading);
-    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
     font-weight: 800;
     color: var(--zv-text);
-    line-height: 1.2;
-    margin: 0 0 12px;
+    line-height: 1.22;
+    margin: 0 0 8px;
   }
 
-  /* Rating and Live Viewers */
+  /* Rating & Live */
   .zv-meta-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.85rem;
-    margin-bottom: 16px;
+    gap: 8px;
+    font-size: 0.82rem;
+    margin-bottom: 12px;
   }
   .zv-stars-group {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
   }
   .zv-stars {
     color: #f59e0b;
-    letter-spacing: 1px;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
   .zv-rating-text {
     font-weight: 600;
@@ -716,14 +634,14 @@
   .zv-live-inline {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     color: #166534;
     font-weight: 600;
-    background: #f0fdf4;
-    padding: 2px 8px;
-    border-radius: 12px;
-    border: 1px solid #bbf7d0;
     font-size: 0.78rem;
+    background: #f0fdf4;
+    padding: 1px 7px;
+    border-radius: 10px;
+    border: 1px solid #bbf7d0;
   }
   .zv-live-dot {
     width: 6px;
@@ -732,21 +650,21 @@
     border-radius: 50%;
   }
 
-  /* Pricing Row */
+  /* Price */
   .zv-pricing-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 10px;
+    margin-bottom: 12px;
   }
   .zv-price-current {
-    font-size: 1.85rem;
+    font-size: 1.55rem;
     font-weight: 800;
     color: #2d3b31;
     font-family: var(--zv-font-heading);
   }
   .zv-price-compare {
-    font-size: 1.15rem;
+    font-size: 1rem;
     text-decoration: line-through;
     color: #94a3b8;
   }
@@ -754,64 +672,41 @@
     background: #fef2f2;
     color: #b91c1c;
     border: 1px solid #fecaca;
-    font-size: 0.76rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    padding: 3px 9px;
-    border-radius: 14px;
-    letter-spacing: 0.04em;
+    padding: 2px 7px;
+    border-radius: 12px;
   }
 
-  /* Delivery Notice Strip */
+  /* UAE Delivery Strip */
   .zv-uae-delivery-strip {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     background: #f8faf9;
     border: 1px solid #e2e8e4;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 0.82rem;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 0.78rem;
     color: #2d3b31;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
   .zv-strip-icon {
-    font-size: 1.1rem;
-  }
-
-  /* Timer Strip */
-  .zv-timer-strip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.82rem;
-    color: #854d0e;
-    background: #fefce8;
-    border: 1px solid #fef08a;
-    border-radius: 8px;
-    padding: 8px 12px;
-    margin-bottom: 20px;
-  }
-  .zv-timer-tag {
-    background: #ca8a04;
-    color: #ffffff;
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-family: monospace;
-    font-size: 0.82rem;
+    font-size: 0.95rem;
   }
 
   /* Size Selector */
   .zv-variant-group {
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
   .zv-variant-label-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .zv-variant-label {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--zv-text);
   }
@@ -823,31 +718,30 @@
     background: none;
     border: none;
     color: #2d3b31;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 700;
     cursor: pointer;
     text-decoration: underline;
-    text-underline-offset: 3px;
     padding: 0;
   }
 
   .zv-size-pills {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
   }
   .zv-size-pill {
     border: 1.5px solid #d8ded9;
-    padding: 10px 16px;
-    border-radius: 8px;
+    padding: 7px 13px;
+    border-radius: 6px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.84rem;
     cursor: pointer;
     background: #ffffff;
     color: var(--zv-text);
-    min-width: 48px;
+    min-width: 44px;
     text-align: center;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
   }
   .zv-size-pill:hover {
     border-color: #2d3b31;
@@ -858,171 +752,115 @@
     border-color: #2d3b31;
   }
 
-  /* Scarcity line */
-  .zv-scarcity-line {
-    font-size: 0.8rem;
-    color: #b91c1c;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* Actions Row */
+  /* Form & Actions */
   .zv-form-container {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
   .zv-actions-row {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
-  /* Stepper */
   .zv-stepper-box {
     display: flex;
     align-items: center;
     border: 1.5px solid #d8ded9;
-    border-radius: 8px;
-    height: 50px;
+    border-radius: 6px;
+    height: 44px;
     background: #ffffff;
-    overflow: hidden;
     flex-shrink: 0;
   }
   .zv-step-btn {
-    width: 40px;
+    width: 36px;
     height: 100%;
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     color: #1a241c;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .zv-step-btn:hover {
-    background: #f4f6f4;
-  }
   .zv-stepper-box input {
-    width: 36px;
+    width: 32px;
     text-align: center;
     font-weight: 700;
     border: none;
     outline: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #1a241c;
     background: transparent;
   }
 
-  /* Add To Cart Primary Button */
   .zv-btn-atc {
     flex: 1;
-    height: 50px;
+    height: 44px;
     background: #2d3b31;
     color: #ffffff;
     border: none;
-    border-radius: 8px;
-    font-size: 0.95rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
     font-weight: 800;
-    letter-spacing: 0.04em;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 14px rgba(45, 59, 49, 0.25);
+    gap: 6px;
+    box-shadow: 0 3px 10px rgba(45, 59, 49, 0.2);
+    transition: all 0.15s ease;
   }
   .zv-btn-atc:hover {
     background: #1e2820;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(45, 59, 49, 0.35);
   }
   .zv-atc-sep {
     opacity: 0.6;
   }
 
-  /* Cash On Delivery Express Secondary Button */
   .zv-btn-cod {
     width: 100%;
-    height: 48px;
+    height: 40px;
     background: #f8faf9;
     color: #2d3b31;
     border: 1.5px solid #2d3b31;
-    border-radius: 8px;
-    font-size: 0.88rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
     font-weight: 800;
     cursor: pointer;
-    letter-spacing: 0.03em;
-    transition: all 0.2s ease;
   }
   .zv-btn-cod:hover {
     background: #2d3b31;
     color: #ffffff;
   }
 
-  /* Trust Cards Grid */
+  /* Trust Grid (Compact 2x2 Inline) */
   .zv-trust-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 22px;
-    padding-top: 14px;
+    gap: 8px;
+    padding-top: 12px;
+    margin-bottom: 14px;
     border-top: 1px solid #edf1ee;
   }
   .zv-trust-card {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .zv-tc-icon {
-    font-size: 1.15rem;
-    line-height: 1;
-    margin-top: 2px;
-  }
-  .zv-trust-card strong {
-    display: block;
-    font-size: 0.82rem;
-    color: var(--zv-text);
-    margin-bottom: 1px;
-  }
-  .zv-trust-card p {
-    font-size: 0.74rem;
-    color: #64748b;
-    margin: 0;
-    line-height: 1.3;
-  }
-
-  /* Payment Bar */
-  .zv-pay-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px 0;
-    border-top: 1px solid #edf1ee;
-    border-bottom: 1px solid #edf1ee;
-    margin-bottom: 20px;
-  }
-  .zv-pay-title {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: #64748b;
-  }
-  .zv-pay-icons {
-    display: flex;
     align-items: center;
     gap: 6px;
+    font-size: 0.76rem;
+    color: #4b5563;
+    font-weight: 600;
+  }
+  .zv-tc-icon {
+    font-size: 0.95rem;
   }
 
   /* Accordions */
   .zv-accordions {
     display: flex;
     flex-direction: column;
+    border-top: 1px solid #edf1ee;
   }
   .zv-acc-box {
     border-bottom: 1px solid #edf1ee;
@@ -1032,26 +870,25 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 0;
+    padding: 11px 0;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.92rem;
+    font-size: 0.86rem;
     font-weight: 700;
     color: var(--zv-text);
     text-align: left;
   }
   .zv-acc-sym {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #64748b;
-    font-weight: 300;
   }
   .zv-acc-body {
     display: none;
-    padding-bottom: 16px;
-    font-size: 0.86rem;
+    padding-bottom: 12px;
+    font-size: 0.82rem;
     color: #4b5563;
-    line-height: 1.6;
+    line-height: 1.55;
   }
   .zv-acc-body.open {
     display: block;
@@ -1059,12 +896,12 @@
   .zv-bullet-list {
     list-style: none;
     padding: 0;
-    margin: 8px 0 0;
+    margin: 6px 0 0;
   }
   .zv-bullet-list li {
-    padding-left: 16px;
+    padding-left: 14px;
     position: relative;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
   }
   .zv-bullet-list li::before {
     content: "•";
@@ -1074,89 +911,43 @@
     font-weight: bold;
   }
 
-  /* Modal Backdrop */
+  /* Modals */
   .zv-modal-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
     z-index: 99999;
     display: none;
     align-items: center;
     justify-content: center;
     padding: 16px;
   }
-  .zv-modal-backdrop.active {
-    display: flex;
-  }
+  .zv-modal-backdrop.active { display: flex; }
   .zv-modal-window {
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 10px;
     width: 100%;
-    max-width: 580px;
-    padding: 24px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    animation: zvPopIn 0.2s ease-out;
-  }
-  @keyframes zvPopIn {
-    from { opacity: 0; transform: scale(0.96); }
-    to { opacity: 1; transform: scale(1); }
+    max-width: 520px;
+    padding: 20px;
   }
   .zv-modal-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     border-bottom: 1px solid #edf1ee;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
   }
-  .zv-modal-h3 {
-    font-size: 1.1rem;
-    font-weight: 800;
-    margin: 0;
-    color: #1a241c;
-  }
-  .zv-modal-x {
-    background: none;
-    border: none;
-    font-size: 1.3rem;
-    cursor: pointer;
-    color: #64748b;
-    padding: 4px;
-  }
-  .zv-guide-tip {
-    font-size: 0.84rem;
-    color: #4b5563;
-    line-height: 1.5;
-    background: #f8faf9;
-    padding: 10px 14px;
-    border-radius: 8px;
-    border-left: 3px solid #2d3b31;
-    margin-bottom: 14px;
-  }
-  .zv-table-wrap {
-    overflow-x: auto;
-  }
-  .zv-tbl {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.84rem;
-  }
-  .zv-tbl th, .zv-tbl td {
-    padding: 8px 10px;
-    text-align: left;
-    border-bottom: 1px solid #edf1ee;
-  }
-  .zv-tbl th {
-    background: #f4f6f4;
-    font-weight: 700;
-    color: #2d3b31;
-  }
-  .zv-row-active {
-    background: #f0fdf4;
-  }
+  .zv-modal-h3 { font-size: 1rem; font-weight: 800; margin: 0; }
+  .zv-modal-x { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #64748b; }
+  .zv-guide-tip { font-size: 0.8rem; background: #f8faf9; padding: 8px 12px; border-left: 3px solid #2d3b31; margin-bottom: 12px; }
+  .zv-tbl { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  .zv-tbl th, .zv-tbl td { padding: 7px 8px; border-bottom: 1px solid #edf1ee; text-align: left; }
+  .zv-tbl th { background: #f4f6f4; font-weight: 700; color: #2d3b31; }
+  .zv-row-active { background: #f0fdf4; }
 
-  /* Fullscreen Lightbox */
+  /* Lightbox */
   .zv-lightbox-wrap {
     position: fixed;
     inset: 0;
@@ -1165,57 +956,28 @@
     display: none;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(8px);
   }
-  .zv-lightbox-wrap.active {
-    display: flex;
-  }
-  .zv-lb-x {
-    position: absolute;
-    top: 20px;
-    right: 24px;
-    background: none;
-    border: none;
-    color: #ffffff;
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 100001;
-  }
+  .zv-lightbox-wrap.active { display: flex; }
+  .zv-lb-x { position: absolute; top: 16px; right: 20px; background: none; border: none; color: #ffffff; font-size: 2rem; cursor: pointer; }
   .zv-lb-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
     border: none;
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s ease;
   }
-  .zv-lb-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
-  .zv-lb-prev { left: 20px; }
-  .zv-lb-next { right: 20px; }
-  .zv-lb-view {
-    max-width: 90vw;
-    max-height: 85vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .zv-lb-view img {
-    max-width: 100%;
-    max-height: 85vh;
-    object-fit: contain;
-    border-radius: 8px;
-  }
+  .zv-lb-prev { left: 16px; }
+  .zv-lb-next { right: 16px; }
+  .zv-lb-view img { max-width: 88vw; max-height: 82vh; object-fit: contain; }
 
   /* Sticky ATC Bar */
   .zv-sticky-atc {
@@ -1225,167 +987,85 @@
     right: 0;
     background: #ffffff;
     border-top: 1px solid #edf1ee;
-    padding: 12px 24px;
+    padding: 10px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     z-index: 900;
-    box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
     transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.25s ease;
   }
-  .zv-sticky-atc.visible {
-    transform: translateY(0);
-  }
-  .zv-sticky-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .zv-sticky-thumb {
-    width: 48px;
-    height: 54px;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #f4f6f4;
-    flex-shrink: 0;
-  }
-  .zv-sticky-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .zv-sticky-title {
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: var(--zv-text);
-  }
-  .zv-sticky-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 2px;
-  }
-  .zv-sticky-price {
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: #2d3b31;
-  }
-  .zv-sticky-size {
-    font-size: 0.74rem;
-    background: #edf1ee;
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-weight: 600;
-  }
+  .zv-sticky-atc.visible { transform: translateY(0); }
+  .zv-sticky-left { display: flex; align-items: center; gap: 10px; }
+  .zv-sticky-thumb { width: 42px; height: 48px; border-radius: 4px; overflow: hidden; }
+  .zv-sticky-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .zv-sticky-title { font-size: 0.82rem; font-weight: 700; color: var(--zv-text); }
+  .zv-sticky-meta { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; }
+  .zv-sticky-price { font-weight: 800; color: #2d3b31; }
+  .zv-sticky-size { background: #edf1ee; padding: 1px 5px; border-radius: 4px; font-size: 0.72rem; }
   .zv-btn-atc-sticky {
-    height: 42px;
-    padding: 0 24px;
+    height: 38px;
+    padding: 0 18px;
     background: #2d3b31;
     color: #ffffff;
     border: none;
     border-radius: 6px;
     font-weight: 800;
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     cursor: pointer;
   }
 
   /* ==========================================================================
-     MOBILE RESPONSIVE BREAKPOINTS (360px - 990px)
+     MOBILE RESPONSIVE (Strict Max 320px Image & Compact Ergonomics)
      ========================================================================== */
-  @media (max-width: 990px) {
+  @media (max-width: 860px) {
     .zv-product-main {
-      padding: 16px 0 40px;
+      padding: 12px 0 36px;
     }
-
     .zv-product-grid {
       grid-template-columns: 1fr !important;
-      gap: 24px;
+      gap: 18px;
     }
-
-    .zv-gallery-sticky {
-      position: static !important;
-      top: auto !important;
+    .zv-gallery-col {
+      max-width: 100%;
     }
-
+    .zv-gallery-box {
+      position: static;
+    }
+    .zv-main-stage {
+      max-width: 320px;
+      margin: 0 auto;
+    }
     .zv-stage-img-wrap {
       aspect-ratio: 1 / 1;
-      max-height: 400px;
+      max-height: 320px;
     }
-
     .zv-stage-nav {
       opacity: 1;
     }
-
+    .zv-thumbs-row {
+      justify-content: center;
+      margin-top: 8px;
+    }
     .zv-thumb-item {
-      width: 60px;
-      height: 72px;
+      width: 52px;
+      height: 62px;
     }
-
     .zv-product-info {
-      padding-left: 0;
+      max-width: 100%;
     }
-
     .zv-product-title {
-      font-size: 1.45rem;
-      margin-bottom: 8px;
+      font-size: 1.3rem;
     }
-
-    .zv-pricing-row {
-      margin-bottom: 12px;
-    }
-
-    .zv-price-current {
-      font-size: 1.6rem;
-    }
-
-    .zv-size-pills {
-      gap: 6px;
-    }
-
     .zv-size-pill {
       flex: 1;
-      min-width: 44px;
-      padding: 9px 8px;
-      font-size: 0.85rem;
-    }
-
-    .zv-actions-row {
-      flex-direction: row;
-      gap: 8px;
-    }
-
-    .zv-stepper-box {
-      height: 46px;
-    }
-
-    .zv-btn-atc {
-      height: 46px;
-      font-size: 0.9rem;
-    }
-
-    .zv-btn-cod {
-      height: 44px;
+      min-width: 40px;
+      padding: 7px 6px;
       font-size: 0.82rem;
     }
-
-    .zv-trust-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
     .zv-sticky-atc {
-      padding: 10px 16px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .zv-stage-img-wrap {
-      max-height: 340px;
-    }
-    .zv-trust-grid {
-      grid-template-columns: 1fr;
-      gap: 8px;
+      padding: 8px 12px;
     }
   }
 </style>
@@ -1408,7 +1088,6 @@
     console.warn('Could not parse variants JSON', e);
   }
 
-  // Selected options state array
   const selectedOptionsState = [];
   {%- if product.options_with_values -%}
     {%- for option in product.options_with_values -%}
@@ -1422,12 +1101,12 @@
 
   if (stageWrap && mainImg) {
     stageWrap.addEventListener('mousemove', function(e) {
-      if (window.innerWidth < 990) return;
+      if (window.innerWidth < 860) return;
       const rect = stageWrap.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
       mainImg.style.transformOrigin = `${x}% ${y}%`;
-      mainImg.style.transform = 'scale(1.4)';
+      mainImg.style.transform = 'scale(1.35)';
     });
 
     stageWrap.addEventListener('mouseleave', function() {
@@ -1436,7 +1115,7 @@
     });
   }
 
-  /* Mobile Touch Swipe Gesture */
+  /* Mobile Touch Swipe */
   let touchStartX = 0;
   let touchEndX = 0;
 
@@ -1447,27 +1126,17 @@
 
     stageWrap.addEventListener('touchend', function(e) {
       touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
+      if (Math.abs(touchEndX - touchStartX) > 40) {
+        if (touchEndX < touchStartX) nextGalleryImage();
+        else prevGalleryImage();
+      }
     }, { passive: true });
   }
 
-  function handleSwipe() {
-    const diff = touchEndX - touchStartX;
-    if (Math.abs(diff) > 40) {
-      if (diff < 0) {
-        nextGalleryImage(); // Swipe left
-      } else {
-        prevGalleryImage(); // Swipe right
-      }
-    }
-  }
-
-  /* Gallery Selection */
+  /* Gallery Image Selection */
   function selectGalleryImage(idx, src, thumbEl) {
     currentImageIndex = idx;
-    if (mainImg) {
-      mainImg.src = src;
-    }
+    if (mainImg) mainImg.src = src;
     document.querySelectorAll('.zv-thumb-item').forEach(t => t.classList.remove('active'));
     if (thumbEl) {
       thumbEl.classList.add('active');
@@ -1480,15 +1149,13 @@
   function nextGalleryImage() {
     if (totalGalleryImages <= 1) return;
     let nextIdx = (currentImageIndex + 1) % totalGalleryImages;
-    const target = galleryThumbEls[nextIdx];
-    if (target) target.click();
+    if (galleryThumbEls[nextIdx]) galleryThumbEls[nextIdx].click();
   }
 
   function prevGalleryImage() {
     if (totalGalleryImages <= 1) return;
     let prevIdx = (currentImageIndex - 1 + totalGalleryImages) % totalGalleryImages;
-    const target = galleryThumbEls[prevIdx];
-    if (target) target.click();
+    if (galleryThumbEls[prevIdx]) galleryThumbEls[prevIdx].click();
   }
 
   /* Lightbox */
@@ -1503,7 +1170,7 @@
     }
   }
 
-  function closeLightbox(e) {
+  function closeLightbox() {
     const modal = document.getElementById('zv-lightbox-modal');
     if (modal) {
       modal.classList.remove('active');
@@ -1516,9 +1183,7 @@
     nextGalleryImage();
     const lbImg = document.getElementById('zv-lb-img');
     const curThumb = galleryThumbEls[currentImageIndex];
-    if (lbImg && curThumb) {
-      lbImg.src = curThumb.getAttribute('data-full-src') || mainImg.src;
-    }
+    if (lbImg && curThumb) lbImg.src = curThumb.getAttribute('data-full-src') || mainImg.src;
   }
 
   function lbPrev(e) {
@@ -1526,9 +1191,7 @@
     prevGalleryImage();
     const lbImg = document.getElementById('zv-lb-img');
     const curThumb = galleryThumbEls[currentImageIndex];
-    if (lbImg && curThumb) {
-      lbImg.src = curThumb.getAttribute('data-full-src') || mainImg.src;
-    }
+    if (lbImg && curThumb) lbImg.src = curThumb.getAttribute('data-full-src') || mainImg.src;
   }
 
   /* Size Guide */
@@ -1565,7 +1228,7 @@
     }
   }
 
-  /* Dynamic Variants Selection (CJ Dropshipping / Shopify) */
+  /* Variant Selection */
   function selectVariantOption(optionIndex, value, btnEl) {
     const parentGroup = btnEl.closest('.zv-variant-group');
     if (parentGroup) {
@@ -1577,9 +1240,7 @@
     if (labelSpan) labelSpan.textContent = value;
 
     const stickySize = document.getElementById('zv-sticky-size-val');
-    const scarcitySize = document.getElementById('zv-stock-size-label');
     if (stickySize) stickySize.textContent = value;
-    if (scarcitySize) scarcitySize.textContent = value;
 
     selectedOptionsState[optionIndex] = value;
 
@@ -1649,9 +1310,7 @@
     const span = document.getElementById('zv-val-0');
     if (span) span.textContent = size;
     const stickySize = document.getElementById('zv-sticky-size-val');
-    const scarcitySize = document.getElementById('zv-stock-size-label');
     if (stickySize) stickySize.textContent = size;
-    if (scarcitySize) scarcitySize.textContent = size;
     const parent = el.closest('.zv-variant-group');
     if (parent) {
       parent.querySelectorAll('.zv-size-pill').forEach(p => p.classList.remove('active'));
@@ -1696,30 +1355,6 @@
     }, 4000);
   }
 
-  /* Delivery Timer */
-  function initDeliveryCountdown() {
-    const timerEl = document.getElementById('zv-cd-timer');
-    if (!timerEl) return;
-
-    function updateTimer() {
-      const now = new Date();
-      const target = new Date();
-      target.setHours(17, 0, 0, 0);
-      if (now > target) target.setDate(target.getDate() + 1);
-
-      const diff = target - now;
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-
-      const pad = n => n.toString().padStart(2, '0');
-      timerEl.textContent = `${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
-    }
-
-    updateTimer();
-    setInterval(updateTimer, 1000);
-  }
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeLightbox();
@@ -1729,10 +1364,9 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     initLiveViewers();
-    initDeliveryCountdown();
   });
 
-  /* Sticky ATC Bar */
+  /* Sticky ATC Bar Scroll Listener */
   window.addEventListener('scroll', function() {
     const buyBox = document.getElementById('zv-product-section');
     const stickyBar = document.getElementById('zv-sticky-bar');
