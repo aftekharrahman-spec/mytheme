@@ -1,23 +1,47 @@
+{%- liquid
+  if collection.description != blank
+    assign banner_desc = collection.description
+  else
+    assign col_title_lower = collection.title | downcase
+    assign col_handle_lower = collection.handle | downcase
+    if col_title_lower contains 'shoe' or col_handle_lower contains 'shoe' or col_title_lower contains 'footwear'
+      assign banner_desc = "Discover ZadaVibe luxury men's footwear, handcrafted leather loafers, sneakers, and slip-ons engineered with premium materials for Dubai and UAE gentlemen."
+    elsif col_title_lower contains 'shirt' or col_handle_lower contains 'shirt' or col_title_lower contains 'henley'
+      assign banner_desc = "Explore our signature vintage lace-up henleys and ribbed knits engineered with 100% organic breathable cotton and athletic tailored drape."
+    else
+      assign banner_desc = "Explore the ZadaVibe " | append: collection.title | append: " collection. Handcrafted luxury designs engineered with superior materials and fast doorstep express delivery across the UAE."
+    endif
+  endif
+-%}
+
 <div class="zv-collection-banner">
   <div class="zv-container">
     <div class="zv-collection-banner-content">
       <span class="zv-hero-pill-badge" style="margin-bottom: 12px;">
-        <span>✨</span> {{ section.settings.badge | default: 'Signature Menswear Collection' }}
+        <span>✨</span> {{ section.settings.badge | default: 'ZadaVibe Curated Collection' }}
       </span>
-      <h1 class="zv-section-title" style="font-size: clamp(2.4rem, 4vw, 3.5rem); margin-bottom: 14px;">
-        {{ collection.title | default: "Men's Vintage & Ribbed Apparel" }}
+      <h1 class="zv-section-title" style="font-size: clamp(2rem, 3.8vw, 3.2rem); margin-bottom: 14px;">
+        {{ collection.title | default: "Men's Luxury Menswear" }}
       </h1>
-      <p class="zv-section-subtitle" style="max-width: 680px; margin: 0 auto 28px;">
-        {{ collection.description | default: "Discover handcrafted men’s henleys and ribbed knits engineered with breathable organic fibers, vintage lace-up details, and tailored athletic drape." }}
+      <p class="zv-section-subtitle" style="max-width: 680px; margin: 0 auto 26px;">
+        {{ banner_desc }}
       </p>
 
       <!-- Quick Category Filter Pills -->
       <div class="zv-collection-pills">
-        <a href="/collections/all" class="zv-cat-pill active">All Styles</a>
-        <a href="/collections/all" class="zv-cat-pill">Signature Henleys</a>
-        <a href="/collections/all" class="zv-cat-pill">Ribbed Knits</a>
-        <a href="/collections/all" class="zv-cat-pill">Earth Tones</a>
-        <a href="/collections/all" class="zv-cat-pill">Limited Drops</a>
+        <a href="/collections/all" class="zv-cat-pill{% if collection.handle == 'all' or collection.handle == blank %} active{% endif %}">
+          🔥 All Products
+        </a>
+        <a href="/collections/shoes" class="zv-cat-pill{% if collection.handle == 'shoes' %} active{% endif %}">
+          👟 Shoes & Footwear
+        </a>
+        {%- for col in collections limit: 8 -%}
+          {%- unless col.handle == 'all' or col.handle == 'frontpage' or col.handle == 'shoes' -%}
+            <a href="{{ col.url }}" class="zv-cat-pill{% if collection.handle == col.handle %} active{% endif %}">
+              {{ col.title }}
+            </a>
+          {%- endunless -%}
+        {%- endfor -%}
       </div>
     </div>
   </div>

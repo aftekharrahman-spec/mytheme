@@ -20,87 +20,184 @@
     </div>
 
     <!-- Product Grid -->
-    <div class="zv-product-grid-catalog">
-      {%- if collection.products.size > 0 -%}
-        {%- for product in collection.products -%}
-          <div class="zv-card">
-            <div class="zv-card-media">
-              <span class="zv-card-badge">HOT DROP</span>
-              <a href="{{ product.url }}">
-                {%- if product.featured_image -%}
-                  <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" class="zv-card-img-primary">
+    {%- paginate collection.products by 24 -%}
+      <div class="zv-product-grid-catalog">
+        {%- if collection.products.size > 0 -%}
+          {%- for product in collection.products -%}
+            {%- liquid
+              assign is_sold_out = false
+              if product.available == false
+                assign is_sold_out = true
+              endif
+
+              assign on_sale = false
+              if product.compare_at_price > product.price
+                assign on_sale = true
+                assign savings_pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+              endif
+            -%}
+            <div class="zv-card">
+              <div class="zv-card-media">
+                {%- if is_sold_out -%}
+                  <span class="zv-card-badge zv-badge-soldout">SOLD OUT</span>
+                {%- elsif on_sale -%}
+                  <span class="zv-card-badge zv-badge-sale">SAVE {{ savings_pct }}%</span>
+                {%- elsif forloop.index <= 2 -%}
+                  <span class="zv-card-badge">BESTSELLER</span>
                 {%- else -%}
-                  <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="Zadavibe Product" class="zv-card-img-primary">
+                  <span class="zv-card-badge">HOT DROP</span>
                 {%- endif -%}
-              </a>
-              <div class="zv-quick-add-overlay">
-                <a href="{{ product.url }}" class="zv-quick-btn">SELECT SIZE & BUY</a>
+
+                <a href="{{ product.url }}" class="zv-card-img-link">
+                  {%- if product.featured_image -%}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 600 }}"
+                      alt="{{ product.title | escape }} - Men's Fashion Dubai UAE"
+                      width="500"
+                      height="625"
+                      loading="lazy"
+                      class="zv-card-img-primary"
+                    >
+                    {%- if product.images.size > 1 -%}
+                      <img
+                        src="{{ product.images[1] | image_url: width: 600 }}"
+                        alt="{{ product.title | escape }} - Fit View"
+                        width="500"
+                        height="625"
+                        loading="lazy"
+                        class="zv-card-img-secondary"
+                      >
+                    {%- endif -%}
+                  {%- else -%}
+                    <img
+                      src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}"
+                      alt="{{ product.title | escape }}"
+                      width="500"
+                      height="625"
+                      loading="lazy"
+                      class="zv-card-img-primary"
+                    >
+                  {%- endif -%}
+                </a>
+
+                <div class="zv-quick-add-overlay">
+                  <a href="{{ product.url }}" class="zv-quick-btn">
+                    <span>SELECT SIZE & BUY</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="zv-card-body">
+                <div class="zv-card-stars">★★★★★ <span style="font-size: 0.78rem; color: #888;">(4.9)</span></div>
+                <h3 class="zv-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+
+                {%- for option in product.options_with_values -%}
+                  {%- assign opt_name = option.name | downcase -%}
+                  {%- if opt_name == 'color' or opt_name == 'colour' -%}
+                    <div class="zv-card-swatches">
+                      {%- for value in option.values limit: 5 -%}
+                        <span class="zv-swatch" style="background-color: {{ value | downcase | remove: ' ' }};" title="{{ value }}"></span>
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+
+                <div class="zv-card-prices">
+                  <span class="zv-price-now">AED {{ product.price | money_without_currency }}</span>
+                  {%- if on_sale -%}
+                    <span class="zv-price-was">AED {{ product.compare_at_price | money_without_currency }}</span>
+                  {%- endif -%}
+                </div>
               </div>
             </div>
+          {%- endfor -%}
+        {%- elsif collection.handle == 'all' or collection.handle == blank -%}
+          <!-- Demo Catalog Items showcasing ZadaVibe Men's Line when store has no uploaded catalog items yet -->
+          {%- assign demo_products = "Vintage Lace-Up Ribbed Henley,Classic Long-Sleeve Ribbed Tunic,Boho Corded Knit Henley,Textured Waffle-Knit Pullover,Athletic Ribbed Camp Shirt,Heritage Lace Collar Henley,Earthy Linen-Cotton Tunic,Minimalist Heavyweight Longsleeve" | split: "," -%}
+          {%- assign demo_prices = "AED 149.00,AED 169.00,AED 159.00,AED 189.00,AED 139.00,AED 175.00,AED 180.00,AED 149.00" | split: "," -%}
+          {%- assign demo_compares = "AED 249.00,AED 279.00,AED 260.00,AED 299.00,AED 220.00,AED 280.00,AED 290.00,AED 240.00" | split: "," -%}
 
-            <div class="zv-card-body">
-              <div class="zv-card-stars">★★★★★ <span style="font-size: 0.78rem; color: #888;">(4.9)</span></div>
-              <h3 class="zv-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-              <div class="zv-card-prices">
-                <span class="zv-price-now">AED {{ product.price | money_without_currency }}</span>
-                {%- if product.compare_at_price > product.price -%}
-                  <span class="zv-price-was">AED {{ product.compare_at_price | money_without_currency }}</span>
+          {%- for title in demo_products -%}
+            {%- assign idx = forloop.index0 -%}
+            <div class="zv-card">
+              <div class="zv-card-media">
+                {%- if forloop.index == 1 or forloop.index == 2 -%}
+                  <span class="zv-card-badge">BESTSELLER • 38% OFF</span>
+                {%- elsif forloop.index == 3 or forloop.index == 5 -%}
+                  <span class="zv-card-badge" style="background: var(--zv-accent);">LIMITED DROP</span>
+                {%- else -%}
+                  <span class="zv-card-badge" style="background: #111;">ORGANIC COTTON</span>
                 {%- endif -%}
+
+                <a href="/collections/all">
+                  {%- if forloop.index == 1 or forloop.index == 3 or forloop.index == 5 -%}
+                    <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="{{ title }} - Men's Fashion UAE" width="500" height="625" class="zv-card-img-primary" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
+                  {%- else -%}
+                    <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="{{ title }} - Luxury Menswear UAE" width="500" height="625" class="zv-card-img-primary" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
+                  {%- endif -%}
+                </a>
+
+                <div class="zv-quick-add-overlay">
+                  <a href="/collections/all" class="zv-quick-btn">SELECT SIZE & BUY</a>
+                </div>
+              </div>
+
+              <div class="zv-card-body">
+                <div class="zv-card-stars">★★★★★ <span style="font-size: 0.78rem; color: #888;">4.9 (1,280)</span></div>
+                <h3 class="zv-card-title"><a href="/collections/all">{{ title }}</a></h3>
+
+                <div class="zv-card-swatches">
+                  <span class="zv-swatch" style="background: #4b5320;" title="Olive Green"></span>
+                  <span class="zv-swatch" style="background: #2b2b2b;" title="Charcoal"></span>
+                  <span class="zv-swatch" style="background: #c2b280;" title="Earth Sand"></span>
+                  <span class="zv-swatch" style="background: #1c2833;" title="Midnight Navy"></span>
+                </div>
+
+                <div class="zv-card-prices">
+                  <span class="zv-price-now">{{ demo_prices[idx] }}</span>
+                  <span class="zv-price-was">{{ demo_compares[idx] }}</span>
+                </div>
               </div>
             </div>
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        <!-- Demo Catalog Items showcasing ZadaVibe Men's Line -->
-        {%- assign demo_products = "Vintage Lace-Up Ribbed Henley,Classic Long-Sleeve Ribbed Tunic,Boho Corded Knit Henley,Textured Waffle-Knit Pullover,Athletic Ribbed Camp Shirt,Heritage Lace Collar Henley,Earthy Linen-Cotton Tunic,Minimalist Heavyweight Longsleeve" | split: "," -%}
-        {%- assign demo_prices = "AED 149.00,AED 169.00,AED 159.00,AED 189.00,AED 139.00,AED 175.00,AED 180.00,AED 149.00" | split: "," -%}
-        {%- assign demo_compares = "AED 249.00,AED 279.00,AED 260.00,AED 299.00,AED 220.00,AED 280.00,AED 290.00,AED 240.00" | split: "," -%}
-
-        {%- for title in demo_products -%}
-          {%- assign idx = forloop.index0 -%}
-          <div class="zv-card">
-            <div class="zv-card-media">
-              {%- if forloop.index == 1 or forloop.index == 2 -%}
-                <span class="zv-card-badge">BESTSELLER • 38% OFF</span>
-              {%- elsif forloop.index == 3 or forloop.index == 5 -%}
-                <span class="zv-card-badge" style="background: var(--zv-accent);">LIMITED DROP</span>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Specific Category Empty State (e.g. Shoes or any custom category) -->
+          <div class="zv-empty-collection-container">
+            <div class="zv-empty-icon-bubble">
+              {%- if collection.handle contains 'shoe' -%}
+                👟
+              {%- elsif collection.handle contains 'pant' or collection.handle contains 'trouser' -%}
+                👖
+              {%- elsif collection.handle contains 'jacket' or collection.handle contains 'hoodie' -%}
+                🧥
               {%- else -%}
-                <span class="zv-card-badge" style="background: #111;">ORGANIC COTTON</span>
+                ✨
               {%- endif -%}
-
-              <a href="/products">
-                {%- if forloop.index == 1 or forloop.index == 3 or forloop.index == 5 -%}
-                  <img src="{{ 'zadavibe-product-shirt.jpg' | asset_url }}" alt="{{ title }}" class="zv-card-img-primary" onerror="this.src='{{ 'zadavibe-model-hero.jpg' | asset_url }}'">
-                {%- else -%}
-                  <img src="{{ 'zadavibe-model-hero.jpg' | asset_url }}" alt="{{ title }}" class="zv-card-img-primary" onerror="this.src='{{ 'zadavibe-product-shirt.jpg' | asset_url }}'">
-                {%- endif -%}
-              </a>
-
-              <div class="zv-quick-add-overlay">
-                <a href="/products" class="zv-quick-btn">SELECT SIZE & BUY</a>
-              </div>
             </div>
-
-            <div class="zv-card-body">
-              <div class="zv-card-stars">★★★★★ <span style="font-size: 0.78rem; color: #888;">4.9 (1,280)</span></div>
-              <h3 class="zv-card-title"><a href="/products">{{ title }}</a></h3>
-
-              <div class="zv-card-swatches">
-                <span class="zv-swatch" style="background: #4b5320;" title="Olive Green"></span>
-                <span class="zv-swatch" style="background: #2b2b2b;" title="Charcoal"></span>
-                <span class="zv-swatch" style="background: #c2b280;" title="Earth Sand"></span>
-                <span class="zv-swatch" style="background: #1c2833;" title="Midnight Navy"></span>
-              </div>
-
-              <div class="zv-card-prices">
-                <span class="zv-price-now">{{ demo_prices[idx] }}</span>
-                <span class="zv-price-was">{{ demo_compares[idx] }}</span>
-              </div>
+            <h2 class="zv-empty-title">New {{ collection.title }} Drops Arriving Soon</h2>
+            <p class="zv-empty-desc">
+              We are actively curating and inspecting exclusive upcoming drops for the <strong>{{ collection.title }}</strong> collection. When you list or assign products to the <strong>{{ collection.title }}</strong> category in your Shopify Admin, they will instantly appear here with full interactive buy boxes.
+            </p>
+            <div class="zv-empty-actions">
+              <a href="/collections/all" class="zv-btn-primary">
+                <span>EXPLORE ALL AVAILABLE DROPS</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <a href="/" class="zv-btn-secondary">
+                RETURN TO HOME
+              </a>
             </div>
           </div>
-        {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <div class="zv-pagination-wrap">
+          {%- render 'pagination', paginate: paginate -%}
+        </div>
       {%- endif -%}
-    </div>
+    {%- endpaginate -%}
   </div>
 </div>
 
@@ -192,6 +289,76 @@
     border-radius: var(--zv-radius-pill);
     z-index: 2;
     text-transform: uppercase;
+  }
+
+  .zv-badge-sale {
+    background: #c07a50 !important;
+  }
+
+  .zv-badge-soldout {
+    background: #4b5563 !important;
+  }
+
+  .zv-card-media .zv-card-img-secondary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.5s ease;
+    z-index: 1;
+  }
+
+  .zv-card:hover .zv-card-media .zv-card-img-secondary {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+
+  .zv-empty-collection-container {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 24px;
+    background: linear-gradient(180deg, #fdfbf7 0%, #f4efe6 100%);
+    border-radius: var(--zv-radius-lg);
+    border: 1.5px dashed var(--zv-border);
+    margin: 10px 0 30px;
+  }
+
+  .zv-empty-icon-bubble {
+    font-size: 3.5rem;
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+
+  .zv-empty-title {
+    font-family: var(--zv-font-heading);
+    font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+    color: var(--zv-primary);
+    margin: 0 0 10px;
+  }
+
+  .zv-empty-desc {
+    max-width: 580px;
+    margin: 0 auto 24px;
+    color: var(--zv-text-muted);
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .zv-empty-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .zv-pagination-wrap {
+    margin-top: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .zv-quick-add-overlay {

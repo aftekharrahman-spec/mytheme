@@ -1,17 +1,35 @@
 {
   "sections": {
     "main": {
-      "type": "main-list-collections",
+      "type": "zadavibe-list-collections",
       "settings": {
-        "title": "Collections",
-        "sort": "alphabetical",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "columns_mobile": "2"
+        "badge": "Curated Categories • Dubai Luxury",
+        "heading": "Explore Collections & Categories",
+        "subheading": "From handcrafted vintage ribbed knits to luxury footwear and athletic silhouettes, discover premium menswear tailored for comfort across the UAE."
       }
+    },
+    "ticker": {
+      "type": "zadavibe-ticker",
+      "settings": {
+        "bg_color": "#2d3b31",
+        "text_color": "#ffffff"
+      }
+    },
+    "reviews": {
+      "type": "zadavibe-review-strip",
+      "settings": {
+        "heading": "Trusted by Men Across Dubai & the UAE"
+      }
+    },
+    "faq": {
+      "type": "zadavibe-faq",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "ticker",
+    "reviews",
+    "faq"
   ]
 }

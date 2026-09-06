@@ -98,7 +98,7 @@
             <div class="zv-fp-media">
               <span class="zv-fp-badge-hot">{{ fallback_tags[idx] }}</span>
 
-              <a href="/products" class="zv-fp-img-link">
+              <a href="/collections/all" class="zv-fp-img-link">
                 {%- if forloop.index == 2 or forloop.index == 4 -%}
                   <img
                     src="{{ 'zadavibe-model-hero.jpg' | asset_url }}"
@@ -121,7 +121,7 @@
               </a>
 
               <div class="zv-fp-overlay-actions">
-                <a href="/products" class="zv-fp-quick-btn">
+                <a href="/collections/all" class="zv-fp-quick-btn">
                   <span>SELECT SIZE & BUY</span>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
@@ -134,7 +134,7 @@
                 <span class="zv-fp-review-cnt">(4.9)</span>
               </div>
               <h3 class="zv-fp-prod-title">
-                <a href="/products">{{ title }}</a>
+                <a href="/collections/all">{{ title }}</a>
               </h3>
               <div class="zv-fp-price-row">
                 <span class="zv-fp-price-curr">AED {{ fallback_prices[idx] }}</span>
